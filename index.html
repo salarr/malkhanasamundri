@@ -128,6 +128,12 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
 .act-wrap{display:flex;gap:6px;justify-content:center}.mad-table td .mini-btn{margin:0;display:inline-block}
 @media(max-width:900px){.main-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.main-row{grid-template-columns:1fr}}
+
+.pop-top{display:flex;justify-content:flex-start;margin-bottom:6px}
+#accusedForm .nested-title{justify-content:flex-start}
+#connectPopup[hidden]{display:none!important}
+#connectPopup:not([hidden]){display:block;position:fixed;top:16vh;left:50%;transform:translateX(-50%);width:min(520px,92vw);z-index:70;background:#fff;border-radius:14px;padding:12px 18px 18px;box-shadow:0 0 0 100vmax rgba(15,30,50,.55),0 20px 60px rgba(0,0,0,.35);text-align:center}
+#connectPopup p{margin:4px 0 14px}#connectPopup .settings-buttons{justify-content:center}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -157,7 +163,6 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
           </div>
           <form id="mainForm" class="data-form" hidden>
             <div id="mainRows" class="main-rows"></div>
-            <div class="save-row"><button type="button" class="btn btn-primary js-save">💾 محفوظ کریں</button></div>
             <span id="mainFormHint" hidden></span>
           </form>
         </section>
@@ -167,10 +172,10 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
           <div class="form-footer"><div class="button-row"><button type="button" id="resetAccusedBtn" class="btn btn-ghost">صاف کریں</button><button type="submit" class="btn btn-primary">Accused محفوظ کریں</button></div></div>
         </form>
         <section class="panel related-panel" id="relatedPanel" hidden>
-        <div class="section-heading"><div><h3 id="relatedTitle">Related records</h3></div><button id="closeRelatedBtn" class="btn btn-ghost">بند کریں ✕</button></div>
+        <div class="pop-top"><button type="button" id="closeRelatedBtn" class="icon-btn" aria-label="Close">✕</button></div><h3 id="relatedTitle" hidden></h3>
         <div id="relatedList" class="record-list"></div>
         <form id="relatedForm" class="data-form nested-form" hidden>
-          <div class="nested-title"><h4 id="relatedFormTitle">نیا ریکارڈ</h4><button type="button" class="icon-btn" id="closeRelatedForm" aria-label="Close">✕</button></div>
+          <div class="nested-title"><h4 id="relatedFormTitle" hidden></h4><button type="button" class="icon-btn" id="closeRelatedForm" aria-label="Close">✕</button></div>
           <div class="form-grid" id="relatedFields"></div>
           <div class="form-footer"><span class="muted" id="relatedFormHint"></span><div class="button-row"><button type="button" id="resetRelatedBtn" class="btn btn-ghost">صاف کریں</button><button type="submit" class="btn btn-primary">محفوظ کریں</button></div></div>
         </form>
@@ -217,6 +222,14 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
         </section>
       </div>
     </main>
+  <div id="connectPopup" hidden>
+    <div class="pop-top"><button type="button" id="connectClose" class="icon-btn" aria-label="Close">✕</button></div>
+    <p>Excel فائل منسلک نہیں ہے۔ کام شروع کرنے کے لیے Excel فائل منسلک کریں۔</p>
+    <div class="settings-buttons">
+      <button type="button" id="popReconnectBtn" class="btn btn-success" hidden>🔄 پچھلی فائل دوبارہ منسلک کریں</button>
+      <button type="button" id="popConnectBtn" class="btn btn-primary">📂 Excel فائل منسلک کریں</button>
+    </div>
+  </div>
     <footer><span>مالخانہ سمندری فیصل آباد</span><span>Local Excel • Record Management</span></footer>
   </div>
   <div id="toast" class="toast" role="status"></div>
@@ -259,7 +272,7 @@ function toISO(s){const p=parseDate(s);return p?`${p.y}-${String(p.m).padStart(2
 function fmtDMY(s){const p=parseDate(s);return p?`${String(p.d).padStart(2,'0')}/${String(p.m).padStart(2,'0')}/${p.y}`:'';}
 let resOpts={};let resLinks={};
 function normKey(s){return val(s).trim().toLowerCase().replace(/\s+/g,'_');}
-function loadResources(wb){resOpts={};resLinks={Case_Property:{}};const ws=wb&&wb.Sheets&&wb.Sheets['Resources'];if(!ws)return;const arr=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false});const keyOf={};Object.keys(LABELS).forEach(k=>{keyOf[normKey(k)]=k;keyOf[normKey(LABELS[k])]=k;});arr.forEach(r=>{const k=keyOf[normKey(r[0])];const v=val(r[1]).trim();if(!k||!v)return;(resOpts[k]=resOpts[k]||[]);if(!resOpts[k].includes(v))resOpts[k].push(v);const link=val(r[2]).trim();if(k==='Case_Property'&&link){if(!resLinks.Case_Property[v])resLinks.Case_Property[v]=link;(resOpts.Type_Of_Case_Property=resOpts.Type_Of_Case_Property||[]);if(!resOpts.Type_Of_Case_Property.includes(link))resOpts.Type_Of_Case_Property.push(link);}});}
+function loadResources(wb){resOpts={};resLinks={Case_Property:{},Type_Of_Case_Property:{},CP_Detail:{}};const ws=wb&&wb.Sheets&&wb.Sheets['Resources'];if(!ws)return;const arr=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false});const keyOf={};Object.keys(LABELS).forEach(k=>{keyOf[normKey(k)]=k;keyOf[normKey(LABELS[k])]=k;});arr.forEach(r=>{const k=keyOf[normKey(r[0])];const v=val(r[1]).trim();if(!k||!v)return;(resOpts[k]=resOpts[k]||[]);if(!resOpts[k].includes(v))resOpts[k].push(v);const link=val(r[2]).trim(),l3=val(r[3]).trim();if(k==='Case_Property'){if(link&&!resLinks.Case_Property[v]){resLinks.Case_Property[v]=link;(resOpts.Type_Of_Case_Property=resOpts.Type_Of_Case_Property||[]);if(!resOpts.Type_Of_Case_Property.includes(link))resOpts.Type_Of_Case_Property.push(link);}if(l3&&!resLinks.CP_Detail[v])resLinks.CP_Detail[v]=l3;}if(k==='Type_Of_Case_Property'&&link&&!resLinks.Type_Of_Case_Property[v])resLinks.Type_Of_Case_Property[v]=link;});}
 function makeSelect(key,current){const s=document.createElement('select');const cur=val(current).trim();const opts=[...(resOpts[key]||[])];if(cur&&!opts.includes(cur))opts.unshift(cur);s.appendChild(new Option('— منتخب کریں —',''));opts.forEach(o=>s.appendChild(new Option(o,o)));s.value=cur;return s;}
 function esc(s){return val(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function toast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3300);}
@@ -268,11 +281,11 @@ function nextId(table){const key=primary(table);if(!key)return '';return rows(ta
 function ensureSchema(){SHEETS.forEach(s=>{if(!data[s])data[s]=[];});}
 function headerRow(sheet){return (sheet&&sheet.length)?sheet[0].map(v=>String(v??'').trim()):[];}
 function normalizeWorkbook(wb){data={};fileNames={sheets:{},cols:{}};SHEETS.forEach(name=>{const actual=wb.Sheets[name]?name:(SHEET_ALIASES[name]||[]).find(a=>wb.Sheets[a]);const ws=actual?wb.Sheets[actual]:null;if(!ws){data[name]=[];return;}fileNames.sheets[name]=actual;const json=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});data[name]=json.map(r=>{const o={};for(const k of Object.keys(r)){const canon=Object.keys(COL_ALIASES).find(c=>COL_ALIASES[c].includes(k));if(canon){o[canon]=r[k];fileNames.cols[canon]=k;}else o[k]=r[k];}return o;});});ensureSchema();loadResources(wb);}
-function buildFields(containerId, table, record={}, mode='edit', hiddenKeys=[]){const wrap=$(containerId);wrap.innerHTML='';const fields=SCHEMA[table]||[];fields.forEach(key=>{const hidden=hiddenKeys.includes(key)||key===primary(table);const field=document.createElement('div');field.className='field';if(hidden){field.hidden=true;}const label=document.createElement('label');label.htmlFor=`${containerId}_${key}`;label.textContent=LABELS[key]||key;let ctl;if(resOpts[key]&&!hidden){ctl=makeSelect(key,record[key]);}else{ctl=(key.toLowerCase().includes('detail')||key.toLowerCase().includes('property')||key==='Decision_of_Court'||key==='Under_Section')?document.createElement('textarea'):document.createElement('input');ctl.value=val(record[key]);ctl.autocomplete='off';if(DATE_KEYS.includes(key)){ctl.type='date';const raw=val(record[key]).trim();ctl.value=toISO(raw);if(raw&&!ctl.value)ctl.dataset.orig=raw;}else if(/date/i.test(key))ctl.placeholder='مثلاً 24/10/2026';else ctl.placeholder=LABELS[key]||key;if(key===primary(table)){ctl.readOnly=true;ctl.value=record[key]??nextId(table);}if(hidden){ctl.value=val(record[key]);}}ctl.id=`${containerId}_${key}`;ctl.name=key;field.append(label,ctl);wrap.appendChild(field);});const cp=$(`${containerId}_Case_Property`),tp=$(`${containerId}_Type_Of_Case_Property`);if(cp&&tp&&cp.tagName==='SELECT'&&tp.tagName==='SELECT')cp.addEventListener('change',()=>{const ty=resLinks.Case_Property&&resLinks.Case_Property[cp.value];if(ty){if(![...tp.options].some(o=>o.value===ty))tp.appendChild(new Option(ty,ty));tp.value=ty;}});}
+function buildFields(containerId, table, record={}, mode='edit', hiddenKeys=[]){const wrap=$(containerId);wrap.innerHTML='';const fields=SCHEMA[table]||[];fields.forEach(key=>{const hidden=hiddenKeys.includes(key)||key===primary(table);const field=document.createElement('div');field.className='field';if(hidden){field.hidden=true;}const label=document.createElement('label');label.htmlFor=`${containerId}_${key}`;label.textContent=LABELS[key]||key;let ctl;if(resOpts[key]&&!hidden){ctl=makeSelect(key,record[key]);}else{ctl=(key.toLowerCase().includes('detail')||key.toLowerCase().includes('property')||key==='Decision_of_Court'||key==='Under_Section')?document.createElement('textarea'):document.createElement('input');ctl.value=val(record[key]);ctl.autocomplete='off';if(DATE_KEYS.includes(key)){ctl.type='date';const raw=val(record[key]).trim();ctl.value=toISO(raw);if(raw&&!ctl.value)ctl.dataset.orig=raw;}else if(/date/i.test(key))ctl.placeholder='مثلاً 24/10/2026';else ctl.placeholder=LABELS[key]||key;if(key===primary(table)){ctl.readOnly=true;ctl.value=record[key]??nextId(table);}if(hidden){ctl.value=val(record[key]);}}ctl.id=`${containerId}_${key}`;ctl.name=key;field.append(label,ctl);wrap.appendChild(field);});const cp=$(`${containerId}_Case_Property`),tp=$(`${containerId}_Type_Of_Case_Property`),dp=$(`${containerId}_Detail_Of_Case_Property`);const fill=(ctl,v,force)=>{if(!ctl||!v)return;const cur=String(ctl.value||'').trim();if(!force&&cur&&cur!==ctl.dataset.auto)return;if(ctl.tagName==='SELECT'&&![...ctl.options].some(o=>o.value===v))ctl.appendChild(new Option(v,v));ctl.value=v;ctl.dataset.auto=v;};if(cp&&cp.tagName==='SELECT')cp.addEventListener('change',()=>{const ty=resLinks.Case_Property[cp.value];if(ty)fill(tp,ty,true);const dt=resLinks.CP_Detail[cp.value]||resLinks.Type_Of_Case_Property[tp?tp.value:''];if(dt)fill(dp,dt,false);});if(tp&&tp.tagName==='SELECT')tp.addEventListener('change',()=>{const dt=resLinks.Type_Of_Case_Property[tp.value];if(dt)fill(dp,dt,false);});}
 function formValues(containerId,table){const out={};(SCHEMA[table]||[]).forEach(k=>{const el=$(`${containerId}_${k}`);if(!el)return;if(el.type==='date'){out[k]=el.value?fmtDMY(el.value):(el.dataset.orig||'');}else out[k]=el.value.trim();});return out;}
 function currentMain(){return rows('Main').find(r=>String(r.ID)===String(selectedMain))||null;}
 function currentAccused(){return rows('Accused_T').find(r=>String(r.Accused_ID)===String(selectedAccused))||null;}
-function updateStatus(){const has=!!workbook;$('workbookStatus').textContent=has?'Excel فائل منسلک ہے':(pendingHandle?'پچھلی Excel فائل اجازت کی منتظر ہے':'Excel فائل منسلک نہیں');$('workbookStatus').className='status-pill '+(has?'connected':'offline');$('saveWorkbookBtn').disabled=!has;$('downloadCopyBtn').disabled=!has;$('disconnectBtn').disabled=!has&&!pendingHandle;$('reconnectBtn').hidden=has||!pendingHandle;$('autoSaveStatus').textContent=has?(workbookHandle?'خودکار محفوظ کاری فعال':'خودکار محفوظ کاری دستی اجازت کی منتظر'):'خودکار محفوظ کاری بند';$('mainForm').hidden=!has;if(!has){$('mainRows').innerHTML='';}}
+function updateStatus(){const has=!!workbook;if(has)$('connectPopup').hidden=true;$('popReconnectBtn').hidden=has||!pendingHandle;$('workbookStatus').textContent=has?'Excel فائل منسلک ہے':(pendingHandle?'پچھلی Excel فائل اجازت کی منتظر ہے':'Excel فائل منسلک نہیں');$('workbookStatus').className='status-pill '+(has?'connected':'offline');$('saveWorkbookBtn').disabled=!has;$('downloadCopyBtn').disabled=!has;$('disconnectBtn').disabled=!has&&!pendingHandle;$('reconnectBtn').hidden=has||!pendingHandle;$('autoSaveStatus').textContent=has?(workbookHandle?'خودکار محفوظ کاری فعال':'خودکار محفوظ کاری دستی اجازت کی منتظر'):'خودکار محفوظ کاری بند';$('mainForm').hidden=!has;if(!has){$('mainRows').innerHTML='';}}
 function norm(v){const s=val(v).trim();return /^\d+\.0+$/.test(s)?s.replace(/\.0+$/,''):s;}
 function mainsForMad(num){const n=norm(num);return n?rows('Main').filter(r=>norm(r.Madd_Number)===n):[];}
 const ROW_FIELDS=['FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'];
@@ -337,7 +350,7 @@ async function saveToConnectedFile(showMessage=true){
    $('autoSaveStatus').textContent='✓ خودکار محفوظ ہوگیا';
    if(showMessage)toast('تبدیلیاں اصل Excel فائل میں محفوظ ہوگئیں۔');
    return true;
- }catch(err){console.error(err);$('autoSaveStatus').textContent='محفوظ کاری میں مسئلہ';if(showMessage)toast('اصل فائل میں محفوظ نہیں ہوسکا؛ Excel کی نئی کاپی ڈاؤن لوڈ کریں۔');return false;}
+ }catch(err){console.error(err);$('autoSaveStatus').textContent='محفوظ کاری میں مسئلہ';toast('Excel میں محفوظ نہیں ہو سکا۔ اگر فائل Excel میں کھلی ہے تو اسے بند کر کے دوبارہ کوشش کریں۔');return false;}
  finally{isWritingWorkbook=false;}
 }
 function scheduleAutoSave(){
@@ -360,7 +373,7 @@ async function connectWorkbook(){
  }
  workbookHandle=null;$('workbookInput').click();
 }
-function loadFile(file,fromHandle=false){if(!file)return;const reader=new FileReader();reader.onload=e=>{try{workbook=XLSX.read(e.target.result,{type:'array',cellDates:false});normalizeWorkbook(workbook);selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;updateStatus();renderMainFields({});if(!$('tabList').hidden)renderMadList();renderMainList();renderAccused();renderSearchResults();$('mainFormHint').textContent='نیا Main ریکارڈ بنانے کے لیے فارم پُر کریں یا تلاش سے موجود ریکارڈ منتخب کریں۔';const missing=SHEETS.filter(s=>s!=='Resources'&&s!=='Mad_Number_T'&&!workbook.Sheets[s]&&!fileNames.sheets[s]);if(missing.length)toast('Workbook لوڈ ہوگئی، مگر یہ sheets نہیں ملیں: '+missing.join(', '));else toast(fromHandle?'Excel فائل منسلک ہوگئی؛ خودکار محفوظ کاری فعال ہے۔':'Excel فائل لوڈ ہوگئی۔ براہِ کرم خودکار محفوظ کاری کے لیے راہنمائی و اپڈیٹ ٹیب سے دوبارہ منسلک کریں۔');updateStatus();}catch(err){console.error(err);toast('Excel فائل نہیں پڑھی جا سکی۔ درست .xlsx فائل منتخب کریں۔');}};reader.readAsArrayBuffer(file);}
+function loadFile(file,fromHandle=false){if(!file)return Promise.resolve();return new Promise(res=>{const reader=new FileReader();reader.onload=e=>{try{workbook=XLSX.read(e.target.result,{type:'array',cellDates:false});normalizeWorkbook(workbook);selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;updateStatus();renderMainFields({});if(!$('tabList').hidden)renderMadList();renderMainList();renderAccused();renderSearchResults();$('mainFormHint').textContent='نیا Main ریکارڈ بنانے کے لیے فارم پُر کریں یا تلاش سے موجود ریکارڈ منتخب کریں۔';const missing=SHEETS.filter(s=>s!=='Resources'&&s!=='Mad_Number_T'&&!workbook.Sheets[s]&&!fileNames.sheets[s]);if(missing.length)toast('Workbook لوڈ ہوگئی، مگر یہ sheets نہیں ملیں: '+missing.join(', '));else toast(fromHandle?'Excel فائل منسلک ہوگئی؛ خودکار محفوظ کاری فعال ہے۔':'Excel فائل لوڈ ہوگئی۔ براہِ کرم خودکار محفوظ کاری کے لیے راہنمائی و اپڈیٹ ٹیب سے دوبارہ منسلک کریں۔');updateStatus();}catch(err){console.error(err);toast('Excel فائل نہیں پڑھی جا سکی۔ درست .xlsx فائل منتخب کریں۔');}res();};reader.readAsArrayBuffer(file);});}
 $('loadWorkbookBtn').onclick=connectWorkbook;$('workbookInput').addEventListener('change',e=>{workbookHandle=null;loadFile(e.target.files[0],false);e.target.value='';});
 $('saveWorkbookBtn').onclick=async()=>{if(workbookHandle)await saveToConnectedFile(true);else downloadWorkbook();};$('downloadCopyBtn').onclick=downloadWorkbook;
 $('searchBtn').onclick=()=>{const q=$('madSearch').value.trim();if(!q){toast('مد نمبر درج کریں۔');return;}if(!workbook){toast('پہلے Excel workbook کھولیں۔');return;}if(!confirmDiscard())return;renderMainListByMad(q);};$('madSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('searchBtn').click();}});$('clearSearchBtn').onclick=()=>{if(!confirmDiscard())return;clearMainForm();};$('mainForm').addEventListener('submit',e=>e.preventDefault());document.querySelectorAll('.js-save').forEach(b=>b.onclick=saveMainForm);$('addMainRowBtn').onclick=()=>{const last=[...$('mainRows').querySelectorAll('input[name=Madd_Number]')].map(i=>i.value.trim()).filter(Boolean).pop();const r=makeRow({Madd_Number:$('madSearch').value.trim()||last||''});r.dataset.dirty='1';$('mainRows').appendChild(r);const ins=r.querySelectorAll('input,select');(ins[0].value?ins[1]:ins[0]).focus();};$('accusedForm').addEventListener('submit',saveAccused);$('resetAccusedBtn').onclick=()=>openAccusedForm();$('closeAccusedForm').onclick=closeAccused;
@@ -393,12 +406,12 @@ function idbOpen(){return new Promise((res,rej)=>{if(!window.indexedDB)return re
 async function idbSet(k,v){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('kv','readwrite');tx.objectStore('kv').put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
 async function idbGet(k){const db=await idbOpen();return new Promise((res,rej)=>{const q=db.transaction('kv','readonly').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error);});}
 async function idbDel(k){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('kv','readwrite');tx.objectStore('kv').delete(k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
-async function attachHandle(h){workbookHandle=h;workbookFileName=h.name;pendingHandle=null;const file=await h.getFile();loadFile(file,true);}
+async function attachHandle(h){workbookHandle=h;workbookFileName=h.name;pendingHandle=null;const file=await h.getFile();await loadFile(file,true);}
 async function restoreWorkbook(){try{const h=await idbGet('wbHandle');if(!h)return;pendingHandle=h;if((await h.queryPermission({mode:'readwrite'}))==='granted'){await attachHandle(h);}else{updateStatus();toast('پچھلی Excel فائل ملی ہے؛ کسی بھی جگہ کلک کریں یا "دوبارہ منسلک کریں" دبائیں۔');}}catch(e){console.warn('restore',e);}}
 let autoTried=false;
 let reconnecting=false;
 async function reconnectWorkbook(){const h=pendingHandle;if(!h||reconnecting)return;reconnecting=true;try{const p=await h.requestPermission({mode:'readwrite'});if(p==='granted')await attachHandle(h);else toast('اجازت نہیں ملی؛ "دوبارہ منسلک کریں" دبا کر Allow کریں۔');}catch(e){console.warn(e);toast('فائل دوبارہ منسلک نہیں ہو سکی؛ "Excel فائل منسلک / کھولیں" سے منتخب کریں۔');}finally{reconnecting=false;}}
-document.addEventListener('click',e=>{if(pendingHandle&&!workbook&&!autoTried&&!e.target.closest('#disconnectBtn,#reconnectBtn,#loadWorkbookBtn')){autoTried=true;reconnectWorkbook();}},true);
+document.addEventListener('click',e=>{if(pendingHandle&&!workbook&&!autoTried&&!e.target.closest('#disconnectBtn,#reconnectBtn,#loadWorkbookBtn,#connectPopup')){autoTried=true;reconnectWorkbook();}},true);
 $('reconnectBtn').onclick=()=>{autoTried=true;reconnectWorkbook();};
 async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disconnect کرنا چاہتے ہیں؟ (فائل میں کوئی تبدیلی نہیں ہوگی)'))return;clearTimeout(autoSaveTimer);if(workbook&&workbookHandle){await saveToConnectedFile(false);}workbook=null;workbookHandle=null;pendingHandle=null;data={};ensureSchema();selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;try{await idbDel('wbHandle');}catch(e){}$('relatedPanel').hidden=true;closeRelatedForm();closeAccused();$('mainRows').innerHTML='';updateStatus();renderMadList();toast('Excel فائل Disconnect ہوگئی۔');}
 $('disconnectBtn').onclick=disconnectWorkbook;
@@ -444,7 +457,11 @@ $('curVersion').textContent=APP_VERSION;
 $('checkUpdateBtn').onclick=()=>checkUpdate(true);$('updateNowBtn').onclick=applyUpdate;
 window.addEventListener('online',()=>checkUpdate(false));
 setInterval(()=>checkUpdate(false),1800000);
-restoreWorkbook();
+function showConnectPopup(){if(workbook)return;$('popReconnectBtn').hidden=!pendingHandle;$('connectPopup').hidden=false;}
+$('connectClose').onclick=()=>{$('connectPopup').hidden=true;};
+$('popConnectBtn').onclick=()=>{autoTried=true;connectWorkbook();};
+$('popReconnectBtn').onclick=()=>{autoTried=true;reconnectWorkbook();};
+restoreWorkbook().then(()=>{if(!workbook)showConnectPopup();});
 checkUpdate(false);
 </script>
 </body>
