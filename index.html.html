@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet" />
+  <title>مالخانہ سمندری فیصل آباد</title>
+  <style>
+@font-face{font-family:'UrduJameel';src:local('Jameel Noori Nastaleeq'),local('JameelNooriNastaleeq'),local('Jameel Noori Nastaleeq Regular');unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200F;}
+@font-face{font-family:'EngFont';src:local('Inter'),local('Segoe UI'),local('Arial'),local('Helvetica Neue'),local('Helvetica'),local('Tahoma');unicode-range:U+0000-05FF,U+2010-2BFF;}
+:root{--font:'EngFont','UrduJameel','Noto Nastaliq Urdu',Inter,'Segoe UI',sans-serif}
+html{scrollbar-gutter:stable}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--navy:#142d4e;--blue:#2164a5;--blue2:#2c7ac0;--teal:#0c8d87;--ink:#1e2c3d;--muted:#738196;--line:#e1e8f0;--bg:#f3f6fb;--white:#fff;--shadow:0 10px 28px rgba(24,48,80,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:27.34px}.app-shell{max-width:1440px;margin:auto;min-height:100vh}.topbar{background:linear-gradient(115deg,#102947,#1d4d7c 60%,#167c82);color:white;display:flex;align-items:center;gap:16px;padding:19px clamp(18px,3vw,42px);box-shadow:0 5px 22px #142d4e25}.brand-mark{width:52px;height:52px;flex-shrink:0;border:1px solid #ffffff70;border-radius:15px;display:grid;place-items:center;font-family:var(--font);font-size:40.34px;background:#ffffff16}.brand-copy{flex:1}.brand-copy h1{margin:0;font-family:var(--font);font-size:clamp(32.34px, 2.5vw, 40.34px);font-weight:700;line-height:1.8}.brand-copy p{margin:0;color:#c8d8e8;font-size:24.34px;letter-spacing:.7px}.header-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.status-pill,.count-pill{font-size:24.34px;font-weight:700;border-radius:30px;padding:8px 11px;white-space:nowrap}.status-pill{background:#ffffff20;color:#fff;border:1px solid #ffffff3b}.status-pill.connected{background:#d9f9eb;color:#08764f;border-color:#b7f0d7}.status-pill.offline{background:#fff2d8;color:#8b5b09;border-color:#ffdfa0}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;font-size:25.34px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s;white-space:nowrap}.btn:hover{transform:translateY(-1px);box-shadow:0 5px 12px #173b5b18}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}.btn-light{background:#fff;color:#193c61}.btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}.btn-success{background:linear-gradient(135deg,#087f70,#13a58e);color:#fff}.btn-ghost{background:#edf2f8;color:#42536a}.app-shell main{padding:25px clamp(14px,3vw,42px) 30px}.intro-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 20px}.intro-row h2{font-size:35.34px;margin:0 0 5px;color:#173c62}.intro-row p{margin:0;color:var(--muted);font-size:25.34px}.intro-badge{display:flex;align-items:center;gap:8px;color:#507087;background:#e6f3f4;border:1px solid #cbe8e8;padding:9px 12px;border-radius:30px;font-size:24.34px;font-weight:700}.pulse{width:8px;height:8px;background:#12a58e;border-radius:50%;box-shadow:0 0 0 4px #12a58e20}.panel{background:#fff;border:1px solid #e7edf4;border-radius:17px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.section-heading>div:first-child{display:flex;align-items:center;gap:10px}.section-heading h3{margin:0;font-size:29.34px;color:#203b59}.step-tag{background:#e7f0fb;color:#2868a3;font-size:23.34px;font-weight:800;padding:6px 8px;border-radius:7px}.muted{color:var(--muted);font-size:24.34px}.search-controls{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field label{font-size:25.34px;font-weight:700;color:#42536a}.field input,.field select,.field textarea{width:100%;border:1px solid #d8e1ec;border-radius:9px;padding:11px 12px;font:inherit;color:#20364f;background:#fbfcfe;outline:none;min-width:0;transition:border .15s,box-shadow .15s}.field input:focus,.field select:focus,.field textarea:focus{border-color:#4e8bc0;box-shadow:0 0 0 3px #4e8bc01c;background:#fff}.field textarea{min-height:80px;resize:vertical}.search-field{flex:1;min-width:240px}.search-results{margin-top:13px;display:flex;gap:8px;flex-wrap:wrap}.result-chip{border:1px solid #d9e7f5;background:#f4f9ff;color:#2d5f91;padding:8px 11px;border-radius:9px;cursor:pointer;font-size:24.34px;font-weight:700}.result-chip.active{background:#1f639e;color:white}.main-panel{border-top:3px solid #2c75b5}.accused-panel{border-top:3px solid #0d9a88}.count-pill{background:#edf3fa;color:#526b84}.data-form{display:block}.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.form-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #edf1f6;margin-top:19px;padding-top:16px}.button-row{display:flex;gap:8px;flex-wrap:wrap}.empty-state{text-align:center;padding:32px 15px 27px;background:linear-gradient(180deg,#f8fbff,#fff);border:1px dashed #cfdeed;border-radius:13px}.empty-icon{font-size:47.34px;color:#5e8fbb;margin-bottom:8px}.empty-state h3{margin:0 0 7px;color:#294968}.empty-state p{max-width:560px;margin:0 auto 17px;color:#718196;font-size:25.34px;line-height:1.8}.section-note{margin:-7px 0 14px;color:var(--muted);font-size:24.34px}.heading-actions{display:flex;align-items:center;gap:9px}.record-list{display:flex;flex-direction:column;gap:9px}.record-card{display:flex;align-items:center;gap:12px;border:1px solid #e3eaf2;border-radius:12px;padding:12px;background:#fcfdff}.record-card.selected{border-color:#76b8ac;background:#f2fbf8}.record-main{flex:1;min-width:0}.record-title{font-weight:800;color:#2a4968;margin-bottom:5px;overflow-wrap:anywhere}.record-sub{font-size:24.34px;color:#77879a;line-height:1.7;overflow-wrap:anywhere}.record-actions{display:flex;gap:6px;flex-wrap:wrap}.mini-btn{border:0;border-radius:8px;padding:8px 10px;font-size:24.34px;font-weight:700;cursor:pointer;background:#eaf1f8;color:#315879}.mini-btn.edit{background:#e5f2ff;color:#1d64a0}.mini-btn.delete{background:#fff0ef;color:#b54440}.placeholder-row{border:1px dashed #dbe4ed;border-radius:10px;padding:18px;text-align:center;color:#8795a7;font-size:25.34px}.nested-form{margin-top:16px;border:1px solid #dbe9f4;border-radius:13px;padding:18px;background:#f9fcff}.nested-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.nested-title h4{margin:0;font-size:27.34px;color:#244967}.icon-btn{border:0;background:#e8eef5;color:#50657c;border-radius:8px;width:31px;height:31px;cursor:pointer}.related-section{margin:23px 0}.related-heading{margin-bottom:13px}.related-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.related-btn{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #e1e8f0;border-radius:15px;background:#fff;padding:17px;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s,border .15s}.related-btn:hover{transform:translateY(-2px);border-color:#c3d5e5}.related-icon{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-size:34.34px;flex-shrink:0}.related-btn>span:nth-child(2){flex:1;display:flex;flex-direction:column;gap:5px}.related-btn strong{font-size:26.34px;color:#2a4562}.related-btn small{font-size:23.34px;color:#8390a0}.related-btn .arrow{color:#8a9caf;font-size:31.34px}.talfi .related-icon{background:#f0eaff;color:#7853b9}.temp .related-icon{background:#e4f3ff;color:#277ab4}.sapurdari .related-icon{background:#e0f7ec;color:#15835e}.related-panel{border-top:3px solid #8b6dc2}.related-add-row{margin-top:13px}.help-strip{display:flex;gap:13px;align-items:flex-start;background:#eaf4fb;border:1px solid #d6e7f5;padding:15px 17px;border-radius:13px;color:#42617d}.help-icon{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#cfe5f7;color:#27669b;font-weight:800;flex-shrink:0}.help-strip strong{font-size:25.34px}.help-strip p{font-size:24.34px;line-height:1.8;margin:5px 0 0}.help-strip code{background:#dbeaf6;padding:2px 4px;border-radius:4px}footer{display:flex;justify-content:space-between;gap:12px;padding:16px clamp(14px,3vw,42px);font-size:23.34px;color:#8492a3;border-top:1px solid #e2e9f1}.toast{position:fixed;bottom:22px;right:22px;max-width:min(420px,calc(100vw - 44px));background:#173c5e;color:#fff;padding:13px 17px;border-radius:11px;box-shadow:0 10px 30px #10294735;font-size:25.34px;opacity:0;pointer-events:none;transform:translateY(10px);transition:.22s;z-index:20}.toast.show{opacity:1;transform:translateY(0)}[hidden]{display:none!important}
+@media(max-width:900px){.topbar{align-items:flex-start;flex-wrap:wrap}.brand-copy{min-width:calc(100% - 80px)}.header-actions{width:100%;justify-content:flex-start}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.related-buttons{gap:9px}.related-btn{padding:13px;gap:8px}.related-icon{width:36px;height:36px}}
+@media(max-width:600px){.app-shell main{padding-top:18px}.intro-row{align-items:flex-start;flex-direction:column}.panel{padding:16px}.section-heading{align-items:flex-start;flex-wrap:wrap}.section-heading>.muted{display:none}.form-grid{grid-template-columns:1fr}.search-field{min-width:100%;flex-basis:100%}.search-controls .btn{flex:1}.related-buttons{grid-template-columns:1fr}.related-btn{padding:14px}.record-card{align-items:flex-start;flex-wrap:wrap}.record-actions{width:100%}.form-footer{align-items:flex-start;flex-direction:column}.button-row{width:100%}.button-row .btn{flex:1}.header-actions .btn{flex:1}.status-pill{width:100%;text-align:center}footer{flex-direction:column}}
+
+.main-record-results:empty{display:none}.main-record-results .result-chip{background:#fff8e9;border-color:#f0d9a7;color:#865f18}.main-record-results .result-chip.active{background:#1f639e;border-color:#1f639e;color:#fff}
+
+/* Requested Urdu RTL + Jameel Noori Nastaleeq */
+html,body{direction:rtl;text-align:right;font-family:var(--font);}
+button,input,textarea,select{font-family:inherit;}
+.topbar,.header-actions,.section-heading,.search-controls,.form-footer,.button-row,.related-buttons,.record-card,footer{direction:rtl}
+.brand-copy h1{font-family:var(--font);line-height:2.05}
+.excel-menu-wrap{position:relative;display:inline-flex;}
+.excel-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:50;min-width:240px;padding:8px;background:#fff;border:1px solid #dce6f0;border-radius:14px;box-shadow:0 16px 40px #1029472b;display:flex;flex-direction:column;gap:5px}
+.excel-menu button{width:100%;text-align:right;background:#f4f8fc;color:#244967;padding:12px 14px;border-radius:9px;border:0;font-size:22.67px;cursor:pointer}
+.excel-menu button:hover{background:#e3effa}
+.autosave-note{font-size:21.67px;color:#e6f8ff;white-space:nowrap}
+@media(max-width:600px){.excel-menu{right:auto;left:0}.autosave-note{white-space:normal}}
+
+  
+.mad-center{display:flex;justify-content:center;margin-bottom:18px}.mad-center .field{width:min(360px,100%)}.mad-center input{text-align:center}
+.main-rows{display:flex;flex-direction:column;gap:10px}.main-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding:10px;border:1px solid transparent;border-radius:12px}.main-row.selected{border-color:#76b8ac;background:#f2fbf8}.main-row:not(:first-child) label{display:none}
+.add-row{display:flex;justify-content:center;margin-top:14px}
+@media(max-width:900px){.main-row{grid-template-columns:repeat(2,minmax(0,1fr))}.main-row:not(:first-child) label{display:block}}
+@media(max-width:600px){.main-row{grid-template-columns:1fr}}
+
+.topbar{flex-wrap:wrap}.brand-copy{flex:0 1 auto}
+.top-search{flex:1;display:flex;align-items:center;gap:8px;min-width:280px}
+.ts-title{white-space:nowrap;font-size:25.67px;color:#e6f2ff;font-weight:700}
+.top-search input{flex:1;min-width:120px;border:0;border-radius:10px;padding:10px 12px;font:inherit;background:#fff;color:#20364f;text-align:center;outline:none}
+.main-row{grid-template-columns:repeat(5,minmax(0,1fr)) 50px;align-items:end}
+.row-del{height:50px;width:50px;border:0;border-radius:10px;background:#fff0ef;color:#b54440;cursor:pointer;font-size:26.67px}.row-del:hover{background:#ffe0de}
+@media(max-width:900px){.brand-copy{min-width:100%}.top-search{flex-basis:100%}.main-row{grid-template-columns:repeat(2,minmax(0,1fr))}.del-field{grid-column:1/-1}}
+@media(max-width:600px){.main-row{grid-template-columns:1fr}.top-search{flex-wrap:wrap}.top-search input{flex-basis:100%}}
+
+/* Compact layout */
+body{font-size:23.67px}
+.topbar{padding:8px clamp(10px,2vw,20px);gap:10px;box-shadow:none}
+.brand-copy h1{font-size:28.67px;line-height:1.6}
+.ts-title{font-size:21.67px}
+.top-search input{padding:6px 10px}
+.btn{padding:6px 12px;font-size:21.67px;border-radius:8px}
+.status-pill,.autosave-note{font-size:19.67px;padding:4px 8px}
+.app-shell main{padding:10px clamp(8px,2vw,20px) 8px}
+.panel{padding:10px 12px;margin-bottom:10px;border-radius:12px}
+.section-heading{margin-bottom:8px;gap:8px}.section-heading h3{font-size:24.67px}.step-tag{font-size:19.67px;padding:3px 6px}
+.mad-center{margin-bottom:8px}
+.field{gap:3px}.field label{font-size:20.67px}.field input,.field select,.field textarea{padding:6px 9px;border-radius:7px}.field textarea{min-height:56px}
+.form-grid{gap:8px}.main-rows{gap:4px}.main-row{gap:8px;padding:4px}
+.row-del{height:38px;width:38px;font-size:23.67px}.add-row{margin-top:6px}
+.record-list{gap:5px}.record-card{padding:7px 10px;gap:8px}.record-title{margin-bottom:2px}.record-sub{font-size:20.67px;line-height:1.5}.mini-btn{padding:5px 8px;font-size:20.67px}
+.related-section{margin:10px 0}.related-heading{margin-bottom:8px}.related-buttons{gap:8px}.related-btn{padding:9px;gap:8px}.related-icon{width:32px;height:32px;font-size:26.67px}.related-btn strong{font-size:22.67px}.related-btn small{font-size:19.67px}
+.nested-form{margin-top:8px;padding:10px}.nested-title{margin-bottom:8px}.form-footer{margin-top:10px;padding-top:8px}
+.placeholder-row{padding:8px;font-size:21.67px}.empty-state{padding:16px 10px}.empty-state p{margin-bottom:10px;font-size:21.67px}
+.help-strip{padding:8px 12px;gap:8px}.help-strip p{font-size:20.67px;margin:2px 0 0}
+footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
+
+.main-row input{text-align:right}
+
+.main-row{grid-template-columns:repeat(6,minmax(0,1fr)) 50px}
+.add-row{direction:rtl;justify-content:flex-start}
+@media(max-width:900px){.main-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.main-row{grid-template-columns:1fr}}
+
+.kv-line{line-height:1.9;font-size:21.67px}.kv b{font-weight:800;color:#1f3a56}.kv-sep{color:#8fa0b3;margin:0 6px}
+
+.accused-heading{justify-content:flex-start;gap:14px}.accused-heading .heading-actions{margin:0}
+#accusedForm[hidden]{display:none!important}
+#accusedForm:not([hidden]){display:block;position:fixed;top:4vh;left:50%;transform:translateX(-50%);width:min(980px,94vw);max-height:92vh;overflow:auto;z-index:60;background:#fff;border-radius:14px;padding:14px 16px;margin:0;box-shadow:0 0 0 100vmax rgba(15,30,50,.5),0 20px 60px rgba(0,0,0,.35)}
+
+#accusedForm input,#accusedForm textarea{text-align:right}#accusedForm select{direction:rtl}#accusedForm .nested-title{justify-content:flex-end}
+#accusedForm input[type=date]{min-height:40px}
+.main-row select{min-width:0;width:100%}
+
+.topbar{gap:18px;padding:8px clamp(10px,2vw,20px)}.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab-btn{border:1px solid #ffffff55;background:#ffffff1a;color:#fff;font:inherit;font-size:22.67px;padding:5px 14px;border-radius:9px;cursor:pointer}.tab-btn.active{background:#fff;color:#14395f}
+.tab-pane[hidden]{display:none!important}
+.tab-search-panel{padding:8px 12px}.tab-search-panel .top-search{min-width:0}.tab-search-panel .ts-title{color:#1f3a56}.tab-search-panel .top-search input{border:1px solid #cfdbe8;background:#f7fafc}
+.settings-panel{padding:10px 12px}.settings-panel .header-actions{justify-content:flex-start}.settings-panel .autosave-note{color:#42617d}
+.table-wrap{overflow-x:auto}.mad-table{width:100%;border-collapse:collapse;font-size:21.67px}.mad-table th{background:#eaf4fb;color:#1f3a56;padding:7px 9px;text-align:right;white-space:nowrap}.mad-table td{padding:5px 9px;border-bottom:1px solid #e5edf5;text-align:right}.mad-table tbody tr:nth-child(even){background:#f8fbfd}.mad-table td:first-child{color:#6a7f94}
+.pager{display:flex;align-items:center;gap:10px}.pager .btn{padding:4px 10px}.page-label{font-weight:700;color:#1f3a56}.pager-bottom{justify-content:center;margin-top:8px}
+
+.topbar{flex-direction:column;align-items:stretch;gap:4px;padding:6px clamp(10px,2vw,20px) 8px}
+.brand-copy{text-align:center}.brand-copy h1{font-size:32.67px;line-height:1.7}
+.tabs{justify-content:flex-start}
+.main-heading{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-start}.main-heading .top-search{flex:1;min-width:260px}
+.fir-block{border:1px solid #e1eaf2;border-radius:12px;padding:6px 8px;background:#fcfeff}.fir-block.selected{border-color:#76b8ac;background:#f2fbf8}
+.main-rows{gap:10px}
+.accused-area{margin-inline-start:18px;padding-inline-start:12px;border-inline-start:3px solid #cfe3f1;margin-top:2px}
+.accused-bar{display:flex;align-items:center;gap:12px;margin:2px 0 6px}.accused-title{font-weight:800;color:#1f3a56;font-size:21.67px}.btn-sm{padding:3px 10px;font-size:20.67px}
+.acc-card{display:flex;flex-direction:column;gap:5px;border:1px solid #e1eaf2;border-radius:10px;padding:6px 10px;margin-bottom:6px;background:#fff}
+.acc-top{display:flex;align-items:flex-start;gap:10px;justify-content:space-between}.acc-top .kv-line{flex:1}
+.rel-row{display:flex;gap:6px;flex-wrap:wrap}.rel-btn{border:1px solid #cfdbe8;background:#f3f8fc;color:#1f3a56;font:inherit;font-size:20.67px;padding:3px 10px;border-radius:8px;cursor:pointer}.rel-btn:hover{background:#e3effa}
+#relatedPanel[hidden]{display:none!important}
+#relatedPanel:not([hidden]){display:block;position:fixed;top:5vh;left:50%;transform:translateX(-50%);width:min(900px,94vw);max-height:90vh;overflow:auto;z-index:60;background:#fff;border-radius:14px;padding:14px 16px;margin:0;box-shadow:0 0 0 100vmax rgba(15,30,50,.5),0 20px 60px rgba(0,0,0,.35)}
+.list-heading{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-start}.list-search{display:flex;gap:8px;align-items:center;flex:1;min-width:260px}.list-search input{flex:1;min-width:120px;padding:6px 10px;border:1px solid #cfdbe8;border-radius:8px;font:inherit;text-align:center}.list-search select{padding:6px 8px;border:1px solid #cfdbe8;border-radius:8px;font:inherit;direction:rtl}
+.mad-table{table-layout:fixed;min-width:1280px;border-collapse:collapse;border:1px solid #d9e4ee}.mad-table th,.mad-table td{border:1px solid #d9e4ee;overflow-wrap:anywhere;vertical-align:middle}.mad-table th.sortable{cursor:pointer;user-select:none}.mad-table td .mini-btn{margin:0 auto;display:block}
+.settings-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.settings-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.btn-danger{background:#fff0ef;color:#b54440;border:1px solid #f0c5c2}.btn-danger:disabled{opacity:.5}
+.update-panel .autosave-note,.settings-panel .autosave-note{color:#42617d;white-space:normal}
+#updateUrlInput{flex:1;min-width:260px;padding:6px 10px;border:1px solid #cfdbe8;border-radius:8px;font:inherit}
+
+.tab-btn{width:210px;text-align:center;font-weight:700;white-space:nowrap;padding-inline:8px}.tab-btn.active{font-weight:700}
+.tab-pane{width:100%}.tab-pane>.panel{box-sizing:border-box;width:100%}
+.upd-arrow{color:#ff8f00;font-weight:900;display:inline-block;animation:updBlink 1s infinite}
+@keyframes updBlink{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:.15;transform:translateY(3px)}}
+.del-field{display:flex;flex-direction:column}.row-del{height:auto;min-height:48px;flex:1;width:52px}
+
+.topbar{flex-direction:row;flex-wrap:wrap;align-items:center;gap:18px}.brand-copy{margin-inline-start:auto;text-align:left}
+.main-row{grid-template-columns:repeat(6,minmax(0,1fr))}
+.save-row{display:flex;justify-content:center;margin-top:10px}
+.act-wrap{display:flex;gap:6px;justify-content:center}.mad-table td .mini-btn{margin:0;display:inline-block}
+@media(max-width:900px){.main-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.main-row{grid-template-columns:1fr}}
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab-btn active" data-tab="tabMain">مد کی تفصیل</button>
+        <button type="button" class="tab-btn" data-tab="tabList">فہرست مدات</button>
+        <button type="button" class="tab-btn" data-tab="tabHelp">راہنمائی و اپڈیٹ <span id="updArrow" class="upd-arrow" hidden>⬇</span></button>
+      </nav>
+      <div class="brand-copy"><h1>مالخانہ سمندری فیصل آباد</h1></div>
+    </header>
+
+    <main>
+      <div id="tabMain" class="tab-pane">
+        <section class="panel main-panel">
+          <div class="section-heading main-heading">
+            <div><h3>مقدمات کی تفصیل</h3></div>
+            <button type="button" id="addMainRowBtn" class="btn btn-success">مزید اندراج</button>
+            <button type="button" class="btn btn-primary js-save">💾 محفوظ کریں</button>
+            <div class="top-search">
+              <input id="madSearch" type="text" aria-label="مد نمبر" placeholder="مد نمبر سے تلاش کریں…" autocomplete="off" />
+              <button id="searchBtn" class="btn btn-primary">تلاش کریں</button>
+              <button id="clearSearchBtn" class="btn btn-light">کلئیر</button>
+            </div>
+          </div>
+          <form id="mainForm" class="data-form" hidden>
+            <div id="mainRows" class="main-rows"></div>
+            <div class="save-row"><button type="button" class="btn btn-primary js-save">💾 محفوظ کریں</button></div>
+            <span id="mainFormHint" hidden></span>
+          </form>
+        </section>
+        <form id="accusedForm" class="data-form nested-form" hidden>
+          <div class="nested-title"><h4 id="accusedFormTitle" hidden></h4><button type="button" class="icon-btn" id="closeAccusedForm" aria-label="Close">✕</button></div>
+          <div class="form-grid" id="accusedFields"></div>
+          <div class="form-footer"><div class="button-row"><button type="button" id="resetAccusedBtn" class="btn btn-ghost">صاف کریں</button><button type="submit" class="btn btn-primary">Accused محفوظ کریں</button></div></div>
+        </form>
+        <section class="panel related-panel" id="relatedPanel" hidden>
+        <div class="section-heading"><div><h3 id="relatedTitle">Related records</h3></div><button id="closeRelatedBtn" class="btn btn-ghost">بند کریں ✕</button></div>
+        <div id="relatedList" class="record-list"></div>
+        <form id="relatedForm" class="data-form nested-form" hidden>
+          <div class="nested-title"><h4 id="relatedFormTitle">نیا ریکارڈ</h4><button type="button" class="icon-btn" id="closeRelatedForm" aria-label="Close">✕</button></div>
+          <div class="form-grid" id="relatedFields"></div>
+          <div class="form-footer"><span class="muted" id="relatedFormHint"></span><div class="button-row"><button type="button" id="resetRelatedBtn" class="btn btn-ghost">صاف کریں</button><button type="submit" class="btn btn-primary">محفوظ کریں</button></div></div>
+        </form>
+        <div class="related-add-row"><button id="addRelatedBtn" class="btn btn-success">＋ نیا ریکارڈ شامل کریں</button></div>
+      </section>
+      </div>
+      <div id="tabList" class="tab-pane" hidden>
+        <section class="panel list-panel">
+          <div class="section-heading list-heading">
+            <div><h3>فہرست مدات</h3></div>
+            <div class="list-search">
+              <select id="listCrit"><option value="Madd_Number">مد نمبر</option><option value="FIR_Number">FIR نمبر</option><option value="Police_Station">Police Station</option><option value="Investigating_Officer">تفتیشی افسر</option></select>
+              <input id="listQuery" type="text" placeholder="تلاش کریں…" autocomplete="off" />
+              
+              <button type="button" id="listClearBtn" class="btn btn-light">کلئیر</button>
+            </div>
+          </div>
+          <div class="table-wrap"><table class="mad-table"><colgroup><col style="width:55px"><col style="width:70px"><col style="width:70px"><col style="width:75px"><col style="width:287px"><col style="width:287px"><col style="width:307px"><col style="width:120px"></colgroup>
+            <thead><tr><th>نمبر شمار</th><th id="thMad" class="sortable" title="ترتیب بدلیں">مد نمبر <span id="sortArrow">▼</span></th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th></th></tr></thead>
+            <tbody id="madListBody"></tbody></table></div>
+          <div class="pager pager-bottom"><button type="button" class="btn btn-light" data-act="prev">Previous</button><span class="page-label">صفحہ 1</span><button type="button" class="btn btn-light" data-act="next">Next</button></div>
+        </section>
+      </div>
+      <div id="tabHelp" class="tab-pane" hidden>
+        <section class="panel settings-panel">
+          <div class="settings-row"><span id="workbookStatus" class="status-pill offline">Excel فائل منسلک نہیں</span><span id="autoSaveStatus" class="autosave-note">خودکار محفوظ کاری بند</span></div>
+          <div class="settings-buttons">
+            <button type="button" id="loadWorkbookBtn" class="btn btn-primary">📂 Excel فائل منسلک / کھولیں</button>
+            <button type="button" id="reconnectBtn" class="btn btn-success" hidden>🔄 دوبارہ منسلک کریں</button>
+            <button type="button" id="saveWorkbookBtn" class="btn btn-light" disabled>💾 Excel میں ابھی محفوظ کریں</button>
+            <button type="button" id="downloadCopyBtn" class="btn btn-light" disabled>⬇️ Excel کی نئی کاپی ڈاؤن لوڈ کریں</button>
+            <button type="button" id="disconnectBtn" class="btn btn-danger" disabled>⛔ Disconnect</button>
+          </div>
+          <input id="workbookInput" type="file" accept=".xlsx,.xls,.xlsm" hidden />
+        </section>
+        <section class="panel update-panel">
+          <div class="section-heading"><div><h3>ورژن اور اپڈیٹ</h3></div></div>
+          <div class="settings-row"><span>موجودہ ورژن: <b id="curVersion"></b></span><span id="updateStatus" class="autosave-note"></span></div>
+          
+          <div class="settings-buttons">
+            <button type="button" id="checkUpdateBtn" class="btn btn-primary">🔍 Check Version</button>
+            <button type="button" id="updateNowBtn" class="btn btn-success" hidden>⬆️ Update Now</button>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer><span>مالخانہ سمندری فیصل آباد</span><span>Local Excel • Record Management</span></footer>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script>
+'use strict';
+const SHEETS = ['Mad_Number_T','Main','Accused_T','Talfi_T','Temp_Out_T','Sapurdari_T','Resources'];
+// Names as they may be spelled in the Excel file (Access export) -> page uses the correct name internally, file keeps its own spelling on save.
+const SHEET_ALIASES={Accused_T:['Accuseed_T']};
+const COL_ALIASES={Accused_ID:['Accuseed_ID'],Chassis_Number:['Chessis_Number'],Investigating_Officer:['Investigating_Offier'],Sapurdari_Date:['Supardari_Date']};
+let fileNames={sheets:{},cols:{}};
+const toFile=k=>fileNames.cols[k]||k;
+const SCHEMA = {
+  Main: ['ID','Madd_Number','FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'],
+  Accused_T: ['Accused_ID','Accused_Name','Road_Number','Road_Issuance_Date','Received_On','Case_Property','Type_Of_Case_Property','Detail_Of_Case_Property','Registration_Number','Engine_Number','Present_or_Disposed_off','Chassis_Number','Main_Accused'],
+  Talfi_T: ['Talfi_ID','Talfi_Madd_Number','Date_of_Decision_of_Court','Detail_of_Decision_of_Court','Main_TID'],
+  Temp_Out_T: ['Temp_ID','Temp_Issuance_Date','Temp_Returned_Date','Temp_Court','Court_Name','Temp_Officer','Court_Name','Temp_Officer','Main_TempID'],
+  Sapurdari_T: ['Sapurdari_ID','Sapurdari_Date','Decision_of_Court','Main_TbID'],
+  Mad_Number_T: ['Madd_ID','Mad_Number'],
+  Resources: []
+};
+// Correct duplicate field labels to match the screenshot's visible table structure.
+SCHEMA.Temp_Out_T = ['Temp_ID','Temp_Issuance_Date','Temp_Returned_Date','Temp_Court','Court_Name','Temp_Officer','Main_TempID'];
+const PRIMARY = {Main:'ID',Accused_T:'Accused_ID',Talfi_T:'Talfi_ID',Temp_Out_T:'Temp_ID',Sapurdari_T:'Sapurdari_ID',Mad_Number_T:'Madd_ID'};
+const FOREIGN = {Accused_T:'Main_Accused',Talfi_T:'Main_TID',Temp_Out_T:'Main_TempID',Sapurdari_T:'Main_TbID'};
+const LABELS = {
+  ID:'ID',Madd_Number:'مد نمبر',FIR_Number:'FIR نمبر',FIR_Dated:'FIR تاریخ',Under_Section:'زیر دفعہ',Police_Station:'پولیس اسٹیشن',Investigating_Officer:'تفتیشی افسر',
+  Accused_ID:'Accused ID',Accused_Name:'ملزم کا نام',Road_Number:'روڈ سرٹیفکیٹ نمبر',Road_Issuance_Date:'روڈ سرٹیفکیٹ اجرا کی تاریخ',Received_On:'وصولی کی تاریخ',Case_Property:'کیس پراپرٹی',Type_Of_Case_Property:'پراپرٹی کی قسم',Detail_Of_Case_Property:'پراپرٹی کی تفصیل',Registration_Number:'رجسٹریشن نمبر',Engine_Number:'انجن نمبر',Present_or_Disposed_off:'موجود / تلف شدہ',Chassis_Number:'چیسس نمبر',Main_Accused:'Main ID (Link)',
+  Talfi_ID:'Talfi ID',Talfi_Madd_Number:'Talfi مد نمبر',Date_of_Decision_of_Court:'عدالتی فیصلے کی تاریخ',Detail_of_Decision_of_Court:'عدالتی فیصلے کی تفصیل',Main_TID:'Accused ID (Link)',
+  Temp_ID:'Temporary ID',Temp_Issuance_Date:'عارضی اجرا کی تاریخ',Temp_Returned_Date:'واپسی کی تاریخ',Temp_Court:'عدالت / اجرا کی نوعیت',Court_Name:'عدالت کا نام',Temp_Officer:'متعلقہ افسر',Main_TempID:'Accused ID (Link)',
+  Sapurdari_ID:'Sapurdari ID',Sapurdari_Date:'سپرداری کی تاریخ',Decision_of_Court:'عدالتی حکم / فیصلہ',Main_TbID:'Accused ID (Link)',Madd_ID:'مد ID',Mad_Number:'مد نمبر'
+};
+let workbook = null, data = {}, selectedMain = null, selectedAccused = null, editingMain = null, editingAccused = null, editingRelated = null, currentRelatedTable = null, toastTimer = null;
+let accBlock = null, editingDraft = null, pendingHandle = null, workbookHandle = null, autoSaveTimer = null, isWritingWorkbook = false, workbookFileName = 'Malkhana_Samundri_Faisalabad.xlsx';
+const $ = id => document.getElementById(id);
+function rows(table){ if(!data[table]) data[table]=[]; return data[table]; }
+function val(v){return v===undefined||v===null?'':String(v);}
+const DATE_KEYS=['Road_Issuance_Date','Received_On'];
+function parseDate(s){s=val(s).trim();if(!s)return null;let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return{y:+m[1],m:+m[2],d:+m[3]};m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/);if(!m)return null;let a=+m[1],b=+m[2],y=+m[3],d,mo;if(m[3].length===2){y+=y<70?2000:1900;if(a>12){d=a;mo=b;}else{mo=a;d=b;}}else{d=a;mo=b;}if(mo<1||mo>12||d<1||d>31)return null;return{y,m:mo,d};}
+function toISO(s){const p=parseDate(s);return p?`${p.y}-${String(p.m).padStart(2,'0')}-${String(p.d).padStart(2,'0')}`:'';}
+function fmtDMY(s){const p=parseDate(s);return p?`${String(p.d).padStart(2,'0')}/${String(p.m).padStart(2,'0')}/${p.y}`:'';}
+let resOpts={};let resLinks={};
+function normKey(s){return val(s).trim().toLowerCase().replace(/\s+/g,'_');}
+function loadResources(wb){resOpts={};resLinks={Case_Property:{}};const ws=wb&&wb.Sheets&&wb.Sheets['Resources'];if(!ws)return;const arr=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false});const keyOf={};Object.keys(LABELS).forEach(k=>{keyOf[normKey(k)]=k;keyOf[normKey(LABELS[k])]=k;});arr.forEach(r=>{const k=keyOf[normKey(r[0])];const v=val(r[1]).trim();if(!k||!v)return;(resOpts[k]=resOpts[k]||[]);if(!resOpts[k].includes(v))resOpts[k].push(v);const link=val(r[2]).trim();if(k==='Case_Property'&&link){if(!resLinks.Case_Property[v])resLinks.Case_Property[v]=link;(resOpts.Type_Of_Case_Property=resOpts.Type_Of_Case_Property||[]);if(!resOpts.Type_Of_Case_Property.includes(link))resOpts.Type_Of_Case_Property.push(link);}});}
+function makeSelect(key,current){const s=document.createElement('select');const cur=val(current).trim();const opts=[...(resOpts[key]||[])];if(cur&&!opts.includes(cur))opts.unshift(cur);s.appendChild(new Option('— منتخب کریں —',''));opts.forEach(o=>s.appendChild(new Option(o,o)));s.value=cur;return s;}
+function esc(s){return val(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3300);}
+function primary(table){return PRIMARY[table];}
+function nextId(table){const key=primary(table);if(!key)return '';return rows(table).reduce((m,r)=>Math.max(m,Number(r[key])||0),0)+1;}
+function ensureSchema(){SHEETS.forEach(s=>{if(!data[s])data[s]=[];});}
+function headerRow(sheet){return (sheet&&sheet.length)?sheet[0].map(v=>String(v??'').trim()):[];}
+function normalizeWorkbook(wb){data={};fileNames={sheets:{},cols:{}};SHEETS.forEach(name=>{const actual=wb.Sheets[name]?name:(SHEET_ALIASES[name]||[]).find(a=>wb.Sheets[a]);const ws=actual?wb.Sheets[actual]:null;if(!ws){data[name]=[];return;}fileNames.sheets[name]=actual;const json=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});data[name]=json.map(r=>{const o={};for(const k of Object.keys(r)){const canon=Object.keys(COL_ALIASES).find(c=>COL_ALIASES[c].includes(k));if(canon){o[canon]=r[k];fileNames.cols[canon]=k;}else o[k]=r[k];}return o;});});ensureSchema();loadResources(wb);}
+function buildFields(containerId, table, record={}, mode='edit', hiddenKeys=[]){const wrap=$(containerId);wrap.innerHTML='';const fields=SCHEMA[table]||[];fields.forEach(key=>{const hidden=hiddenKeys.includes(key)||key===primary(table);const field=document.createElement('div');field.className='field';if(hidden){field.hidden=true;}const label=document.createElement('label');label.htmlFor=`${containerId}_${key}`;label.textContent=LABELS[key]||key;let ctl;if(resOpts[key]&&!hidden){ctl=makeSelect(key,record[key]);}else{ctl=(key.toLowerCase().includes('detail')||key.toLowerCase().includes('property')||key==='Decision_of_Court'||key==='Under_Section')?document.createElement('textarea'):document.createElement('input');ctl.value=val(record[key]);ctl.autocomplete='off';if(DATE_KEYS.includes(key)){ctl.type='date';const raw=val(record[key]).trim();ctl.value=toISO(raw);if(raw&&!ctl.value)ctl.dataset.orig=raw;}else if(/date/i.test(key))ctl.placeholder='مثلاً 24/10/2026';else ctl.placeholder=LABELS[key]||key;if(key===primary(table)){ctl.readOnly=true;ctl.value=record[key]??nextId(table);}if(hidden){ctl.value=val(record[key]);}}ctl.id=`${containerId}_${key}`;ctl.name=key;field.append(label,ctl);wrap.appendChild(field);});const cp=$(`${containerId}_Case_Property`),tp=$(`${containerId}_Type_Of_Case_Property`);if(cp&&tp&&cp.tagName==='SELECT'&&tp.tagName==='SELECT')cp.addEventListener('change',()=>{const ty=resLinks.Case_Property&&resLinks.Case_Property[cp.value];if(ty){if(![...tp.options].some(o=>o.value===ty))tp.appendChild(new Option(ty,ty));tp.value=ty;}});}
+function formValues(containerId,table){const out={};(SCHEMA[table]||[]).forEach(k=>{const el=$(`${containerId}_${k}`);if(!el)return;if(el.type==='date'){out[k]=el.value?fmtDMY(el.value):(el.dataset.orig||'');}else out[k]=el.value.trim();});return out;}
+function currentMain(){return rows('Main').find(r=>String(r.ID)===String(selectedMain))||null;}
+function currentAccused(){return rows('Accused_T').find(r=>String(r.Accused_ID)===String(selectedAccused))||null;}
+function updateStatus(){const has=!!workbook;$('workbookStatus').textContent=has?'Excel فائل منسلک ہے':(pendingHandle?'پچھلی Excel فائل اجازت کی منتظر ہے':'Excel فائل منسلک نہیں');$('workbookStatus').className='status-pill '+(has?'connected':'offline');$('saveWorkbookBtn').disabled=!has;$('downloadCopyBtn').disabled=!has;$('disconnectBtn').disabled=!has&&!pendingHandle;$('reconnectBtn').hidden=has||!pendingHandle;$('autoSaveStatus').textContent=has?(workbookHandle?'خودکار محفوظ کاری فعال':'خودکار محفوظ کاری دستی اجازت کی منتظر'):'خودکار محفوظ کاری بند';$('mainForm').hidden=!has;if(!has){$('mainRows').innerHTML='';}}
+function norm(v){const s=val(v).trim();return /^\d+\.0+$/.test(s)?s.replace(/\.0+$/,''):s;}
+function mainsForMad(num){const n=norm(num);return n?rows('Main').filter(r=>norm(r.Madd_Number)===n):[];}
+const ROW_FIELDS=['FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'];
+function makeRow(rec={}){const block=document.createElement('div');block.className='fir-block';block.dataset.id=val(rec.ID);block._draft=[];const row=document.createElement('div');row.className='main-row';['Madd_Number',...ROW_FIELDS].forEach(k=>{const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=k==='Madd_Number'?'مد نمبر':(LABELS[k]||k);const dd=k!=='Madd_Number'&&resOpts[k];const i=dd?makeSelect(k,rec[k]):document.createElement('input');i.name=k;if(!dd){i.value=val(rec[k]);i.autocomplete='off';i.placeholder=k==='Madd_Number'?'مد نمبر':(/date/i.test(k)?'مثلاً 24/10/2026':(LABELS[k]||k));}f.append(l,i);row.appendChild(f);});row.addEventListener('focusin',()=>{if(block.dataset.id&&String(selectedMain)!==block.dataset.id)selectMain(block.dataset.id,true);});row.addEventListener('change',()=>{block.dataset.dirty='1';});block.appendChild(row);const area=document.createElement('div');area.className='accused-area';area.innerHTML='<div class="accused-bar"><span class="accused-title">ملزمان اور مال مقدمہ کی تفصیل</span><button type="button" class="btn btn-success btn-sm acc-add">ملزم کا اندراج</button></div><div class="accused-items"></div>';area.querySelector('.acc-add').onclick=()=>{accBlock=block;selectedMain=block.dataset.id||null;highlightRow();openAccusedForm();};block.appendChild(area);return block;}
+const isDirty=b=>b.dataset.dirty==='1'||(!b.dataset.id&&b._draft&&b._draft.length>0);
+function confirmDiscard(){const d=[...document.querySelectorAll('#mainRows .fir-block')].some(isDirty);return !d||confirm('غیر محفوظ تبدیلیاں موجود ہیں۔ کیا آپ انہیں چھوڑ کر آگے بڑھنا چاہتے ہیں؟');}
+function clearMainForm(){$('madSearch').value='';selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;closeAccused();$('relatedPanel').hidden=true;closeRelatedForm();if(workbook)renderMainRows([]);}
+function saveMainForm(){if(!workbook){toast('پہلے Excel فائل منسلک کریں۔');return;}const items=[];for(const b of document.querySelectorAll('#mainRows .fir-block')){const v={};b.querySelectorAll('.main-row input,.main-row select').forEach(i=>v[i.name]=i.value.trim());v.Madd_Number=norm(v.Madd_Number);const has=ROW_FIELDS.some(k=>v[k])||(b._draft&&b._draft.length);if(!b.dataset.id&&!has)continue;if(!v.Madd_Number){toast('ہر مقدمے کے لیے مد نمبر لکھیں۔');b.querySelector('[name=Madd_Number]').focus();return;}items.push({b,v});}
+if(!items.length){toast('محفوظ کرنے کے لیے کوئی ریکارڈ نہیں۔');return;}
+for(const {b,v} of items){const id=b.dataset.id;if(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(rec)Object.assign(rec,v);}else{const rec={ID:nextId('Main'),...v};rows('Main').push(rec);(b._draft||[]).forEach(a=>{rows('Accused_T').push({...a,Accused_ID:nextId('Accused_T'),Main_Accused:String(rec.ID)});});}}
+scheduleAutoSave();clearMainForm();if(!$('tabList').hidden)renderMadList();toast('مقدمات اور متعلقہ ملزمان محفوظ ہوگئے۔');}
+function deleteMainCascade(id){const acc=new Set(rows('Accused_T').filter(r=>String(r.Main_Accused)===String(id)).map(r=>String(r.Accused_ID)));data.Main=rows('Main').filter(r=>String(r.ID)!==String(id));data.Accused_T=rows('Accused_T').filter(r=>String(r.Main_Accused)!==String(id));for(const c of ['Talfi_T','Temp_Out_T','Sapurdari_T'])data[c]=rows(c).filter(r=>!acc.has(String(r[FOREIGN[c]])));[...document.querySelectorAll('#mainRows .fir-block')].filter(b=>b.dataset.id===String(id)).forEach(b=>b.remove());if(workbook&&!$('mainRows').children.length)renderMainRows([]);if(String(selectedMain)===String(id)){selectedMain=null;selectedAccused=null;$('relatedPanel').hidden=true;closeRelatedForm();closeAccused();}scheduleAutoSave();}
+function highlightRow(){document.querySelectorAll('#mainRows .fir-block').forEach(r=>r.classList.toggle('selected',!!r.dataset.id&&r.dataset.id===String(selectedMain)));}
+function renderMainRows(list,defMad=''){const host=$('mainRows');host.innerHTML='';if(!list.length)host.appendChild(makeRow({Madd_Number:defMad}));else list.forEach(r=>host.appendChild(makeRow(r)));highlightRow();renderAccused();}
+function renderMainFields(record={}){renderMainRows([]);}
+function renderMainCount(){}
+function filteredMain(){const q=$('madSearch').value.trim().toLowerCase();if(!q)return rows('Main');return rows('Main').filter(r=>norm(r.Madd_Number).toLowerCase().includes(q));}
+function renderSearchResults(){}
+function renderMainListByMad(mad){mad=String(mad||'').trim();$('madSearch').value=mad;const list=mainsForMad(mad);renderMainRows(list,mad);if(list.length){selectMain(list[0].ID,true);}else{selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;renderAccused();renderMainCount();renderMainCards();if(mad)toast('اس مد نمبر کے لیے ابھی کوئی ریکارڈ نہیں؛ نیچے نیا ریکارڈ بھریں۔');}renderSearchResults();}
+function renderMainCards(){}
+function selectMain(id,keepRows){selectedMain=String(id);selectedAccused=null;editingMain=String(id);const rec=currentMain();if(!rec)return;if(!keepRows){renderMainRows(mainsForMad(rec.Madd_Number),norm(rec.Madd_Number));}highlightRow();renderMainList();renderAccused();renderSearchResults();$('mainForm').hidden=false;}
+function renderMainList(){renderMainCards();renderMainCount();}
+const REL_TABLES=['Talfi_T','Temp_Out_T','Sapurdari_T'];
+function accusedLine(r){const parts=(SCHEMA.Accused_T||[]).filter(k=>k!=='Main_Accused'&&k!=='Accused_ID'&&(k==='Accused_Name'||String(val(r[k])).trim()!=='')).map(k=>{const v0=String(val(r[k])).trim();const shown=DATE_KEYS.includes(k)?(fmtDMY(v0)||v0):v0;return `<span class="kv"><b>${esc(LABELS[k]||k)}:</b> ${esc(shown||'—')}</span>`;});return parts.join('<span class="kv-sep"> | </span>')||'تفصیل موجود نہیں';}
+function renderBlockAccused(block){const id=block.dataset.id;const host=block.querySelector('.accused-items');host.innerHTML='';const items=id?rows('Accused_T').filter(r=>String(r.Main_Accused)===String(id)):(block._draft||[]);items.forEach((r,i)=>{const card=document.createElement('div');card.className='acc-card';card.innerHTML=`<div class="acc-top"><div class="record-sub kv-line">${accusedLine(r)}</div><div class="record-actions"><button type="button" class="mini-btn edit" data-a="edit" title="Edit" aria-label="Edit">✏️</button><button type="button" class="mini-btn delete" data-a="delete" title="Delete" aria-label="Delete">🗑</button></div></div><div class="rel-row">${REL_TABLES.map(tb=>`<button type="button" class="rel-btn" data-rel="${tb}"${id?'':' disabled title="پہلے مقدمہ محفوظ کریں"'}>${esc(REL_NAMES[tb])}</button>`).join('')}</div>`;card.querySelector('[data-a=edit]').onclick=()=>{accBlock=block;selectedMain=id||null;highlightRow();openAccusedForm(r,id?null:i);};card.querySelector('[data-a=delete]').onclick=()=>{if(id)deleteRecord('Accused_T',r.Accused_ID);else{block._draft.splice(i,1);renderBlockAccused(block);}};if(id)card.querySelectorAll('[data-rel]').forEach(bt=>bt.onclick=()=>{selectedMain=String(id);selectedAccused=String(r.Accused_ID);highlightRow();renderRelated(bt.dataset.rel);});host.appendChild(card);});}
+function renderAccused(){document.querySelectorAll('#mainRows .fir-block').forEach(renderBlockAccused);}
+function openAccusedForm(record=null,draftIdx=null){editingDraft=draftIdx;editingAccused=(record&&draftIdx===null)?String(record.Accused_ID):null;const mid=accBlock&&accBlock.dataset.id?accBlock.dataset.id:'';if(record&&draftIdx===null)selectedAccused=String(record.Accused_ID);const rec={...(record||{}),Main_Accused:mid,Accused_ID:record?.Accused_ID??nextId('Accused_T')};buildFields('accusedFields','Accused_T',rec,'edit',['Main_Accused']);$('accusedForm').hidden=false;$('accusedFormTitle').textContent='';}
+function renderRelated(table){currentRelatedTable=table;const names=REL_NAMES;$('relatedTitle').textContent=names[table]||table;$('relatedPanel').hidden=false;$('relatedForm').hidden=true;const host=$('relatedList');host.innerHTML='';const parent=selectedAccused;const linked=parent?rows(table).filter(r=>String(r[FOREIGN[table]])===String(parent)):[];if(!parent){host.innerHTML='<div class="placeholder-row">پہلے ملزمان اور مال مقدمہ کی تفصیل کا ریکارڈ میں سے ایک ریکارڈ منتخب کریں، پھر متعلقہ کارروائی کھولیں۔</div>';$('addRelatedBtn').disabled=true;return;}$('addRelatedBtn').disabled=false;if(!linked.length){host.innerHTML='<div class="placeholder-row">اس Accused record کے لیے کوئی ریکارڈ موجود نہیں۔ نیا ریکارڈ شامل کر سکتے ہیں۔</div>';return;}linked.forEach(r=>{const card=document.createElement('div');card.className='record-card';const pk=primary(table);const details=(SCHEMA[table]||[]).filter(k=>k!==pk&&k!==FOREIGN[table]).map(k=>r[k]?`${LABELS[k]||k}: ${r[k]}`:'').filter(Boolean).slice(0,3).join(' • ');card.innerHTML=`<div class="record-main"><div class="record-title">${esc(names[table])} <span class="muted">#${esc(r[pk])}</span></div><div class="record-sub">${esc(details||'تفصیل موجود نہیں')}</div></div><div class="record-actions"><button class="mini-btn edit" data-action="edit" data-id="${esc(r[pk])}">Edit</button><button class="mini-btn delete" data-action="delete" data-id="${esc(r[pk])}">Delete</button></div>`;host.appendChild(card);});host.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(b.dataset.action==='edit')openRelatedForm(rows(table).find(r=>String(r[primary(table)])===String(b.dataset.id)));else deleteRecord(table,b.dataset.id);});}
+function openRelatedForm(record=null){const table=currentRelatedTable;if(!table||!selectedAccused){toast('پہلے Accused ریکارڈ منتخب کریں۔');return;}editingRelated=record?String(record[primary(table)]):null;const rec={...(record||{}),[FOREIGN[table]]:selectedAccused,[primary(table)]:record?.[primary(table)]??nextId(table)};buildFields('relatedFields',table,rec,'edit',[FOREIGN[table]]);$('relatedFormTitle').textContent=record?`${REL_NAMES[table]||table} اپ ڈیٹ کریں`:`${REL_NAMES[table]||table} کا نیا اندراج`;$('relatedFormHint').textContent=`${FOREIGN[table]} خود منتخب Accused_ID (${selectedAccused}) سے منسلک ہوگا۔`;$('relatedForm').hidden=false;$('relatedForm').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function deleteRecord(table,id){if(!confirm(`کیا آپ ${table} کا یہ ریکارڈ حذف کرنا چاہتے ہیں؟`))return;const pk=primary(table);data[table]=rows(table).filter(r=>String(r[pk])!==String(id));if(table==='Main'){data.Accused_T=rows('Accused_T').filter(r=>String(r.Main_Accused)!==String(id));selectedMain=null;selectedAccused=null;renderMainFields({});renderAccused();}if(table==='Accused_T'){for(const child of ['Talfi_T','Temp_Out_T','Sapurdari_T'])data[child]=rows(child).filter(r=>String(r[FOREIGN[child]])!==String(id));if(String(selectedAccused)===String(id))selectedAccused=null;renderAccused();}if(['Talfi_T','Temp_Out_T','Sapurdari_T'].includes(table))renderRelated(table);renderMainList();renderSearchResults();toast('ریکارڈ حذف ہوگیا۔');scheduleAutoSave();}
+function closeAccused(){ $('accusedForm').hidden=true;editingAccused=null;editingDraft=null; }
+function closeRelatedForm(){ $('relatedForm').hidden=true;editingRelated=null; }
+
+function saveAccused(e){e.preventDefault();const v=formValues('accusedFields','Accused_T');
+if(accBlock&&!accBlock.dataset.id){const d=accBlock._draft=accBlock._draft||[];if(editingDraft!==null&&d[editingDraft])d[editingDraft]=v;else d.push(v);accBlock.dataset.dirty='1';closeAccused();renderBlockAccused(accBlock);toast('ملزم کا اندراج رکھ لیا گیا؛ مقدمات کی تفصیل کا "محفوظ کریں" دبائیں۔');return;}
+v.Main_Accused=selectedMain;const id=editingAccused||v.Accused_ID;const existing=rows('Accused_T').find(r=>String(r.Accused_ID)===String(id));if(existing){Object.assign(existing,v,{Accused_ID:existing.Accused_ID});selectedAccused=String(existing.Accused_ID);toast('Accused ریکارڈ اپ ڈیٹ ہوگیا۔');}else{v.Accused_ID=nextId('Accused_T');rows('Accused_T').push(v);selectedAccused=String(v.Accused_ID);toast('Accused ریکارڈ شامل ہوگیا۔');}closeAccused();renderAccused();scheduleAutoSave();}
+function saveRelated(e){e.preventDefault();const table=currentRelatedTable,v=formValues('relatedFields',table);v[FOREIGN[table]]=selectedAccused;const id=editingRelated||v[primary(table)];const existing=rows(table).find(r=>String(r[primary(table)])===String(id));if(existing){Object.assign(existing,v,{[primary(table)]:existing[primary(table)]});toast(`${table} ریکارڈ اپ ڈیٹ ہوگیا۔`);}else{v[primary(table)]=nextId(table);rows(table).push(v);toast(`${table} ریکارڈ شامل ہوگیا۔`);}closeRelatedForm();renderRelated(table);scheduleAutoSave();}
+function buildWorkbook(){
+ const wb=XLSX.utils.book_new();
+ SHEETS.forEach(name=>{
+   if(name==='Resources'&&workbook?.Sheets?.Resources){XLSX.utils.book_append_sheet(wb,workbook.Sheets.Resources,'Resources');return;}
+   let arr=rows(name).map(r=>{const o={};for(const k of Object.keys(r))o[toFile(k)]=r[k];return o;});
+   if(name==='Resources'&&arr.length===0&&workbook?.Sheets[name])arr=XLSX.utils.sheet_to_json(workbook.Sheets[name],{defval:'',raw:false});
+   let headers=(SCHEMA[name]||[]).map(toFile);
+   if(arr.length){const existing=Object.keys(arr[0]);headers=[...new Set([...existing,...headers])];}
+   else if(workbook?.Sheets[fileNames.sheets[name]||name]){const raw=XLSX.utils.sheet_to_json(workbook.Sheets[fileNames.sheets[name]||name],{header:1,blankrows:false});headers=raw[0]||headers;}
+   const ws=XLSX.utils.json_to_sheet(arr,{header:headers.length?headers:undefined});
+   XLSX.utils.book_append_sheet(wb,ws,fileNames.sheets[name]||name);
+ });
+ return wb;
+}
+async function saveToConnectedFile(showMessage=true){
+ if(!workbook){if(showMessage)toast('پہلے Excel فائل منسلک کریں۔');return false;}
+ if(!workbookHandle){if(showMessage)toast('خودکار محفوظ کاری کے لیے راہنمائی و اپڈیٹ ٹیب سے دوبارہ فائل منسلک کریں؛ اگر اجازت دستیاب نہ ہو تو نئی کاپی ڈاؤن لوڈ کریں۔');return false;}
+ try{
+   isWritingWorkbook=true;
+   const wb=buildWorkbook();
+   const bytes=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+   const writable=await workbookHandle.createWritable();
+   await writable.write(bytes);await writable.close();
+   workbook=wb;
+   $('autoSaveStatus').textContent='✓ خودکار محفوظ ہوگیا';
+   if(showMessage)toast('تبدیلیاں اصل Excel فائل میں محفوظ ہوگئیں۔');
+   return true;
+ }catch(err){console.error(err);$('autoSaveStatus').textContent='محفوظ کاری میں مسئلہ';if(showMessage)toast('اصل فائل میں محفوظ نہیں ہوسکا؛ Excel کی نئی کاپی ڈاؤن لوڈ کریں۔');return false;}
+ finally{isWritingWorkbook=false;}
+}
+function scheduleAutoSave(){
+ if(!workbook)return;
+ $('autoSaveStatus').textContent=workbookHandle?'تبدیلی محفوظ ہو رہی ہے…':'تبدیلی عارضی طور پر رکھی گئی';
+ clearTimeout(autoSaveTimer);
+ autoSaveTimer=setTimeout(async()=>{
+   if(workbookHandle) await saveToConnectedFile(false);
+   else $('autoSaveStatus').textContent='خودکار محفوظ کاری کے لیے فائل دوبارہ منسلک کریں';
+ },650);
+}
+function downloadWorkbook(){if(!workbook){toast('پہلے Excel فائل کھولیں۔');return;}const wb=buildWorkbook();XLSX.writeFile(wb,'Malkhana_Samundri_Faisalabad_Updated.xlsx');toast('اپ ڈیٹ شدہ Excel workbook کی کاپی ڈاؤن لوڈ ہو رہی ہے۔');}
+async function connectWorkbook(){
+ if('showOpenFilePicker' in window){
+   try{
+     const [handle]=await window.showOpenFilePicker({multiple:false,types:[{description:'Excel Workbook',accept:{'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx'],'application/vnd.ms-excel':['.xls']}}]});
+     workbookHandle=handle;workbookFileName=handle.name;pendingHandle=null;idbSet('wbHandle',handle).catch(()=>{});
+     const file=await handle.getFile();await loadFile(file,true);return;
+   }catch(err){if(err?.name==='AbortError')return;console.warn('File picker unavailable; falling back to file input',err);}
+ }
+ workbookHandle=null;$('workbookInput').click();
+}
+function loadFile(file,fromHandle=false){if(!file)return;const reader=new FileReader();reader.onload=e=>{try{workbook=XLSX.read(e.target.result,{type:'array',cellDates:false});normalizeWorkbook(workbook);selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;updateStatus();renderMainFields({});if(!$('tabList').hidden)renderMadList();renderMainList();renderAccused();renderSearchResults();$('mainFormHint').textContent='نیا Main ریکارڈ بنانے کے لیے فارم پُر کریں یا تلاش سے موجود ریکارڈ منتخب کریں۔';const missing=SHEETS.filter(s=>s!=='Resources'&&s!=='Mad_Number_T'&&!workbook.Sheets[s]&&!fileNames.sheets[s]);if(missing.length)toast('Workbook لوڈ ہوگئی، مگر یہ sheets نہیں ملیں: '+missing.join(', '));else toast(fromHandle?'Excel فائل منسلک ہوگئی؛ خودکار محفوظ کاری فعال ہے۔':'Excel فائل لوڈ ہوگئی۔ براہِ کرم خودکار محفوظ کاری کے لیے راہنمائی و اپڈیٹ ٹیب سے دوبارہ منسلک کریں۔');updateStatus();}catch(err){console.error(err);toast('Excel فائل نہیں پڑھی جا سکی۔ درست .xlsx فائل منتخب کریں۔');}};reader.readAsArrayBuffer(file);}
+$('loadWorkbookBtn').onclick=connectWorkbook;$('workbookInput').addEventListener('change',e=>{workbookHandle=null;loadFile(e.target.files[0],false);e.target.value='';});
+$('saveWorkbookBtn').onclick=async()=>{if(workbookHandle)await saveToConnectedFile(true);else downloadWorkbook();};$('downloadCopyBtn').onclick=downloadWorkbook;
+$('searchBtn').onclick=()=>{const q=$('madSearch').value.trim();if(!q){toast('مد نمبر درج کریں۔');return;}if(!workbook){toast('پہلے Excel workbook کھولیں۔');return;}if(!confirmDiscard())return;renderMainListByMad(q);};$('madSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('searchBtn').click();}});$('clearSearchBtn').onclick=()=>{if(!confirmDiscard())return;clearMainForm();};$('mainForm').addEventListener('submit',e=>e.preventDefault());document.querySelectorAll('.js-save').forEach(b=>b.onclick=saveMainForm);$('addMainRowBtn').onclick=()=>{const last=[...$('mainRows').querySelectorAll('input[name=Madd_Number]')].map(i=>i.value.trim()).filter(Boolean).pop();const r=makeRow({Madd_Number:$('madSearch').value.trim()||last||''});r.dataset.dirty='1';$('mainRows').appendChild(r);const ins=r.querySelectorAll('input,select');(ins[0].value?ins[1]:ins[0]).focus();};$('accusedForm').addEventListener('submit',saveAccused);$('resetAccusedBtn').onclick=()=>openAccusedForm();$('closeAccusedForm').onclick=closeAccused;
+$('closeRelatedBtn').onclick=()=>{$('relatedPanel').hidden=true;closeRelatedForm();};$('addRelatedBtn').onclick=()=>openRelatedForm();$('relatedForm').addEventListener('submit',saveRelated);$('resetRelatedBtn').onclick=()=>openRelatedForm();$('closeRelatedForm').onclick=closeRelatedForm;
+updateStatus();
+
+  
+// Mixed Urdu/English text (e.g. "3/4 PHO", "25-D/286") must keep its typed order
+const _autoDir=()=>document.querySelectorAll('input:not([type=checkbox]):not([type=file]):not([type=button]),textarea').forEach(e=>{if(e.dir!=='auto')e.dir='auto';});
+new MutationObserver(_autoDir).observe(document.body,{childList:true,subtree:true});_autoDir();
+
+const REL_NAMES={Talfi_T:'تلفی کی تفصیل',Temp_Out_T:'عارضی اجراء واپسی کی تفصیل',Sapurdari_T:'تفصیل سپرداری'};
+const TAB_IDS=['tabMain','tabList','tabHelp'];
+function showTab(id){TAB_IDS.forEach(x=>{$(x).hidden=x!==id;});document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='tabList')renderMadList();}
+document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+
+// ---------- Tab 2: فہرست مدات ----------
+let listPage=0,listSortDir='desc',listCrit='Madd_Number',listQ='';const LIST_SIZE=10;
+function listRows(){let a=rows('Main');const q=listQ.trim().toLowerCase();if(q){a=a.filter(r=>(listCrit==='Madd_Number'?norm(r[listCrit]):val(r[listCrit])).trim().toLowerCase().includes(q));}const dir=listSortDir==='desc'?-1:1;return [...a].sort((x,y)=>{const a1=parseFloat(norm(x.Madd_Number)),b1=parseFloat(norm(y.Madd_Number));const nx=isNaN(a1),ny=isNaN(b1);if(nx!==ny)return nx?1:-1;if(!nx&&a1!==b1)return (a1-b1)*dir;return ((Number(x.ID)||0)-(Number(y.ID)||0))*dir;});}
+function renderMadList(){const body=$('madListBody');body.innerHTML='';const all=listRows();const pages=Math.max(1,Math.ceil(all.length/LIST_SIZE));if(listPage>=pages)listPage=pages-1;if(listPage<0)listPage=0;const start=listPage*LIST_SIZE;if(!all.length){body.innerHTML='<tr><td colspan="8" class="placeholder-row">'+(workbook?'کوئی ریکارڈ نہیں ملا۔':'پہلے Excel فائل منسلک کریں۔')+'</td></tr>';}else{const frag=document.createDocumentFragment();all.slice(start,start+LIST_SIZE).forEach((r,i)=>{const tr=document.createElement('tr');[start+i+1,norm(r.Madd_Number),r.FIR_Number,r.FIR_Dated,r.Under_Section,r.Police_Station,r.Investigating_Officer].forEach(c=>{const td=document.createElement('td');td.textContent=val(c);tr.appendChild(td);});const td=document.createElement('td');const wrap=document.createElement('div');wrap.className='act-wrap';const mk=(cls,icon,title,fn)=>{const b=document.createElement('button');b.type='button';b.className='mini-btn '+cls;b.title=title;b.setAttribute('aria-label',title);b.textContent=icon;b.onclick=fn;return b;};wrap.append(mk('edit','✏️','Edit',()=>openMainFromList(r.ID)),mk('delete','🗑','Delete',()=>{if(!confirm('کیا آپ یہ مقدمہ اور اس سے متعلقہ تمام ملزمان اور باقی تمام ریکارڈ (تلفی، عارضی اجراء واپسی، سپرداری) حذف کرنا چاہتے ہیں؟'))return;deleteMainCascade(r.ID);renderMadList();toast('مقدمہ اور متعلقہ تمام ریکارڈ حذف ہوگئے۔');}));td.appendChild(wrap);tr.appendChild(td);frag.appendChild(tr);});body.appendChild(frag);}$('sortArrow').textContent=listSortDir==='desc'?'▼':'▲';document.querySelectorAll('.page-label').forEach(s=>s.textContent=`صفحہ ${listPage+1}`);document.querySelectorAll('[data-act=prev]').forEach(b=>b.disabled=listPage<=0);document.querySelectorAll('[data-act=next]').forEach(b=>b.disabled=listPage>=pages-1);}
+document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{listPage+=b.dataset.act==='next'?1:-1;renderMadList();});
+$('thMad').onclick=()=>{listSortDir=listSortDir==='desc'?'asc':'desc';listPage=0;renderMadList();};
+function doListSearch(){listCrit=$('listCrit').value;listQ=$('listQuery').value;listPage=0;renderMadList();}
+$('listQuery').addEventListener('input',doListSearch);$('listQuery').addEventListener('keydown',e=>{if(e.key==='Enter')e.preventDefault();});$('listCrit').onchange=doListSearch;
+$('listClearBtn').onclick=()=>{$('listQuery').value='';$('listCrit').value='Madd_Number';listQ='';listCrit='Madd_Number';listPage=0;renderMadList();};
+function openMainFromList(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(!rec)return;showTab('tabMain');if(!confirmDiscard())return;const mad=norm(rec.Madd_Number);if(mad){renderMainListByMad(mad);}else{$('madSearch').value='';renderMainRows([rec]);}selectMain(rec.ID,true);const el=[...document.querySelectorAll('#mainRows .fir-block')].find(r=>r.dataset.id===String(rec.ID));if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+
+// ---------- Tab 3: Excel connection (persists across refresh) ----------
+function idbOpen(){return new Promise((res,rej)=>{if(!window.indexedDB)return rej(new Error('no idb'));const r=indexedDB.open('malkhana_db',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+async function idbSet(k,v){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('kv','readwrite');tx.objectStore('kv').put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
+async function idbGet(k){const db=await idbOpen();return new Promise((res,rej)=>{const q=db.transaction('kv','readonly').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error);});}
+async function idbDel(k){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('kv','readwrite');tx.objectStore('kv').delete(k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
+async function attachHandle(h){workbookHandle=h;workbookFileName=h.name;pendingHandle=null;const file=await h.getFile();loadFile(file,true);}
+async function restoreWorkbook(){try{const h=await idbGet('wbHandle');if(!h)return;pendingHandle=h;if((await h.queryPermission({mode:'readwrite'}))==='granted'){await attachHandle(h);}else{updateStatus();toast('پچھلی Excel فائل ملی ہے؛ کسی بھی جگہ کلک کریں یا "دوبارہ منسلک کریں" دبائیں۔');}}catch(e){console.warn('restore',e);}}
+let autoTried=false;
+let reconnecting=false;
+async function reconnectWorkbook(){const h=pendingHandle;if(!h||reconnecting)return;reconnecting=true;try{const p=await h.requestPermission({mode:'readwrite'});if(p==='granted')await attachHandle(h);else toast('اجازت نہیں ملی؛ "دوبارہ منسلک کریں" دبا کر Allow کریں۔');}catch(e){console.warn(e);toast('فائل دوبارہ منسلک نہیں ہو سکی؛ "Excel فائل منسلک / کھولیں" سے منتخب کریں۔');}finally{reconnecting=false;}}
+document.addEventListener('click',e=>{if(pendingHandle&&!workbook&&!autoTried&&!e.target.closest('#disconnectBtn,#reconnectBtn,#loadWorkbookBtn')){autoTried=true;reconnectWorkbook();}},true);
+$('reconnectBtn').onclick=()=>{autoTried=true;reconnectWorkbook();};
+async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disconnect کرنا چاہتے ہیں؟ (فائل میں کوئی تبدیلی نہیں ہوگی)'))return;clearTimeout(autoSaveTimer);if(workbook&&workbookHandle){await saveToConnectedFile(false);}workbook=null;workbookHandle=null;pendingHandle=null;data={};ensureSchema();selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;try{await idbDel('wbHandle');}catch(e){}$('relatedPanel').hidden=true;closeRelatedForm();closeAccused();$('mainRows').innerHTML='';updateStatus();renderMadList();toast('Excel فائل Disconnect ہوگئی۔');}
+$('disconnectBtn').onclick=disconnectWorkbook;
+
+// ---------- Version check & Update (GitHub) ----------
+const APP_VERSION='1.0.0';
+const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
+let newer=null;
+const setUpd=m=>{$('updateStatus').textContent=m;};
+const isNewer=(a,b)=>{a=String(a).split('.').map(Number);b=String(b).split('.').map(Number);for(let i=0;i<3;i++){const x=a[i]||0,y=b[i]||0;if(x!==y)return x>y;}return false;};
+function showUpdateAvailable(on){$('updArrow').hidden=!on;$('updateNowBtn').hidden=!on;$('updateNowBtn').disabled=!on;}
+async function checkUpdate(manual){
+  if(UPDATE_URL.includes('YOUR-')){if(manual)toast('اپڈیٹ کا لنک سیٹ نہیں');return;}
+  if(!navigator.onLine){if(manual){setUpd('انٹرنیٹ کنکشن نہیں');toast('انٹرنیٹ کنکشن نہیں');}return;}
+  try{
+    const j=await(await fetch(UPDATE_URL+'?t='+Date.now(),{cache:'no-store'})).json();
+    if(isNewer(j.version,APP_VERSION)){newer=j;showUpdateAvailable(true);setUpd(`نیا ورژن ${j.version} دستیاب ہے${j.notes?' — '+j.notes:''}`);if(manual)toast('نیا ورژن دستیاب ہے');}
+    else{showUpdateAvailable(false);setUpd('آپ کے پاس تازہ ترین ورژن ہے ✓');if(manual)toast('آپ تازہ ترین ورژن استعمال کر رہے ہیں');}
+  }catch(e){if(manual){setUpd('ورژن چیک نہیں ہو سکا');toast('اپڈیٹ چیک نہیں ہو سکی');}}
+}
+async function applyUpdate(){
+  if(!newer)return;
+  if(!window.showOpenFilePicker){window.open(new URL(newer.url||'Malkhana_Samundri_Faisalabad.html',UPDATE_URL).href);return;}
+  try{
+    let h=null;try{h=await idbGet('appHandle');}catch(e){}
+    let ok=false;try{ok=!!h&&(await h.requestPermission({mode:'readwrite'}))==='granted';}catch(e){}
+    if(!ok){
+      [h]=await showOpenFilePicker({types:[{description:'Application file',accept:{'text/html':['.html']}}]});
+      const me=decodeURIComponent(location.pathname.split('/').pop());
+      if(me&&h.name!==me)throw new Error('اسی فائل کو منتخب کریں: '+me);
+      if((await h.requestPermission({mode:'readwrite'}))!=='granted')throw new Error('اجازت نہیں ملی');
+    }
+    const fileUrl=new URL(newer.url||'Malkhana_Samundri_Faisalabad.html',UPDATE_URL).href;
+    const html=await(await fetch(fileUrl+'?t='+Date.now(),{cache:'no-store'})).text();
+    if(!/^\s*<!DOCTYPE html/i.test(html)||!html.includes("APP_VERSION='"+newer.version+"'"))throw new Error('ڈاؤن لوڈ کی گئی فائل درست نہیں');
+    const w=await h.createWritable();await w.write(html);await w.close();
+    try{await idbSet('appHandle',h);}catch(e){}
+    toast('ورژن '+newer.version+' انسٹال ہوگیا؛ دوبارہ لوڈ ہو رہا ہے…');
+    setTimeout(()=>location.reload(),1500);
+  }catch(e){if(e.name!=='AbortError')alert('اپڈیٹ ناکام: '+e.message);}
+}
+$('curVersion').textContent=APP_VERSION;
+$('checkUpdateBtn').onclick=()=>checkUpdate(true);$('updateNowBtn').onclick=applyUpdate;
+window.addEventListener('online',()=>checkUpdate(false));
+setInterval(()=>checkUpdate(false),1800000);
+restoreWorkbook();
+checkUpdate(false);
+</script>
+</body>
+</html>
