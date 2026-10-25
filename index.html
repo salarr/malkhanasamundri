@@ -134,6 +134,13 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
 #connectPopup[hidden]{display:none!important}
 #connectPopup:not([hidden]){display:block;position:fixed;top:16vh;left:50%;transform:translateX(-50%);width:min(520px,92vw);z-index:70;background:#fff;border-radius:14px;padding:12px 18px 18px;box-shadow:0 0 0 100vmax rgba(15,30,50,.55),0 20px 60px rgba(0,0,0,.35);text-align:center}
 #connectPopup p{margin:4px 0 14px}#connectPopup .settings-buttons{justify-content:center}
+
+/* One button colour everywhere = colour of the "ملزم کا اندراج" button */
+:root{--btn-green:linear-gradient(135deg,#087f70,#13a58e)}
+.btn,.btn-light,.btn-primary,.btn-ghost,.btn-success,.btn-danger{background:var(--btn-green);color:#fff;border:0}
+.rel-btn{background:var(--btn-green);color:#fff;border:0;font-weight:700}.rel-btn:hover{background:var(--btn-green);filter:brightness(1.1)}.rel-btn:disabled{opacity:.45;cursor:not-allowed}
+/* accused line: field values in the same green, bold */
+.kv-line .kv{color:#087f70;font-weight:700}.kv-line .kv b{color:#1f3a56}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -169,7 +176,7 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
         <form id="accusedForm" class="data-form nested-form" hidden>
           <div class="nested-title"><h4 id="accusedFormTitle" hidden></h4><button type="button" class="icon-btn" id="closeAccusedForm" aria-label="Close">✕</button></div>
           <div class="form-grid" id="accusedFields"></div>
-          <div class="form-footer"><div class="button-row"><button type="button" id="resetAccusedBtn" class="btn btn-ghost">صاف کریں</button><button type="submit" class="btn btn-primary">Accused محفوظ کریں</button></div></div>
+          <div class="form-footer"><div class="button-row"><button type="submit" class="btn btn-primary">محفوظ کریں</button><button type="button" id="resetAccusedBtn" class="btn btn-ghost">صاف کریں</button></div></div>
         </form>
         <section class="panel related-panel" id="relatedPanel" hidden>
         <div class="pop-top"><button type="button" id="closeRelatedBtn" class="icon-btn" aria-label="Close">✕</button></div><h3 id="relatedTitle" hidden></h3>
@@ -417,20 +424,20 @@ async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disc
 $('disconnectBtn').onclick=disconnectWorkbook;
 
 // ---------- Version check & Update (GitHub) ----------
-const APP_VERSION='1.0.1';
+const APP_VERSION='1.0.2';
 const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
 let newer=null;
 const setUpd=m=>{$('updateStatus').textContent=m;};
-const isNewer=(a,b)=>{a=String(a).split('.').map(Number);b=String(b).split('.').map(Number);for(let i=0;i<3;i++){const x=a[i]||0,y=b[i]||0;if(x!==y)return x>y;}return false;};
+const isNewer=(a,b)=>{const nv=s=>String(s).trim().replace(/^v/i,'').split('.').map(Number);a=nv(a);b=nv(b);for(let i=0;i<3;i++){const x=a[i]||0,y=b[i]||0;if(x!==y)return x>y;}return false;};
 function showUpdateAvailable(on){$('updArrow').hidden=!on;$('updateNowBtn').hidden=!on;$('updateNowBtn').disabled=!on;}
 async function checkUpdate(manual){
   if(UPDATE_URL.includes('YOUR-')){if(manual)toast('اپڈیٹ کا لنک سیٹ نہیں');return;}
   if(!navigator.onLine){if(manual){setUpd('انٹرنیٹ کنکشن نہیں');toast('انٹرنیٹ کنکشن نہیں');}return;}
   try{
     const j=await(await fetch(UPDATE_URL+'?t='+Date.now(),{cache:'no-store'})).json();
-    if(isNewer(j.version,APP_VERSION)){newer=j;showUpdateAvailable(true);setUpd(`نیا ورژن ${j.version} دستیاب ہے${j.notes?' — '+j.notes:''}`);if(manual)toast('نیا ورژن دستیاب ہے');}
-    else{showUpdateAvailable(false);setUpd('آپ کے پاس تازہ ترین ورژن ہے ✓');if(manual)toast('آپ تازہ ترین ورژن استعمال کر رہے ہیں');}
-  }catch(e){if(manual){setUpd('ورژن چیک نہیں ہو سکا');toast('اپڈیٹ چیک نہیں ہو سکی');}}
+    if(isNewer(j.version,APP_VERSION)){newer=j;showUpdateAvailable(true);setUpd(`آپ کا ورژن ${APP_VERSION} | آن لائن ورژن ${j.version} — نیا ورژن دستیاب ہے${j.notes?' ('+j.notes+')':''}`);if(manual)toast('نیا ورژن دستیاب ہے');}
+    else{showUpdateAvailable(false);setUpd(`آپ کا ورژن ${APP_VERSION} | آن لائن ورژن ${j.version} — تازہ ترین ✓`);if(manual)toast('آپ تازہ ترین ورژن استعمال کر رہے ہیں');}
+  }catch(e){setUpd('ورژن چیک نہیں ہو سکا ('+(e&&e.message||e)+')');if(manual)toast('اپڈیٹ چیک نہیں ہو سکی');}
 }
 async function applyUpdate(){
   if(!newer)return;
