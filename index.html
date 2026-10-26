@@ -494,7 +494,7 @@ async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disc
 $('disconnectBtn').onclick=disconnectWorkbook;
 
 // ---------- Version check & Update (GitHub) ----------
-const APP_VERSION='1.0.8';
+const APP_VERSION='1.0.5';
 const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
 let newer=null;
 const setUpd=m=>{$('updateStatus').textContent=m;};
@@ -513,19 +513,27 @@ async function applyUpdate(){
   if(!newer)return;
   if(!window.showOpenFilePicker){window.open(new URL(newer.url||'Malkhana_Samundri_Faisalabad.html',UPDATE_URL).href);return;}
   try{
-    let h=null;try{h=await idbGet('appHandle');}catch(e){}
-    let ok=false;try{ok=!!h&&(await h.requestPermission({mode:'readwrite'}))==='granted';}catch(e){}
-    if(!ok){
+    const me=decodeURIComponent(location.pathname.split('/').pop());
+    // A file is accepted only if it has the same name as the page that is open now,
+    // write permission is granted, and its content is this running version.
+    const verify=async x=>{try{
+      if(!x||(me&&x.name!==me))return false;
+      if((await x.requestPermission({mode:'readwrite'}))!=='granted')return false;
+      const t=await(await x.getFile()).text();
+      return t.includes("APP_VERSION='"+APP_VERSION+"'");
+    }catch(e){return false;}};
+    const hKey='appHandle|'+location.href.split('#')[0].split('?')[0]; // one saved handle per exact file location
+    let h=null;try{h=await idbGet(hKey);}catch(e){}
+    if(!(await verify(h))){
+      // saved file not found / belongs to another copy -> ask for the file again
       [h]=await showOpenFilePicker({types:[{description:'Application file',accept:{'text/html':['.html']}}]});
-      const me=decodeURIComponent(location.pathname.split('/').pop());
-      if(me&&h.name!==me)throw new Error('اسی فائل کو منتخب کریں: '+me);
-      if((await h.requestPermission({mode:'readwrite'}))!=='granted')throw new Error('اجازت نہیں ملی');
+      if(!(await verify(h)))throw new Error('وہی فائل منتخب کریں جو اس وقت کھلی ہوئی ہے'+(me?': '+me:'')+'\n(نام، اجازت اور ورژن تینوں درست ہونے چاہئیں)');
     }
     const fileUrl=new URL(newer.url||'Malkhana_Samundri_Faisalabad.html',UPDATE_URL).href;
     const html=await(await fetch(fileUrl+'?t='+Date.now(),{cache:'no-store'})).text();
     if(!/^\s*<!DOCTYPE html/i.test(html)||!html.includes("APP_VERSION='"+newer.version+"'"))throw new Error('ڈاؤن لوڈ کی گئی فائل درست نہیں');
     const w=await h.createWritable();await w.write(html);await w.close();
-    try{await idbSet('appHandle',h);}catch(e){}
+    try{await idbSet(hKey,h);}catch(e){}
     toast('Version '+newer.version+' installed; reloading…');
     setTimeout(()=>location.reload(),1500);
   }catch(e){if(e.name!=='AbortError')alert('اپڈیٹ ناکام: '+e.message);}
