@@ -188,6 +188,16 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
 .orph-box{background:#fff;border-radius:14px;padding:16px;width:min(900px,94vw);max-height:90vh;overflow:auto;direction:rtl}
 .orph-link{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #dbe6f0}
 .orph-box .button-row{margin-top:12px}
+
+.upd-box{direction:ltr;max-width:460px;text-align:left}
+.upd-box h3{margin:0 0 8px}
+.upd-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.upd-row select{min-height:40px;padding:4px 8px;border:1px solid #cfdbe8;border-radius:8px;font:inherit}
+
+#bkBody3 tr.dup-alt td{background:#eef6fc}
+#bkBody3 tr.dup-start td{border-top:2px solid #8fbad6}
+
+.bk-mad{color:#4b6a85;font-size:15px;margin:2px 0 6px}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -242,7 +252,7 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
           <div class="section-heading list-heading">
             <div><h3>فہرست مدات</h3></div>
             <div class="list-search">
-              <select id="listCrit"><option value="Madd_Number">مد نمبر</option><option value="FIR_Number">FIR نمبر</option><option value="Police_Station">Police Station</option><option value="Investigating_Officer">تفتیشی افسر</option></select>
+              <select id="listCrit"><option value="Main_Madd_ID">مد نمبر</option><option value="FIR_Number">FIR نمبر</option><option value="Police_Station">Police Station</option><option value="Investigating_Officer">تفتیشی افسر</option></select>
               <input id="listQuery" type="text" placeholder="تلاش کریں…" autocomplete="off" />
               
               <button type="button" id="listClearBtn" class="btn btn-light">کلئیر</button>
@@ -265,13 +275,15 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
           </div>
           <div id="bkP1" class="bk-pane">
           <div class="section-heading"><div></div><span class="muted" id="bkNote"></span></div>
+          <div class="bk-title">لنکس اور مد نمبر کے مطابق <span class="muted">(ملزم ← Main ← Main_Madd_ID ← Mad_Number_T)</span></div>
+          <div id="bkLinks" class="bk-grid"></div>
           <div class="bk-title">پولیس اسٹیشن کے مطابق <span class="muted">(کارڈ پر کلک کریں تو نیچے کی قسموں کا بریک اپ اسی اسٹیشن کا بن جائے گا)</span></div>
           <div id="bkStations" class="bk-grid"></div>
           <div class="bk-title">مال کی قسم کے مطابق <span id="bkScope" class="bk-scope"></span></div>
           <div id="bkTypes" class="bk-grid"></div>
           </div>
           <div id="bkP2" class="bk-pane" hidden><div class="table-wrap"><table class="mad-table"><colgroup><col style="width:55px"><col style="width:70px"><col style="width:70px"><col style="width:75px"><col style="width:287px"><col style="width:287px"><col style="width:307px"><col style="width:120px"></colgroup><thead><tr><th>نمبر شمار</th><th>مد نمبر</th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th></th></tr></thead><tbody id="bkBody2"></tbody></table></div></div>
-          <div id="bkP3" class="bk-pane" hidden><div class="table-wrap"><table class="mad-table"><colgroup><col style="width:55px"><col style="width:70px"><col style="width:70px"><col style="width:75px"><col style="width:287px"><col style="width:287px"><col style="width:307px"><col style="width:120px"></colgroup><thead><tr><th>نمبر شمار</th><th>مد نمبر</th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th></th></tr></thead><tbody id="bkBody3"></tbody></table></div></div>
+          <div id="bkP3" class="bk-pane" hidden><div class="muted" id="bkNote3" style="margin-bottom:8px"></div><div class="table-wrap"><table class="mad-table"><colgroup><col style="width:55px"><col style="width:70px"><col style="width:70px"><col style="width:75px"><col style="width:287px"><col style="width:287px"><col style="width:307px"><col style="width:120px"></colgroup><thead><tr><th>نمبر شمار</th><th>مد نمبر</th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th></th></tr></thead><tbody id="bkBody3"></tbody></table></div></div>
           <div id="bkP4" class="bk-pane" hidden><div class="table-wrap"><table class="mad-table"><colgroup><col style="width:55px"><col style="width:70px"><col style="width:70px"><col style="width:75px"><col style="width:287px"><col style="width:287px"><col style="width:307px"><col style="width:120px"></colgroup><thead><tr><th>نمبر شمار</th><th>مد نمبر</th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th></th></tr></thead><tbody id="bkBody4"></tbody></table></div></div>
           <div id="bkP5" class="bk-pane" hidden><div class="table-wrap"><table class="mad-table"><colgroup><col style="width:1.5in"><col style="width:1.5in"><col style="width:1.5in"><col style="width:1.5in"><col style="width:1.5in"><col><col style="width:150px"><col style="width:120px"></colgroup><thead><tr><th>نمبر شمار</th><th>Accused_ID</th><th>ملزم کا نام</th><th>مال مقدمہ</th><th>مال کی قسم</th><th>تفصیل</th><th>حالت</th><th></th></tr></thead><tbody id="bkBody5"></tbody></table></div></div>
         </section>
@@ -316,11 +328,11 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
 const SHEETS = ['Mad_Number_T','Main','Accused_T','Talfi_T','Temp_Out_T','Sapurdari_T','Resources'];
 // Names as they may be spelled in the Excel file (Access export) -> page uses the correct name internally, file keeps its own spelling on save.
 const SHEET_ALIASES={Accused_T:['Accuseed_T']};
-const COL_ALIASES={Accused_ID:['Accuseed_ID'],Chassis_Number:['Chessis_Number'],Investigating_Officer:['Investigating_Offier'],Sapurdari_Date:['Supardari_Date']};
+const COL_ALIASES={Main_Madd_ID:['Madd_Number'],Accused_ID:['Accuseed_ID'],Chassis_Number:['Chessis_Number'],Investigating_Officer:['Investigating_Offier'],Sapurdari_Date:['Supardari_Date']};
 let fileNames={sheets:{},cols:{}};
 const toFile=k=>fileNames.cols[k]||k;
 const SCHEMA = {
-  Main: ['ID','Madd_Number','FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'],
+  Main: ['ID','Main_Madd_ID','FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'],
   Accused_T: ['Accused_ID','Accused_Name','Road_Number','Road_Issuance_Date','Received_On','Case_Property','Type_Of_Case_Property','Detail_Of_Case_Property','Registration_Number','Engine_Number','Present_or_Disposed_off','Chassis_Number','Main_Accused'],
   Talfi_T: ['Talfi_ID','Talfi_Madd_Number','Date_of_Decision_of_Court','Detail_of_Decision_of_Court','Main_TID'],
   Temp_Out_T: ['Temp_ID','Temp_Issuance_Date','Temp_Returned_Date','Temp_Court','Court_Name','Temp_Officer','Court_Name','Temp_Officer','Main_TempID'],
@@ -333,7 +345,7 @@ SCHEMA.Temp_Out_T = ['Temp_ID','Temp_Issuance_Date','Temp_Returned_Date','Temp_C
 const PRIMARY = {Main:'ID',Accused_T:'Accused_ID',Talfi_T:'Talfi_ID',Temp_Out_T:'Temp_ID',Sapurdari_T:'Sapurdari_ID',Mad_Number_T:'Madd_ID'};
 const FOREIGN = {Accused_T:'Main_Accused',Talfi_T:'Main_TID',Temp_Out_T:'Main_TempID',Sapurdari_T:'Main_TbID'};
 const LABELS = {
-  ID:'ID',Madd_Number:'مد نمبر',FIR_Number:'FIR نمبر',FIR_Dated:'FIR تاریخ',Under_Section:'زیر دفعہ',Police_Station:'پولیس اسٹیشن',Investigating_Officer:'تفتیشی افسر',
+  ID:'ID',Main_Madd_ID:'مد نمبر',FIR_Number:'FIR نمبر',FIR_Dated:'FIR تاریخ',Under_Section:'زیر دفعہ',Police_Station:'پولیس اسٹیشن',Investigating_Officer:'تفتیشی افسر',
   Accused_ID:'Accused ID',Accused_Name:'ملزم کا نام',Road_Number:'روڈ سرٹیفکیٹ نمبر',Road_Issuance_Date:'روڈ سرٹیفکیٹ اجرا کی تاریخ',Received_On:'وصولی کی تاریخ',Case_Property:'کیس پراپرٹی',Type_Of_Case_Property:'پراپرٹی کی قسم',Detail_Of_Case_Property:'پراپرٹی کی تفصیل',Registration_Number:'رجسٹریشن نمبر',Engine_Number:'انجن نمبر',Present_or_Disposed_off:'موجود / تلف شدہ',Chassis_Number:'چیسس نمبر',Main_Accused:'Main ID (Link)',
   Talfi_ID:'Talfi ID',Talfi_Madd_Number:'تلفی مد نمبر',Date_of_Decision_of_Court:'عدالتی فیصلے کی تاریخ',Detail_of_Decision_of_Court:'عدالتی فیصلے کی تفصیل',Main_TID:'Accused ID (Link)',
   Temp_ID:'Temporary ID',Temp_Issuance_Date:'عارضی اجرا کی تاریخ',Temp_Returned_Date:'واپسی کی تاریخ',Temp_Court:'عدالت / اجرا کی نوعیت',Court_Name:'عدالت کا نام',Temp_Officer:'متعلقہ افسر',Main_TempID:'Accused ID (Link)',
@@ -365,28 +377,33 @@ function currentMain(){return rows('Main').find(r=>String(r.ID)===String(selecte
 function currentAccused(){return rows('Accused_T').find(r=>String(r.Accused_ID)===String(selectedAccused))||null;}
 function updateStatus(){const has=!!workbook;if(has)$('connectPopup').hidden=true;$('popReconnectBtn').hidden=has||!pendingHandle;$('workbookStatus').textContent=has?'Excel فائل منسلک ہے':(pendingHandle?'پچھلی Excel فائل اجازت کی منتظر ہے':'Excel فائل منسلک نہیں');$('workbookStatus').className='status-pill '+(has?'connected':'offline');$('saveWorkbookBtn').disabled=!has;$('downloadCopyBtn').disabled=!has;$('disconnectBtn').disabled=!has&&!pendingHandle;$('reconnectBtn').hidden=has||!pendingHandle;$('autoSaveStatus').textContent=has?(workbookHandle?'آٹو سیو فعال':'آٹو سیو دستی اجازت کی منتظر'):'آٹو سیو بند';$('mainForm').hidden=!has;if(!has){$('mainRows').innerHTML='';}}
 function norm(v){const s=val(v).trim();return /^\d+\.0+$/.test(s)?s.replace(/\.0+$/,''):s;}
-function mainsForMad(num){const n=norm(num);return n?rows('Main').filter(r=>norm(r.Madd_Number)===n):[];}
+// Main.Main_Madd_ID holds a Madd_ID; the real Mad number is Mad_Number_T.Mad_Number for that Madd_ID.
+let madCache=null;
+function madMaps(){const a=rows('Mad_Number_T');if(madCache&&madCache.a===a&&madCache.n===a.length)return madCache;const byId=new Map(),byNum=new Map();a.forEach(r=>{const id=norm(r.Madd_ID),n=norm(r.Mad_Number);byId.set(id,n);if(n){if(!byNum.has(n))byNum.set(n,[]);byNum.get(n).push(id);}});return madCache={a,n:a.length,byId,byNum};}
+function madNumOf(m){const mm=madMaps(),id=norm(m&&m.Main_Madd_ID);return mm.a.length?(mm.byId.get(id)||''):id;}
+function madIdFor(num,rec){num=norm(num);const mm=madMaps();if(!mm.a.length)return num;const ids=mm.byNum.get(num)||[];if(rec){const cur=norm(rec.Main_Madd_ID);if(ids.includes(cur))return cur;}if(ids.length)return ids[0];const id=String(nextId('Mad_Number_T'));rows('Mad_Number_T').push({Madd_ID:id,Mad_Number:num});madCache=null;return id;}
+function mainsForMad(num){const n=norm(num);if(!n)return[];const mm=madMaps();if(!mm.a.length)return rows('Main').filter(r=>norm(r.Main_Madd_ID)===n);const ids=new Set(mm.byNum.get(n)||[]);return rows('Main').filter(r=>ids.has(norm(r.Main_Madd_ID)));}
 const ROW_FIELDS=['FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'];
-function makeRow(rec={}){const block=document.createElement('div');block.className='fir-block';block.dataset.id=val(rec.ID);block._draft=[];const row=document.createElement('div');row.className='main-row';['Madd_Number',...ROW_FIELDS].forEach(k=>{const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=k==='Madd_Number'?'مد نمبر':(LABELS[k]||k);const dd=k!=='Madd_Number'&&resOpts[k];const i=dd?makeSelect(k,rec[k]):document.createElement('input');i.name=k;if(!dd){i.value=val(rec[k]);i.autocomplete='off';i.placeholder=k==='Madd_Number'?'مد نمبر':(/date/i.test(k)?'مثلاً 24/10/2026':(LABELS[k]||k));}f.append(l,i);row.appendChild(f);});const del=document.createElement('button');del.type='button';del.className='row-del';del.title='Del';del.setAttribute('aria-label','Del');del.textContent='🗑';del.onclick=()=>deleteMainBlock(block);row.appendChild(del);
+function makeRow(rec={}){const block=document.createElement('div');block.className='fir-block';block.dataset.id=val(rec.ID);block._draft=[];const row=document.createElement('div');row.className='main-row';['Main_Madd_ID',...ROW_FIELDS].forEach(k=>{const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=k==='Main_Madd_ID'?'مد نمبر':(LABELS[k]||k);const dd=k!=='Main_Madd_ID'&&resOpts[k];const i=dd?makeSelect(k,rec[k]):document.createElement('input');i.name=k;if(!dd){i.value=(k==='Main_Madd_ID'&&rec.ID)?madNumOf(rec):val(rec[k]);i.autocomplete='off';i.placeholder=k==='Main_Madd_ID'?'مد نمبر':(/date/i.test(k)?'مثلاً 24/10/2026':(LABELS[k]||k));}f.append(l,i);row.appendChild(f);});const del=document.createElement('button');del.type='button';del.className='row-del';del.title='Del';del.setAttribute('aria-label','Del');del.textContent='🗑';del.onclick=()=>deleteMainBlock(block);row.appendChild(del);
 row.addEventListener('focusin',()=>{if(block.dataset.id&&String(selectedMain)!==block.dataset.id)selectMain(block.dataset.id,true);});row.addEventListener('change',()=>{block.dataset.dirty='1';});block.appendChild(row);const area=document.createElement('div');area.className='accused-area';area.innerHTML='<div class="accused-bar"><span class="accused-title">ملزمان اور مال مقدمہ کی تفصیل</span><button type="button" class="btn btn-success btn-sm acc-add">ملزم کا اندراج</button></div><div class="accused-items"></div>';area.querySelector('.acc-add').onclick=()=>{accBlock=block;selectedMain=block.dataset.id||null;highlightRow();openAccusedForm();};block.appendChild(area);return block;}
 function deleteMainBlock(block){const id=block.dataset.id;if(id){if(!confirm('کیا آپ یہ مقدمہ اور اس سے متعلقہ تمام ملزمان اور باقی تمام ریکارڈ (تلفی، عارضی اجراء واپسی، سپرداری) حذف کرنا چاہتے ہیں؟'))return;deleteMainCascade(id);if(!$('tabList').hidden)renderMadList();toast('Case and all related records deleted.');return;}if(block._draft&&block._draft.length&&!confirm('اس نئے اندراج میں ملزمان کی تفصیل موجود ہے۔ کیا اسے حذف کرنا چاہتے ہیں؟'))return;block.remove();if(workbook&&!$('mainRows').children.length)renderMainRows([]);toast('Entry removed.');}
 const isDirty=b=>b.dataset.dirty==='1'||(!b.dataset.id&&b._draft&&b._draft.length>0);
 function confirmDiscard(){const d=[...document.querySelectorAll('#mainRows .fir-block')].some(isDirty);return !d||confirm('غیر محفوظ تبدیلیاں موجود ہیں۔ کیا آپ انہیں چھوڑ کر آگے بڑھنا چاہتے ہیں؟');}
 function clearMainForm(){$('madSearch').value='';selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;closeAccused();$('relatedPanel').hidden=true;closeRelatedForm();if(workbook)renderMainRows([]);}
-function saveMainForm(){if(!workbook){toast('Connect an Excel file first.');return;}const items=[];for(const b of document.querySelectorAll('#mainRows .fir-block')){const v={};b.querySelectorAll('.main-row input,.main-row select').forEach(i=>v[i.name]=i.value.trim());v.Madd_Number=norm(v.Madd_Number);const has=ROW_FIELDS.some(k=>v[k])||(b._draft&&b._draft.length);if(!b.dataset.id&&!has)continue;if(!v.Madd_Number){toast('Enter a Mad number for every case.');b.querySelector('[name=Madd_Number]').focus();return;}items.push({b,v});}
+function saveMainForm(){if(!workbook){toast('Connect an Excel file first.');return;}const items=[];for(const b of document.querySelectorAll('#mainRows .fir-block')){const v={};b.querySelectorAll('.main-row input,.main-row select').forEach(i=>v[i.name]=i.value.trim());v.Main_Madd_ID=norm(v.Main_Madd_ID);const has=ROW_FIELDS.some(k=>v[k])||(b._draft&&b._draft.length);if(!b.dataset.id&&!has)continue;if(!v.Main_Madd_ID){toast('Enter a Mad number for every case.');b.querySelector('[name=Main_Madd_ID]').focus();return;}items.push({b,v});}
 if(!items.length){toast('There are no records to save.');return;}
-for(const {b,v} of items){const id=b.dataset.id;if(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(rec)Object.assign(rec,v);}else{const rec={ID:nextId('Main'),...v};rows('Main').push(rec);(b._draft||[]).forEach(a=>{rows('Accused_T').push({...a,Accused_ID:nextId('Accused_T'),Main_Accused:String(rec.ID)});});}}
+for(const {b,v} of items){const id=b.dataset.id;if(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(rec){v.Main_Madd_ID=madIdFor(v.Main_Madd_ID,rec);Object.assign(rec,v);}}else{v.Main_Madd_ID=madIdFor(v.Main_Madd_ID,null);const rec={ID:nextId('Main'),...v};rows('Main').push(rec);(b._draft||[]).forEach(a=>{rows('Accused_T').push({...a,Accused_ID:nextId('Accused_T'),Main_Accused:String(rec.ID)});});}}
 scheduleAutoSave();clearMainForm();if(!$('tabList').hidden)renderMadList();toast('Cases and related accused saved.');}
 function deleteMainCascade(id){const acc=new Set(rows('Accused_T').filter(r=>String(r.Main_Accused)===String(id)).map(r=>String(r.Accused_ID)));data.Main=rows('Main').filter(r=>String(r.ID)!==String(id));data.Accused_T=rows('Accused_T').filter(r=>String(r.Main_Accused)!==String(id));for(const c of ['Talfi_T','Temp_Out_T','Sapurdari_T'])data[c]=rows(c).filter(r=>!acc.has(String(r[FOREIGN[c]])));[...document.querySelectorAll('#mainRows .fir-block')].filter(b=>b.dataset.id===String(id)).forEach(b=>b.remove());if(workbook&&!$('mainRows').children.length)renderMainRows([]);if(String(selectedMain)===String(id)){selectedMain=null;selectedAccused=null;$('relatedPanel').hidden=true;closeRelatedForm();closeAccused();}scheduleAutoSave();}
 function highlightRow(){document.querySelectorAll('#mainRows .fir-block').forEach(r=>r.classList.toggle('selected',!!r.dataset.id&&r.dataset.id===String(selectedMain)));}
-function renderMainRows(list,defMad=''){const host=$('mainRows');host.innerHTML='';if(!list.length)host.appendChild(makeRow({Madd_Number:defMad}));else list.forEach(r=>host.appendChild(makeRow(r)));highlightRow();renderAccused();}
+function renderMainRows(list,defMad=''){const host=$('mainRows');host.innerHTML='';if(!list.length)host.appendChild(makeRow({Main_Madd_ID:defMad}));else list.forEach(r=>host.appendChild(makeRow(r)));highlightRow();renderAccused();}
 function renderMainFields(record={}){renderMainRows([]);}
 function renderMainCount(){}
-function filteredMain(){const q=$('madSearch').value.trim().toLowerCase();if(!q)return rows('Main');return rows('Main').filter(r=>norm(r.Madd_Number).toLowerCase().includes(q));}
+function filteredMain(){const q=$('madSearch').value.trim().toLowerCase();if(!q)return rows('Main');return rows('Main').filter(r=>madNumOf(r).toLowerCase().includes(q));}
 function renderSearchResults(){}
 function renderMainListByMad(mad){mad=String(mad||'').trim();$('madSearch').value=mad;const list=mainsForMad(mad);renderMainRows(list,mad);if(list.length){selectMain(list[0].ID,true);}else{selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;renderAccused();renderMainCount();renderMainCards();if(mad)toast('No record exists for this Mad number yet; fill in a new record below.');}renderSearchResults();}
 function renderMainCards(){}
-function selectMain(id,keepRows){selectedMain=String(id);selectedAccused=null;editingMain=String(id);const rec=currentMain();if(!rec)return;if(!keepRows){renderMainRows(mainsForMad(rec.Madd_Number),norm(rec.Madd_Number));}highlightRow();renderMainList();renderAccused();renderSearchResults();$('mainForm').hidden=false;}
+function selectMain(id,keepRows){selectedMain=String(id);selectedAccused=null;editingMain=String(id);const rec=currentMain();if(!rec)return;if(!keepRows){renderMainRows(mainsForMad(madNumOf(rec)),madNumOf(rec));}highlightRow();renderMainList();renderAccused();renderSearchResults();$('mainForm').hidden=false;}
 function renderMainList(){renderMainCards();renderMainCount();}
 const REL_TABLES=['Talfi_T','Temp_Out_T','Sapurdari_T'];
 function accusedLine(r){const parts=(SCHEMA.Accused_T||[]).filter(k=>k!=='Main_Accused'&&k!=='Accused_ID'&&(k==='Accused_Name'||String(val(r[k])).trim()!=='')).map(k=>{const v0=String(val(r[k])).trim();const shown=DATE_KEYS.includes(k)?(fmtDMY(v0)||v0):v0;return `<span class="kv"><b>${esc(LABELS[k]||k)}:</b> ${esc(shown||'—')}</span>`;});return parts.join('<span class="kv-sep"> | </span>')||'تفصیل موجود نہیں';}
@@ -434,6 +451,7 @@ async function saveToConnectedFile(showMessage=true){
  finally{isWritingWorkbook=false;}
 }
 function scheduleAutoSave(){
+ madCache=null;
  if(!workbook)return;
  $('autoSaveStatus').textContent=workbookHandle?'تبدیلی محفوظ ہو رہی ہے…':'تبدیلی عارضی طور پر رکھی گئی';
  clearTimeout(autoSaveTimer);
@@ -453,10 +471,10 @@ async function connectWorkbook(){
  }
  workbookHandle=null;$('workbookInput').click();
 }
-function loadFile(file,fromHandle=false){if(!file)return Promise.resolve();return new Promise(res=>{const reader=new FileReader();reader.onload=e=>{try{workbook=XLSX.read(e.target.result,{type:'array',cellDates:false});normalizeWorkbook(workbook);selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;updateStatus();renderMainFields({});if(!$('tabList').hidden)renderMadList();renderMainList();renderAccused();renderSearchResults();$('mainFormHint').textContent='نیا Main ریکارڈ بنانے کے لیے فارم پُر کریں یا تلاش سے موجود ریکارڈ منتخب کریں۔';const missing=SHEETS.filter(s=>s!=='Resources'&&s!=='Mad_Number_T'&&!workbook.Sheets[s]&&!fileNames.sheets[s]);if(missing.length)toast('Workbook loaded, but these sheets were not found: '+missing.join(', '));else toast(fromHandle?'Excel file connected; auto-save is active.':'Excel file loaded. For auto-save, please reconnect it from the Help & Update tab.');updateStatus();}catch(err){console.error(err);toast('Could not read the Excel file. Please select a valid .xlsx file.');}res();};reader.readAsArrayBuffer(file);});}
+function loadFile(file,fromHandle=false){if(!file)return Promise.resolve();return new Promise(res=>{const reader=new FileReader();reader.onload=e=>{try{workbook=XLSX.read(e.target.result,{type:'array',cellDates:false});normalizeWorkbook(workbook);selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;updateStatus();renderMainFields({});if(!$('tabList').hidden)renderMadList();renderMainList();renderAccused();renderSearchResults();$('mainFormHint').textContent='نیا Main ریکارڈ بنانے کے لیے فارم پُر کریں یا تلاش سے موجود ریکارڈ منتخب کریں۔';const missing=SHEETS.filter(s=>s!=='Resources'&&s!=='Mad_Number_T'&&!workbook.Sheets[s]&&!fileNames.sheets[s]);if(missing.length)toast('Workbook loaded, but these sheets were not found: '+missing.join(', '));else toast(fromHandle?'Excel file connected; auto-save is active.':'Excel file loaded. For auto-save, please reconnect it from the Help & Update tab.');updateStatus();updatePopupCheck();}catch(err){console.error(err);toast('Could not read the Excel file. Please select a valid .xlsx file.');}res();};reader.readAsArrayBuffer(file);});}
 $('loadWorkbookBtn').onclick=connectWorkbook;$('workbookInput').addEventListener('change',e=>{workbookHandle=null;loadFile(e.target.files[0],false);e.target.value='';});
 $('saveWorkbookBtn').onclick=async()=>{if(workbookHandle)await saveToConnectedFile(true);else downloadWorkbook();};$('downloadCopyBtn').onclick=downloadWorkbook;
-$('searchBtn').onclick=()=>{const q=$('madSearch').value.trim();if(!q){toast('Enter a Mad number.');return;}if(!workbook){toast('Open an Excel workbook first.');return;}if(!confirmDiscard())return;renderMainListByMad(q);};$('madSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('searchBtn').click();}});$('clearSearchBtn').onclick=()=>{if(!confirmDiscard())return;clearMainForm();};$('mainForm').addEventListener('submit',e=>e.preventDefault());document.querySelectorAll('.js-save').forEach(b=>b.onclick=saveMainForm);$('addMainRowBtn').onclick=()=>{const last=[...$('mainRows').querySelectorAll('input[name=Madd_Number]')].map(i=>i.value.trim()).filter(Boolean).pop();const r=makeRow({Madd_Number:$('madSearch').value.trim()||last||''});r.dataset.dirty='1';$('mainRows').appendChild(r);const ins=r.querySelectorAll('input,select');(ins[0].value?ins[1]:ins[0]).focus();};$('accusedForm').addEventListener('submit',saveAccused);$('resetAccusedBtn').onclick=()=>openAccusedForm();$('closeAccusedForm').onclick=closeAccused;
+$('searchBtn').onclick=()=>{const q=$('madSearch').value.trim();if(!q){toast('Enter a Mad number.');return;}if(!workbook){toast('Open an Excel workbook first.');return;}if(!confirmDiscard())return;renderMainListByMad(q);};$('madSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('searchBtn').click();}});$('clearSearchBtn').onclick=()=>{if(!confirmDiscard())return;clearMainForm();};$('mainForm').addEventListener('submit',e=>e.preventDefault());document.querySelectorAll('.js-save').forEach(b=>b.onclick=saveMainForm);$('addMainRowBtn').onclick=()=>{const last=[...$('mainRows').querySelectorAll('input[name=Main_Madd_ID]')].map(i=>i.value.trim()).filter(Boolean).pop();const r=makeRow({Main_Madd_ID:$('madSearch').value.trim()||last||''});r.dataset.dirty='1';$('mainRows').appendChild(r);const ins=r.querySelectorAll('input,select');(ins[0].value?ins[1]:ins[0]).focus();};$('accusedForm').addEventListener('submit',saveAccused);$('resetAccusedBtn').onclick=()=>openAccusedForm();$('closeAccusedForm').onclick=closeAccused;
 $('closeRelatedBtn').onclick=()=>{$('relatedPanel').hidden=true;closeRelatedForm();};$('addRelatedBtn').onclick=()=>openRelatedForm();$('relatedForm').addEventListener('submit',saveRelated);$('resetRelatedBtn').onclick=()=>openRelatedForm();$('closeRelatedForm').onclick=closeRelatedForm;
 updateStatus();
 
@@ -471,15 +489,15 @@ function showTab(id){TAB_IDS.forEach(x=>{$(x).hidden=x!==id;});document.querySel
 document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 
 // ---------- Tab 2: فہرست مدات ----------
-let listPage=0,listSortDir='desc',listCrit='Madd_Number',listQ='';const LIST_SIZE=10;
-function listRows(){let a=rows('Main');const q=listQ.trim().toLowerCase();if(q){a=a.filter(r=>(listCrit==='Madd_Number'?norm(r[listCrit]):val(r[listCrit])).trim().toLowerCase().includes(q));}const dir=listSortDir==='desc'?-1:1;return [...a].sort((x,y)=>{const a1=parseFloat(norm(x.Madd_Number)),b1=parseFloat(norm(y.Madd_Number));const nx=isNaN(a1),ny=isNaN(b1);if(nx!==ny)return nx?1:-1;if(!nx&&a1!==b1)return (a1-b1)*dir;return ((Number(x.ID)||0)-(Number(y.ID)||0))*dir;});}
-function renderMadList(){const body=$('madListBody');body.innerHTML='';const all=listRows();const pages=Math.max(1,Math.ceil(all.length/LIST_SIZE));if(listPage>=pages)listPage=pages-1;if(listPage<0)listPage=0;const start=listPage*LIST_SIZE;if(!all.length){body.innerHTML='<tr><td colspan="8" class="placeholder-row">'+(workbook?'کوئی ریکارڈ نہیں ملا۔':'Connect an Excel file first.')+'</td></tr>';}else{const frag=document.createDocumentFragment();all.slice(start,start+LIST_SIZE).forEach((r,i)=>{const tr=document.createElement('tr');[start+i+1,norm(r.Madd_Number),r.FIR_Number,r.FIR_Dated,r.Under_Section,r.Police_Station,r.Investigating_Officer].forEach(c=>{const td=document.createElement('td');td.textContent=val(c);tr.appendChild(td);});const td=document.createElement('td');const wrap=document.createElement('div');wrap.className='act-wrap';const mk=(cls,icon,title,fn)=>{const b=document.createElement('button');b.type='button';b.className='mini-btn '+cls;b.title=title;b.setAttribute('aria-label',title);b.textContent=icon;b.onclick=fn;return b;};wrap.append(mk('edit','✏️','Edit',()=>openMainFromList(r.ID)),mk('delete','🗑','Delete',()=>{if(!confirm('کیا آپ یہ مقدمہ اور اس سے متعلقہ تمام ملزمان اور باقی تمام ریکارڈ (تلفی، عارضی اجراء واپسی، سپرداری) حذف کرنا چاہتے ہیں؟'))return;deleteMainCascade(r.ID);renderMadList();toast('Case and all related records deleted.');}));td.appendChild(wrap);tr.appendChild(td);frag.appendChild(tr);});body.appendChild(frag);}$('sortArrow').textContent=listSortDir==='desc'?'▼':'▲';document.querySelectorAll('.page-label').forEach(s=>s.textContent=`صفحہ ${listPage+1}`);document.querySelectorAll('[data-act=prev]').forEach(b=>b.disabled=listPage<=0);document.querySelectorAll('[data-act=next]').forEach(b=>b.disabled=listPage>=pages-1);}
+let listPage=0,listSortDir='desc',listCrit='Main_Madd_ID',listQ='';const LIST_SIZE=10;
+function listRows(){let a=rows('Main');const q=listQ.trim().toLowerCase();if(q){a=a.filter(r=>(listCrit==='Main_Madd_ID'?madNumOf(r):val(r[listCrit])).trim().toLowerCase().includes(q));}const dir=listSortDir==='desc'?-1:1;return [...a].sort((x,y)=>{const a1=parseFloat(madNumOf(x)),b1=parseFloat(madNumOf(y));const nx=isNaN(a1),ny=isNaN(b1);if(nx!==ny)return nx?1:-1;if(!nx&&a1!==b1)return (a1-b1)*dir;return ((Number(x.ID)||0)-(Number(y.ID)||0))*dir;});}
+function renderMadList(){const body=$('madListBody');body.innerHTML='';const all=listRows();const pages=Math.max(1,Math.ceil(all.length/LIST_SIZE));if(listPage>=pages)listPage=pages-1;if(listPage<0)listPage=0;const start=listPage*LIST_SIZE;if(!all.length){body.innerHTML='<tr><td colspan="8" class="placeholder-row">'+(workbook?'کوئی ریکارڈ نہیں ملا۔':'Connect an Excel file first.')+'</td></tr>';}else{const frag=document.createDocumentFragment();all.slice(start,start+LIST_SIZE).forEach((r,i)=>{const tr=document.createElement('tr');[start+i+1,madNumOf(r),r.FIR_Number,r.FIR_Dated,r.Under_Section,r.Police_Station,r.Investigating_Officer].forEach(c=>{const td=document.createElement('td');td.textContent=val(c);tr.appendChild(td);});const td=document.createElement('td');const wrap=document.createElement('div');wrap.className='act-wrap';const mk=(cls,icon,title,fn)=>{const b=document.createElement('button');b.type='button';b.className='mini-btn '+cls;b.title=title;b.setAttribute('aria-label',title);b.textContent=icon;b.onclick=fn;return b;};wrap.append(mk('edit','✏️','Edit',()=>openMainFromList(r.ID)),mk('delete','🗑','Delete',()=>{if(!confirm('کیا آپ یہ مقدمہ اور اس سے متعلقہ تمام ملزمان اور باقی تمام ریکارڈ (تلفی، عارضی اجراء واپسی، سپرداری) حذف کرنا چاہتے ہیں؟'))return;deleteMainCascade(r.ID);renderMadList();toast('Case and all related records deleted.');}));td.appendChild(wrap);tr.appendChild(td);frag.appendChild(tr);});body.appendChild(frag);}$('sortArrow').textContent=listSortDir==='desc'?'▼':'▲';document.querySelectorAll('.page-label').forEach(s=>s.textContent=`صفحہ ${listPage+1}`);document.querySelectorAll('[data-act=prev]').forEach(b=>b.disabled=listPage<=0);document.querySelectorAll('[data-act=next]').forEach(b=>b.disabled=listPage>=pages-1);}
 document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{listPage+=b.dataset.act==='next'?1:-1;renderMadList();});
 $('thMad').onclick=()=>{listSortDir=listSortDir==='desc'?'asc':'desc';listPage=0;renderMadList();};
 function doListSearch(){listCrit=$('listCrit').value;listQ=$('listQuery').value;listPage=0;renderMadList();}
 $('listQuery').addEventListener('input',doListSearch);$('listQuery').addEventListener('keydown',e=>{if(e.key==='Enter')e.preventDefault();});$('listCrit').onchange=doListSearch;
-$('listClearBtn').onclick=()=>{$('listQuery').value='';$('listCrit').value='Madd_Number';listQ='';listCrit='Madd_Number';listPage=0;renderMadList();};
-function openMainFromList(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(!rec)return;showTab('tabMain');if(!confirmDiscard())return;const mad=norm(rec.Madd_Number);if(mad){renderMainListByMad(mad);}else{$('madSearch').value='';renderMainRows([rec]);}selectMain(rec.ID,true);const el=[...document.querySelectorAll('#mainRows .fir-block')].find(r=>r.dataset.id===String(rec.ID));if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+$('listClearBtn').onclick=()=>{$('listQuery').value='';$('listCrit').value='Main_Madd_ID';listQ='';listCrit='Main_Madd_ID';listPage=0;renderMadList();};
+function openMainFromList(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(!rec)return;showTab('tabMain');if(!confirmDiscard())return;const mad=madNumOf(rec);if(mad){renderMainListByMad(mad);}else{$('madSearch').value='';renderMainRows([rec]);}selectMain(rec.ID,true);const el=[...document.querySelectorAll('#mainRows .fir-block')].find(r=>r.dataset.id===String(rec.ID));if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
 
 
 // ---------- Tab: بریک اپ ----------
@@ -489,19 +507,38 @@ const BK_ST=[['تلف','t'],['حاضر','h'],['سپرداری','s']];
 let bkStation='';
 function bkStationOf(m){if(!m)return '';let s=val(m.Police_Station).trim().replace(/\s+/g,' ');if(s==='مرید والہ')s='مرید والا';return BK_STATIONS.includes(s)?s:'';}
 function bkCatOf(a){const cp=val(a.Case_Property).trim();const mapped=resLinks&&resLinks.Case_Property?resLinks.Case_Property[cp]:'';if(mapped&&BK_CATS.includes(mapped))return mapped;const t=val(a.Type_Of_Case_Property).trim();return BK_CATS.includes(t)?t:'دیگر';}
-function bkBlank(){return{total:0,t:0,h:0,s:0,other:0};}
-function bkAdd(o,a){const p=val(a.Present_or_Disposed_off).trim();if(p==='تلف'){o.t++;o.total++;}else if(p==='حاضر'){o.h++;o.total++;}else if(p==='سپرداری'){o.s++;o.total++;}else o.other++;}
-function computeBreakup(){const mains={};rows('Main').forEach(m=>{mains[String(m.ID)]=m;});const all=bkBlank(),st={},cat={};BK_STATIONS.forEach(x=>st[x]=bkBlank());BK_CATS.forEach(x=>cat[x]=bkBlank());let unknownStation=0;const ns=bkBlank(),un=bkBlank();
- rows('Accused_T').forEach(a=>{const s=bkStationOf(mains[String(a.Main_Accused)]);bkAdd(all,a);if(s)bkAdd(st[s],a);else{unknownStation++;if(mains[String(a.Main_Accused)])bkAdd(ns,a);else bkAdd(un,a);}if(!bkStation||s===bkStation)bkAdd(cat[bkCatOf(a)],a);});
- return{all,st,cat,unknownStation,ns,un};}
+function bkBlank(){return{total:0,t:0,h:0,s:0,other:0,nums:new Set()};}
+function bkAdd(o,a,n){const p=val(a.Present_or_Disposed_off).trim();let ok=true;if(p==='تلف')o.t++;else if(p==='حاضر')o.h++;else if(p==='سپرداری')o.s++;else{o.other++;ok=false;}if(ok){o.total++;if(n)o.nums.add(n);}}
+function bkFin(o){o.t=o.h=o.s=o.other=0;o.mm.forEach(e=>{if(e.has('تلف'))o.t++;if(e.has('حاضر'))o.h++;if(e.has('سپرداری'))o.s++;if(!e.size)o.other++;});o.total=o.mm.size;}
+function computeBreakup(){
+ // Counts مدات (Main records). A مد is counted under every status (تلف/حاضر/سپرداری) found on its accused rows; "حالت درج نہیں" = مدات with none of the three.
+ const mains={};rows('Main').forEach(m=>{mains[String(m.ID)]=m;});
+ const mk=()=>({mm:new Map(),nums:new Set()});
+ const all=mk(),st={},cat={},ns=mk(),un=bkBlank(),stOf={};BK_STATIONS.forEach(x=>st[x]=mk());BK_CATS.forEach(x=>cat[x]=mk());
+ const put=(o,m,p)=>{const k=String(m.ID);let e=o.mm.get(k);if(!e){e=new Set();o.mm.set(k,e);const n=madNumOf(m);if(n)o.nums.add(n);}if(p)e.add(p);};
+ rows('Main').forEach(m=>{const s=bkStationOf(m);stOf[String(m.ID)]=s;put(all,m,'');put(s?st[s]:ns,m,'');});
+ rows('Accused_T').forEach(a=>{const m=mains[String(a.Main_Accused)],p0=val(a.Present_or_Disposed_off).trim(),p=BK_OK_STATUS.includes(p0)?p0:'';
+  if(!m){bkAdd(un,a,'');return;}
+  const s=stOf[String(m.ID)];if(p){put(all,m,p);put(s?st[s]:ns,m,p);}
+  if(!bkStation||s===bkStation)put(cat[bkCatOf(a)],m,p);});
+ [all,ns,...Object.values(st),...Object.values(cat)].forEach(bkFin);
+ un.total=un.t+un.h+un.s+un.other;
+ return{all,st,cat,ns,un};}
 function bkCard(name,o,opts={}){const c=document.createElement('div');c.className='bk-card'+(opts.click?' clickable':'')+(opts.active?' active':'');
- c.innerHTML=`<div class="bk-name">${esc(name)}</div><div class="bk-total"><b>${o.total}</b><span>کل مدات</span></div><div class="bk-stats">${BK_ST.map(([n,k])=>`<div class="bk-stat ${k}"><b>${o[k]}</b>${n}</div>`).join('')}</div>${o.other?`<div class="bk-other">حالت درج نہیں: ${o.other}</div>`:''}`;if(opts.click)c.onclick=opts.click;return c;}
-function renderBreakup(){const sh=$('bkStations'),th=$('bkTypes');sh.innerHTML='';th.innerHTML='';if(!workbook){sh.innerHTML='<div class="placeholder-row">پہلے Excel فائل منسلک کریں۔</div>';$('bkScope').textContent='';$('bkNote').textContent='';renderBkLists();return;}
- const {all,st,cat,unknownStation,ns,un}=computeBreakup();
+ c.innerHTML=`<div class="bk-name">${esc(name)}</div><div class="bk-total"><b>${o.total}</b><span>${opts.label||'کل مدات'}</span></div>${opts.noMad?'':`<div class="bk-mad">الگ مد نمبر: ${o.nums?o.nums.size:0}</div>`}<div class="bk-stats">${BK_ST.map(([n,k])=>`<div class="bk-stat ${k}"><b>${o[k]}</b>${n}</div>`).join('')}</div>${o.other?`<div class="bk-other">حالت درج نہیں: ${o.other}</div>`:''}`;if(opts.click)c.onclick=opts.click;return c;}
+function renderBreakup(){const sh=$('bkStations'),th=$('bkTypes');sh.innerHTML='';th.innerHTML='';$('bkLinks').innerHTML='';if(!workbook){sh.innerHTML='<div class="placeholder-row">پہلے Excel فائل منسلک کریں۔</div>';$('bkScope').textContent='';$('bkNote').textContent='';renderBkLists();return;}
+ const {all,st,cat,ns,un}=computeBreakup();
  sh.appendChild(bkCard('کل (تمام اسٹیشن)',all,{click:()=>{bkStation='';renderBreakup();},active:!bkStation}));
  BK_STATIONS.forEach(n=>sh.appendChild(bkCard(n,st[n],{click:()=>{bkStation=(bkStation===n?'':n);renderBreakup();},active:bkStation===n})));
- if(ns.total||ns.other)sh.appendChild(bkCard('پولیس اسٹیشن درج نہیں',ns));if(un.total||un.other)sh.appendChild(bkCard('مد سے منسلک نہیں',un));
+ if(ns.total)sh.appendChild(bkCard('پولیس اسٹیشن درج نہیں',ns));if(un.total)sh.appendChild(bkCard('مد سے منسلک نہیں (ملزمان)',un,{label:'کل ملزمان',noMad:true}));
  BK_CATS.forEach(n=>th.appendChild(bkCard(n,cat[n])));
+ {const mains=rows('Main'),byId={};mains.forEach(m=>{byId[String(m.ID)]=m;});const used=new Set(mains.map(m=>norm(m.Main_Madd_ID))),hasAcc=new Set(rows('Accused_T').map(a=>String(a.Main_Accused)));
+  const tiles=[['کل مد نمبر (الگ الگ)',new Set(mains.map(madNumOf).filter(Boolean)).size],['کل مدات (Main)',mains.length],
+   ['مد نمبر درج نہیں والے مدات',mains.filter(m=>!madNumOf(m)).length],['پولیس اسٹیشن درج نہیں والے مدات',ns.total,2],['FIR نمبر درج نہیں والے مدات',mains.filter(m=>{const v=val(m.FIR_Number).trim();return !v||v==='0';}).length],
+   ['ملزم کے بغیر مدات',mains.filter(m=>!hasAcc.has(String(m.ID))).length],['حالت درج نہیں والے مدات',all.other,4],
+   ['مد سے منسلک نہیں ملزمان',un.total,5],['ملزم جن کے مد کا نمبر الاٹ نہیں',rows('Accused_T').filter(a=>{const m=byId[String(a.Main_Accused)];return m&&!madNumOf(m);}).length],
+   ['Mad_Number_T کی غیر استعمال شدہ قطاریں',rows('Mad_Number_T').filter(r=>!used.has(norm(r.Madd_ID))).length]];
+  tiles.forEach(([n,v,tab])=>{const c=document.createElement('div');c.className='bk-card'+(tab?' clickable':'');c.innerHTML=`<div class="bk-name">${esc(n)}</div><div class="bk-total"><b>${v}</b></div>`;if(tab)c.onclick=()=>bkSubShow(tab);$('bkLinks').appendChild(c);});}
  $('bkScope').textContent=bkStation?'— '+bkStation:'— تمام اسٹیشن';
  $('bkNote').textContent='';renderBkLists();}
 
@@ -510,8 +547,8 @@ function renderBreakup(){const sh=$('bkStations'),th=$('bkTypes');sh.innerHTML='
 const BK_OK_STATUS=['تلف','حاضر','سپرداری'];
 function bkSubShow(n){document.querySelectorAll('.bk-sub').forEach(b=>b.classList.toggle('active',b.dataset.bk===String(n)));[1,2,3,4,5].forEach(i=>{$('bkP'+i).hidden=i!==Number(n);});}
 document.querySelectorAll('.bk-sub').forEach(b=>b.onclick=()=>bkSubShow(b.dataset.bk));
-function bkSorted(a){return [...a].sort((x,y)=>{const p=Number(norm(x.Madd_Number)),q=Number(norm(y.Madd_Number));const nx=isNaN(p),ny=isNaN(q);if(nx!==ny)return nx?1:-1;if(!nx&&p!==q)return p-q;return (Number(x.ID)||0)-(Number(y.ID)||0);});}
-function bkMadRow(r,n){const tr=document.createElement('tr');[n,norm(r.Madd_Number),r.FIR_Number,r.FIR_Dated,r.Under_Section,r.Police_Station,r.Investigating_Officer].forEach(c=>{const td=document.createElement('td');td.textContent=val(c);tr.appendChild(td);});
+function bkSorted(a){return [...a].sort((x,y)=>{const p=Number(madNumOf(x)),q=Number(madNumOf(y));const nx=isNaN(p),ny=isNaN(q);if(nx!==ny)return nx?1:-1;if(!nx&&p!==q)return p-q;return (Number(x.ID)||0)-(Number(y.ID)||0);});}
+function bkMadRow(r,n){const tr=document.createElement('tr');[n,madNumOf(r),r.FIR_Number,r.FIR_Dated,r.Under_Section,r.Police_Station,r.Investigating_Officer].forEach(c=>{const td=document.createElement('td');td.textContent=val(c);tr.appendChild(td);});
  const td=document.createElement('td'),w=document.createElement('div');w.className='act-wrap';
  const mk=(cls,icon,title,fn)=>{const b=document.createElement('button');b.type='button';b.className='mini-btn '+cls;b.title=title;b.setAttribute('aria-label',title);b.textContent=icon;b.onclick=fn;return b;};
  w.append(mk('edit','✏️','Edit',()=>openMainFromList(r.ID)),mk('delete','🗑','Delete',()=>{if(!confirm('کیا آپ یہ مقدمہ اور اس سے متعلقہ تمام ملزمان اور باقی تمام ریکارڈ (تلفی، عارضی اجراء واپسی، سپرداری) حذف کرنا چاہتے ہیں؟'))return;deleteMainCascade(r.ID);renderBreakup();toast('Case and all related records deleted.');}));
@@ -521,11 +558,15 @@ function bkFill(i,list){const body=$('bkBody'+i);body.innerHTML='';$('bkC'+i).te
  const frag=document.createDocumentFragment();list.forEach((r,k)=>frag.appendChild(bkMadRow(r,k+1)));body.appendChild(frag);}
 function renderBkLists(){const mains=workbook?rows('Main'):[];
  const noStation=bkSorted(mains.filter(m=>!bkStationOf(m)));
- const cnt={};mains.forEach(m=>{const k=norm(m.Madd_Number);if(k)cnt[k]=(cnt[k]||0)+1;});
- const dup=bkSorted(mains.filter(m=>{const k=norm(m.Madd_Number);return k&&cnt[k]>1;}));
- const bad=new Set();rows('Accused_T').forEach(a=>{if(!BK_OK_STATUS.includes(val(a.Present_or_Disposed_off).trim()))bad.add(String(a.Main_Accused));});
- const unk=bkSorted(mains.filter(m=>bad.has(String(m.ID))));
+ // Duplicate = same real Mad number (Mad_Number_T.Mad_Number via Main_Madd_ID); year is ignored.
+ const gk=m=>madNumOf(m);
+ const cnt={};mains.forEach(m=>{const k=gk(m);if(k)cnt[k]=(cnt[k]||0)+1;});
+ const dup=mains.filter(m=>{const k=gk(m);return k&&cnt[k]>1;}).sort((a,b)=>{const p=Number(madNumOf(a)),q=Number(madNumOf(b));if(!isNaN(p)&&!isNaN(q)&&p!==q)return p-q;if(gk(a)!==gk(b))return gk(a)<gk(b)?-1:1;return (Number(a.ID)||0)-(Number(b.ID)||0);});
+ const okSt=new Set();rows('Accused_T').forEach(a=>{if(BK_OK_STATUS.includes(val(a.Present_or_Disposed_off).trim()))okSt.add(String(a.Main_Accused));});
+ const unk=bkSorted(mains.filter(m=>!okSt.has(String(m.ID))));
  bkFill(2,noStation);bkFill(3,dup);bkFill(4,unk);
+ {let g=-1,last=null;[...$('bkBody3').querySelectorAll('tr')].forEach((tr,i)=>{if(!dup[i])return;const k=gk(dup[i]);if(k!==last){g++;last=k;tr.classList.add('dup-start');}if(g%2)tr.classList.add('dup-alt');});
+  $('bkNote3').textContent=workbook?(g+1)+' مد نمبر — '+dup.length+' مدات (ایک ہی مد نمبر ایک سے زیادہ مدات میں)':'';}
  const ids=new Set(mains.map(m=>String(m.ID)));
  bkFillOrph(workbook?rows('Accused_T').filter(a=>!ids.has(String(a.Main_Accused))):[]);}
 function bkFillOrph(list){const body=$('bkBody5');body.innerHTML='';$('bkC5').textContent=workbook?'('+list.length+')':'';
@@ -548,6 +589,23 @@ function orphSave(){const r=orphRec;if(!r)return;const v=formValues('orphFields'
  Object.assign(r,v,{Accused_ID:r.Accused_ID,Main_Accused:link?link.ID:r.Main_Accused});scheduleAutoSave();orphClose();renderBreakup();renderAccused();toast(link?'Accused record updated and linked to the case.':'Accused record updated.');}
 
 
+
+// ---------- Update popup (shown after the Excel file is connected) ----------
+const REMIND_KEY='updRemindUntil';let remindTimer=null;
+function scheduleRemind(ms){clearTimeout(remindTimer);remindTimer=setTimeout(()=>updatePopupCheck(false),Math.max(ms,1000));}
+function hideUpdPopup(){const o=$('updOv');if(o)o.hidden=true;}
+function showUpdPopup(){let o=$('updOv');
+ if(!o){o=document.createElement('div');o.id='updOv';o.className='orph-ov';
+  o.innerHTML='<div class="orph-box upd-box" role="dialog" aria-modal="true"><h3>Update is Available</h3><p id="updPopMsg"></p><div class="upd-row"><select id="updRemindSel" aria-label="Remind me in"><option value="10">10 minutes</option><option value="30">30 minutes</option><option value="60">01 hour</option></select><button type="button" class="btn btn-ghost" id="updRemindBtn">Remind Me Later</button><button type="button" class="btn btn-primary" id="updNowBtn2">Update Now</button></div></div>';
+  document.body.appendChild(o);
+  $('updRemindBtn').onclick=()=>{const m=Number($('updRemindSel').value)||10;try{localStorage.setItem(REMIND_KEY,String(Date.now()+m*60000));}catch(e){}hideUpdPopup();scheduleRemind(m*60000);toast('We will remind you again in '+(m===60?'1 hour':m+' minutes')+'.');};
+  $('updNowBtn2').onclick=()=>{hideUpdPopup();applyUpdate();};}
+ $('updPopMsg').textContent='Version '+newer.version+' is available (you are using '+APP_VERSION+').'+(newer.notes?' '+newer.notes:'');o.hidden=false;}
+async function updatePopupCheck(){
+ try{const t=Number(localStorage.getItem(REMIND_KEY)||0);if(t>Date.now()){scheduleRemind(t-Date.now());return;}}catch(e){}
+ await checkUpdate(false);
+ if(newer&&isNewer(newer.version,APP_VERSION))showUpdPopup();}
+
 // ---------- Tab 3: Excel connection (persists across refresh) ----------
 function idbOpen(){return new Promise((res,rej)=>{if(!window.indexedDB)return rej(new Error('no idb'));const r=indexedDB.open('malkhana_db',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
 async function idbSet(k,v){const db=await idbOpen();return new Promise((res,rej)=>{const tx=db.transaction('kv','readwrite');tx.objectStore('kv').put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
@@ -564,7 +622,7 @@ async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disc
 $('disconnectBtn').onclick=disconnectWorkbook;
 
 // ---------- Version check & Update (GitHub) ----------
-const APP_VERSION='1.0.4';
+const APP_VERSION='1.0.5';
 const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
 let newer=null;
 const setUpd=m=>{$('updateStatus').textContent=m;};
