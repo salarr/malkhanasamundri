@@ -198,6 +198,27 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
 #bkBody3 tr.dup-start td{border-top:2px solid #8fbad6}
 
 .bk-mad{color:#4b6a85;font-size:15px;margin:2px 0 6px}
+/* سال field in the main row + فہرست ہائے tab */
+.main-row{grid-template-columns:minmax(0,.9fr) minmax(0,.7fr) repeat(5,minmax(0,1fr)) 44px;align-items:end}
+@media(max-width:900px){.main-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.main-row{grid-template-columns:1fr}}
+.yl-lbl{font-weight:700;align-self:center}.yl-num{width:110px}
+.yl-title{display:none;text-align:center;font-weight:700;font-size:20px;margin:4px 0 8px}
+.yl-wrap{overflow:auto}
+.yl-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.8;background:#fff}
+.yl-table th,.yl-table td{border:1px solid #8a97a8;padding:3px 6px;text-align:center;vertical-align:middle}
+.yl-table th{background:#e6edf6;font-size:14px;white-space:nowrap}
+.yl-table tr.yl-start td{border-top:2px solid #4b5b70}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ html,body{background:#fff!important}body{font-size:11px}
+ .topbar,footer,.no-print,.toast,#toast,#connectPopup,.pager{display:none!important}
+ .app-shell{max-width:none}.app-shell main{padding:0!important}
+ #tabYear .panel{box-shadow:none!important;border:0!important;padding:0!important;margin:0!important;background:#fff!important}
+ .yl-title{display:block}.yl-wrap{overflow:visible}
+ .yl-table{font-size:10px;line-height:1.45}.yl-table th{font-size:10px;white-space:normal}.yl-table th,.yl-table td{padding:2px 3px;border-color:#000}
+ .yl-table thead{display:table-header-group}.yl-table tr{page-break-inside:avoid}
+}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -207,6 +228,7 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
       <nav class="tabs" role="tablist">
         <button type="button" class="tab-btn active" data-tab="tabMain">مد کی تفصیل</button>
         <button type="button" class="tab-btn" data-tab="tabList">فہرست مدات</button>
+        <button type="button" class="tab-btn" data-tab="tabYear">فہرست ہائے</button>
         <button type="button" class="tab-btn" data-tab="tabBreak">بریک اپ</button>
         <button type="button" class="tab-btn" data-tab="tabHelp">راہنمائی و اپڈیٹ <span id="updArrow" class="upd-arrow" hidden>⬇</span></button>
       </nav>
@@ -262,6 +284,25 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
             <thead><tr><th>نمبر شمار</th><th id="thMad" class="sortable" title="ترتیب بدلیں">مد نمبر <span id="sortArrow">▼</span></th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th></th></tr></thead>
             <tbody id="madListBody"></tbody></table></div>
           <div class="pager pager-bottom"><button type="button" class="btn btn-light" data-act="prev">Previous</button><span class="page-label">صفحہ 1</span><button type="button" class="btn btn-light" data-act="next">Next</button></div>
+        </section>
+      </div>
+      <div id="tabYear" class="tab-pane" hidden>
+        <section class="panel list-panel yl-panel">
+          <div class="section-heading list-heading no-print">
+            <div><h3>فہرست ہائے</h3></div>
+            <div class="list-search">
+              <label for="ylYear" class="yl-lbl">سال</label>
+              <select id="ylYear"></select>
+              <label for="ylFrom" class="yl-lbl">مد نمبر سے</label><input id="ylFrom" type="number" min="0" class="yl-num" placeholder="شروع" />
+              <label for="ylTo" class="yl-lbl">تک</label><input id="ylTo" type="number" min="0" class="yl-num" placeholder="آخر" />
+              <button type="button" id="ylClearBtn" class="btn btn-light">کلئیر</button>
+              <span class="muted" id="ylCount"></span>
+              <button type="button" id="ylPrintBtn" class="btn btn-primary">🖨 پرنٹ</button>
+            </div>
+          </div>
+          <div class="yl-title" id="ylPrintTitle"></div>
+          <div class="yl-wrap"><table class="yl-table"><thead><tr><th>نمبر شمار</th><th>مد نمبر</th><th>FIR نمبر</th><th>FIR تاریخ</th><th>زیر دفعہ</th><th>پولیس اسٹیشن</th><th>تفتیشی افسر</th><th>ملزم کا نام</th><th>پراپرٹی کی قسم</th><th>پراپرٹی کی تفصیل</th><th>رجسٹریشن نمبر</th><th>انجن نمبر</th><th>چیسس نمبر</th><th>موجود / تلف شدہ</th></tr></thead>
+            <tbody id="ylBody"></tbody></table></div>
         </section>
       </div>
       <div id="tabBreak" class="tab-pane" hidden>
@@ -337,7 +378,7 @@ const SCHEMA = {
   Talfi_T: ['Talfi_ID','Talfi_Madd_Number','Date_of_Decision_of_Court','Detail_of_Decision_of_Court','Main_TID'],
   Temp_Out_T: ['Temp_ID','Temp_Issuance_Date','Temp_Returned_Date','Temp_Court','Court_Name','Temp_Officer','Court_Name','Temp_Officer','Main_TempID'],
   Sapurdari_T: ['Sapurdari_ID','Sapurdari_Date','Decision_of_Court','Main_TbID'],
-  Mad_Number_T: ['Madd_ID','Mad_Number'],
+  Mad_Number_T: ['Madd_ID','Mad_Number','Year'],
   Resources: []
 };
 // Correct duplicate field labels to match the screenshot's visible table structure.
@@ -349,7 +390,7 @@ const LABELS = {
   Accused_ID:'Accused ID',Accused_Name:'ملزم کا نام',Road_Number:'روڈ سرٹیفکیٹ نمبر',Road_Issuance_Date:'روڈ سرٹیفکیٹ اجرا کی تاریخ',Received_On:'وصولی کی تاریخ',Case_Property:'کیس پراپرٹی',Type_Of_Case_Property:'پراپرٹی کی قسم',Detail_Of_Case_Property:'پراپرٹی کی تفصیل',Registration_Number:'رجسٹریشن نمبر',Engine_Number:'انجن نمبر',Present_or_Disposed_off:'موجود / تلف شدہ',Chassis_Number:'چیسس نمبر',Main_Accused:'Main ID (Link)',
   Talfi_ID:'Talfi ID',Talfi_Madd_Number:'تلفی مد نمبر',Date_of_Decision_of_Court:'عدالتی فیصلے کی تاریخ',Detail_of_Decision_of_Court:'عدالتی فیصلے کی تفصیل',Main_TID:'Accused ID (Link)',
   Temp_ID:'Temporary ID',Temp_Issuance_Date:'عارضی اجرا کی تاریخ',Temp_Returned_Date:'واپسی کی تاریخ',Temp_Court:'عدالت / اجرا کی نوعیت',Court_Name:'عدالت کا نام',Temp_Officer:'متعلقہ افسر',Main_TempID:'Accused ID (Link)',
-  Sapurdari_ID:'Sapurdari ID',Sapurdari_Date:'سپرداری کی تاریخ',Decision_of_Court:'عدالتی حکم / فیصلہ',Main_TbID:'Accused ID (Link)',Madd_ID:'مد ID',Mad_Number:'مد نمبر'
+  Sapurdari_ID:'Sapurdari ID',Sapurdari_Date:'سپرداری کی تاریخ',Decision_of_Court:'عدالتی حکم / فیصلہ',Main_TbID:'Accused ID (Link)',Madd_ID:'مد ID',Mad_Number:'مد نمبر',Year:'سال'
 };
 let workbook = null, data = {}, selectedMain = null, selectedAccused = null, editingMain = null, editingAccused = null, editingRelated = null, currentRelatedTable = null, toastTimer = null;
 let accBlock = null, editingDraft = null, pendingHandle = null, workbookHandle = null, autoSaveTimer = null, isWritingWorkbook = false, workbookFileName = 'Malkhana_Samundri_Faisalabad.xlsx';
@@ -379,20 +420,29 @@ function updateStatus(){const has=!!workbook;if(has)$('connectPopup').hidden=tru
 function norm(v){const s=val(v).trim();return /^\d+\.0+$/.test(s)?s.replace(/\.0+$/,''):s;}
 // Main.Main_Madd_ID holds a Madd_ID; the real Mad number is Mad_Number_T.Mad_Number for that Madd_ID.
 let madCache=null;
-function madMaps(){const a=rows('Mad_Number_T');if(madCache&&madCache.a===a&&madCache.n===a.length)return madCache;const byId=new Map(),byNum=new Map();a.forEach(r=>{const id=norm(r.Madd_ID),n=norm(r.Mad_Number);byId.set(id,n);if(n){if(!byNum.has(n))byNum.set(n,[]);byNum.get(n).push(id);}});return madCache={a,n:a.length,byId,byNum};}
+function madMaps(){const a=rows('Mad_Number_T');if(madCache&&madCache.a===a&&madCache.n===a.length)return madCache;const byId=new Map(),byNum=new Map(),yearById=new Map();a.forEach(r=>{const id=norm(r.Madd_ID),n=norm(r.Mad_Number);byId.set(id,n);yearById.set(id,norm(r.Year));if(n){if(!byNum.has(n))byNum.set(n,[]);byNum.get(n).push(id);}});return madCache={a,n:a.length,byId,byNum,yearById};}
 function madNumOf(m){const mm=madMaps(),id=norm(m&&m.Main_Madd_ID);return mm.a.length?(mm.byId.get(id)||''):id;}
-function madIdFor(num,rec){num=norm(num);const mm=madMaps();if(!mm.a.length)return num;const ids=mm.byNum.get(num)||[];if(rec){const cur=norm(rec.Main_Madd_ID);if(ids.includes(cur))return cur;}if(ids.length)return ids[0];const id=String(nextId('Mad_Number_T'));rows('Mad_Number_T').push({Madd_ID:id,Mad_Number:num});madCache=null;return id;}
+// ---- سال (Year): stored in Mad_Number_T next to Mad_Number. Years run from 2015 up to the current year (grows automatically each year).
+const YEAR_START=2015;
+function curYear(){return new Date().getFullYear();}
+function yearOpts(extra=[]){const s=new Set();for(let y=YEAR_START;y<=curYear();y++)s.add(String(y));extra.forEach(e=>{e=String(e==null?'':e).trim();if(e)s.add(e);});return [...s].sort((a,b)=>b-a);}
+function yearSelect(cur){cur=val(cur).trim();const s=document.createElement('select');s.appendChild(new Option('— سال —',''));yearOpts([cur]).forEach(y=>s.appendChild(new Option(y,y)));s.value=cur;return s;}
+function madYearOf(m){const id=norm(m&&m.Main_Madd_ID);return madMaps().yearById.get(id)||'';}
+// A مد is identified by Mad_Number + Year; the matching Mad_Number_T row is reused, or a new one is added with the Year.
+function madIdFor(num,rec,year){num=norm(num);year=norm(year);const mm=madMaps();if(!mm.a.length)return num;const ids=(mm.byNum.get(num)||[]).filter(id=>(mm.yearById.get(id)||'')===year);if(rec){const cur=norm(rec.Main_Madd_ID);if(ids.includes(cur))return cur;}if(ids.length)return ids[0];
+ if(rec){const cur=norm(rec.Main_Madd_ID);const row=rows('Mad_Number_T').find(r=>norm(r.Madd_ID)===cur);if(row&&norm(row.Mad_Number)===num&&rows('Main').filter(x=>norm(x.Main_Madd_ID)===cur).length===1){row.Year=year;madCache=null;return cur;}}
+ const id=String(nextId('Mad_Number_T'));rows('Mad_Number_T').push({Madd_ID:id,Mad_Number:num,Year:year});madCache=null;return id;}
 function mainsForMad(num){const n=norm(num);if(!n)return[];const mm=madMaps();if(!mm.a.length)return rows('Main').filter(r=>norm(r.Main_Madd_ID)===n);const ids=new Set(mm.byNum.get(n)||[]);return rows('Main').filter(r=>ids.has(norm(r.Main_Madd_ID)));}
 const ROW_FIELDS=['FIR_Number','FIR_Dated','Under_Section','Police_Station','Investigating_Officer'];
-function makeRow(rec={}){const block=document.createElement('div');block.className='fir-block';block.dataset.id=val(rec.ID);block._draft=[];const row=document.createElement('div');row.className='main-row';['Main_Madd_ID',...ROW_FIELDS].forEach(k=>{const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=k==='Main_Madd_ID'?'مد نمبر':(LABELS[k]||k);const dd=k!=='Main_Madd_ID'&&resOpts[k];const i=dd?makeSelect(k,rec[k]):document.createElement('input');i.name=k;if(!dd){i.value=(k==='Main_Madd_ID'&&rec.ID)?madNumOf(rec):val(rec[k]);i.autocomplete='off';i.placeholder=k==='Main_Madd_ID'?'مد نمبر':(/date/i.test(k)?'مثلاً 24/10/2026':(LABELS[k]||k));}f.append(l,i);row.appendChild(f);});const del=document.createElement('button');del.type='button';del.className='row-del';del.title='Del';del.setAttribute('aria-label','Del');del.textContent='🗑';del.onclick=()=>deleteMainBlock(block);row.appendChild(del);
+function makeRow(rec={}){const rowYear=rec.ID?madYearOf(rec):(rec.Year!==undefined?val(rec.Year):String(curYear()));const block=document.createElement('div');block.className='fir-block';block.dataset.id=val(rec.ID);block._draft=[];const row=document.createElement('div');row.className='main-row';['Main_Madd_ID','Year',...ROW_FIELDS].forEach(k=>{const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=k==='Main_Madd_ID'?'مد نمبر':(k==='Year'?'سال':(LABELS[k]||k));const isY=k==='Year';const dd=!isY&&k!=='Main_Madd_ID'&&resOpts[k];const i=isY?yearSelect(rowYear):(dd?makeSelect(k,rec[k]):document.createElement('input'));i.name=k;if(!dd&&!isY){i.value=(k==='Main_Madd_ID'&&rec.ID)?madNumOf(rec):val(rec[k]);i.autocomplete='off';i.placeholder=k==='Main_Madd_ID'?'مد نمبر':(/date/i.test(k)?'مثلاً 24/10/2026':(LABELS[k]||k));}f.append(l,i);row.appendChild(f);});const del=document.createElement('button');del.type='button';del.className='row-del';del.title='Del';del.setAttribute('aria-label','Del');del.textContent='🗑';del.onclick=()=>deleteMainBlock(block);row.appendChild(del);
 row.addEventListener('focusin',()=>{if(block.dataset.id&&String(selectedMain)!==block.dataset.id)selectMain(block.dataset.id,true);});row.addEventListener('change',()=>{block.dataset.dirty='1';});block.appendChild(row);const area=document.createElement('div');area.className='accused-area';area.innerHTML='<div class="accused-bar"><span class="accused-title">ملزمان اور مال مقدمہ کی تفصیل</span><button type="button" class="btn btn-success btn-sm acc-add">ملزم کا اندراج</button></div><div class="accused-items"></div>';area.querySelector('.acc-add').onclick=()=>{accBlock=block;selectedMain=block.dataset.id||null;highlightRow();openAccusedForm();};block.appendChild(area);return block;}
 function deleteMainBlock(block){const id=block.dataset.id;if(id){if(!confirm('کیا آپ یہ مقدمہ اور اس سے متعلقہ تمام ملزمان اور باقی تمام ریکارڈ (تلفی، عارضی اجراء واپسی، سپرداری) حذف کرنا چاہتے ہیں؟'))return;deleteMainCascade(id);if(!$('tabList').hidden)renderMadList();toast('Case and all related records deleted.');return;}if(block._draft&&block._draft.length&&!confirm('اس نئے اندراج میں ملزمان کی تفصیل موجود ہے۔ کیا اسے حذف کرنا چاہتے ہیں؟'))return;block.remove();if(workbook&&!$('mainRows').children.length)renderMainRows([]);toast('Entry removed.');}
 const isDirty=b=>b.dataset.dirty==='1'||(!b.dataset.id&&b._draft&&b._draft.length>0);
 function confirmDiscard(){const d=[...document.querySelectorAll('#mainRows .fir-block')].some(isDirty);return !d||confirm('غیر محفوظ تبدیلیاں موجود ہیں۔ کیا آپ انہیں چھوڑ کر آگے بڑھنا چاہتے ہیں؟');}
 function clearMainForm(){$('madSearch').value='';selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;closeAccused();$('relatedPanel').hidden=true;closeRelatedForm();if(workbook)renderMainRows([]);}
-function saveMainForm(){if(!workbook){toast('Connect an Excel file first.');return;}const items=[];for(const b of document.querySelectorAll('#mainRows .fir-block')){const v={};b.querySelectorAll('.main-row input,.main-row select').forEach(i=>v[i.name]=i.value.trim());v.Main_Madd_ID=norm(v.Main_Madd_ID);const has=ROW_FIELDS.some(k=>v[k])||(b._draft&&b._draft.length);if(!b.dataset.id&&!has)continue;if(!v.Main_Madd_ID){toast('Enter a Mad number for every case.');b.querySelector('[name=Main_Madd_ID]').focus();return;}items.push({b,v});}
+function saveMainForm(){if(!workbook){toast('Connect an Excel file first.');return;}const items=[];for(const b of document.querySelectorAll('#mainRows .fir-block')){const v={};b.querySelectorAll('.main-row input,.main-row select').forEach(i=>v[i.name]=i.value.trim());v.Main_Madd_ID=norm(v.Main_Madd_ID);const yr=v.Year||'';delete v.Year;const has=ROW_FIELDS.some(k=>v[k])||(b._draft&&b._draft.length);if(!b.dataset.id&&!has)continue;if(!v.Main_Madd_ID){toast('Enter a Mad number for every case.');b.querySelector('[name=Main_Madd_ID]').focus();return;}items.push({b,v,yr});}
 if(!items.length){toast('There are no records to save.');return;}
-for(const {b,v} of items){const id=b.dataset.id;if(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(rec){v.Main_Madd_ID=madIdFor(v.Main_Madd_ID,rec);Object.assign(rec,v);}}else{v.Main_Madd_ID=madIdFor(v.Main_Madd_ID,null);const rec={ID:nextId('Main'),...v};rows('Main').push(rec);(b._draft||[]).forEach(a=>{rows('Accused_T').push({...a,Accused_ID:nextId('Accused_T'),Main_Accused:String(rec.ID)});});}}
+for(const {b,v,yr} of items){const id=b.dataset.id;if(id){const rec=rows('Main').find(r=>String(r.ID)===String(id));if(rec){v.Main_Madd_ID=madIdFor(v.Main_Madd_ID,rec,yr);Object.assign(rec,v);}}else{v.Main_Madd_ID=madIdFor(v.Main_Madd_ID,null,yr);const rec={ID:nextId('Main'),...v};rows('Main').push(rec);(b._draft||[]).forEach(a=>{rows('Accused_T').push({...a,Accused_ID:nextId('Accused_T'),Main_Accused:String(rec.ID)});});}}
 scheduleAutoSave();clearMainForm();if(!$('tabList').hidden)renderMadList();toast('Cases and related accused saved.');}
 function deleteMainCascade(id){const acc=new Set(rows('Accused_T').filter(r=>String(r.Main_Accused)===String(id)).map(r=>String(r.Accused_ID)));data.Main=rows('Main').filter(r=>String(r.ID)!==String(id));data.Accused_T=rows('Accused_T').filter(r=>String(r.Main_Accused)!==String(id));for(const c of ['Talfi_T','Temp_Out_T','Sapurdari_T'])data[c]=rows(c).filter(r=>!acc.has(String(r[FOREIGN[c]])));[...document.querySelectorAll('#mainRows .fir-block')].filter(b=>b.dataset.id===String(id)).forEach(b=>b.remove());if(workbook&&!$('mainRows').children.length)renderMainRows([]);if(String(selectedMain)===String(id)){selectedMain=null;selectedAccused=null;$('relatedPanel').hidden=true;closeRelatedForm();closeAccused();}scheduleAutoSave();}
 function highlightRow(){document.querySelectorAll('#mainRows .fir-block').forEach(r=>r.classList.toggle('selected',!!r.dataset.id&&r.dataset.id===String(selectedMain)));}
@@ -474,7 +524,7 @@ async function connectWorkbook(){
 function loadFile(file,fromHandle=false){if(!file)return Promise.resolve();return new Promise(res=>{const reader=new FileReader();reader.onload=e=>{try{workbook=XLSX.read(e.target.result,{type:'array',cellDates:false});normalizeWorkbook(workbook);selectedMain=null;selectedAccused=null;editingMain=null;editingAccused=null;updateStatus();renderMainFields({});if(!$('tabList').hidden)renderMadList();renderMainList();renderAccused();renderSearchResults();$('mainFormHint').textContent='نیا Main ریکارڈ بنانے کے لیے فارم پُر کریں یا تلاش سے موجود ریکارڈ منتخب کریں۔';const missing=SHEETS.filter(s=>s!=='Resources'&&s!=='Mad_Number_T'&&!workbook.Sheets[s]&&!fileNames.sheets[s]);if(missing.length)toast('Workbook loaded, but these sheets were not found: '+missing.join(', '));else toast(fromHandle?'Excel file connected; auto-save is active.':'Excel file loaded. For auto-save, please reconnect it from the Help & Update tab.');updateStatus();updatePopupCheck();}catch(err){console.error(err);toast('Could not read the Excel file. Please select a valid .xlsx file.');}res();};reader.readAsArrayBuffer(file);});}
 $('loadWorkbookBtn').onclick=connectWorkbook;$('workbookInput').addEventListener('change',e=>{workbookHandle=null;loadFile(e.target.files[0],false);e.target.value='';});
 $('saveWorkbookBtn').onclick=async()=>{if(workbookHandle)await saveToConnectedFile(true);else downloadWorkbook();};$('downloadCopyBtn').onclick=downloadWorkbook;
-$('searchBtn').onclick=()=>{const q=$('madSearch').value.trim();if(!q){toast('Enter a Mad number.');return;}if(!workbook){toast('Open an Excel workbook first.');return;}if(!confirmDiscard())return;renderMainListByMad(q);};$('madSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('searchBtn').click();}});$('clearSearchBtn').onclick=()=>{if(!confirmDiscard())return;clearMainForm();};$('mainForm').addEventListener('submit',e=>e.preventDefault());document.querySelectorAll('.js-save').forEach(b=>b.onclick=saveMainForm);$('addMainRowBtn').onclick=()=>{const last=[...$('mainRows').querySelectorAll('input[name=Main_Madd_ID]')].map(i=>i.value.trim()).filter(Boolean).pop();const r=makeRow({Main_Madd_ID:$('madSearch').value.trim()||last||''});r.dataset.dirty='1';$('mainRows').appendChild(r);const ins=r.querySelectorAll('input,select');(ins[0].value?ins[1]:ins[0]).focus();};$('accusedForm').addEventListener('submit',saveAccused);$('resetAccusedBtn').onclick=()=>openAccusedForm();$('closeAccusedForm').onclick=closeAccused;
+$('searchBtn').onclick=()=>{const q=$('madSearch').value.trim();if(!q){toast('Enter a Mad number.');return;}if(!workbook){toast('Open an Excel workbook first.');return;}if(!confirmDiscard())return;renderMainListByMad(q);};$('madSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('searchBtn').click();}});$('clearSearchBtn').onclick=()=>{if(!confirmDiscard())return;clearMainForm();};$('mainForm').addEventListener('submit',e=>e.preventDefault());document.querySelectorAll('.js-save').forEach(b=>b.onclick=saveMainForm);$('addMainRowBtn').onclick=()=>{const last=[...$('mainRows').querySelectorAll('input[name=Main_Madd_ID]')].map(i=>i.value.trim()).filter(Boolean).pop();const ly=[...$('mainRows').querySelectorAll('select[name=Year]')].map(i=>i.value).pop();const r=makeRow({Main_Madd_ID:$('madSearch').value.trim()||last||'',Year:ly});r.dataset.dirty='1';$('mainRows').appendChild(r);const ins=r.querySelectorAll('input,select');(ins[0].value?ins[2]:ins[0]).focus();};$('accusedForm').addEventListener('submit',saveAccused);$('resetAccusedBtn').onclick=()=>openAccusedForm();$('closeAccusedForm').onclick=closeAccused;
 $('closeRelatedBtn').onclick=()=>{$('relatedPanel').hidden=true;closeRelatedForm();};$('addRelatedBtn').onclick=()=>openRelatedForm();$('relatedForm').addEventListener('submit',saveRelated);$('resetRelatedBtn').onclick=()=>openRelatedForm();$('closeRelatedForm').onclick=closeRelatedForm;
 updateStatus();
 
@@ -484,8 +534,8 @@ const _autoDir=()=>document.querySelectorAll('input:not([type=checkbox]):not([ty
 new MutationObserver(_autoDir).observe(document.body,{childList:true,subtree:true});_autoDir();
 
 const REL_EN={Talfi_T:'Destruction (Talfi)',Temp_Out_T:'Temporary release/return',Sapurdari_T:'Sapurdari'};const REL_NAMES={Talfi_T:'تلفی کی تفصیل',Temp_Out_T:'عارضی اجراء واپسی کی تفصیل',Sapurdari_T:'تفصیل سپرداری'};
-const TAB_IDS=['tabMain','tabList','tabBreak','tabHelp'];
-function showTab(id){TAB_IDS.forEach(x=>{$(x).hidden=x!==id;});document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='tabList')renderMadList();if(id==='tabBreak')renderBreakup();}
+const TAB_IDS=['tabMain','tabList','tabYear','tabBreak','tabHelp'];
+function showTab(id){TAB_IDS.forEach(x=>{$(x).hidden=x!==id;});document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='tabList')renderMadList();if(id==='tabYear')renderYearLists();if(id==='tabBreak')renderBreakup();}
 document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 
 // ---------- Tab 2: فہرست مدات ----------
@@ -558,15 +608,15 @@ function bkFill(i,list){const body=$('bkBody'+i);body.innerHTML='';$('bkC'+i).te
  const frag=document.createDocumentFragment();list.forEach((r,k)=>frag.appendChild(bkMadRow(r,k+1)));body.appendChild(frag);}
 function renderBkLists(){const mains=workbook?rows('Main'):[];
  const noStation=bkSorted(mains.filter(m=>!bkStationOf(m)));
- // Duplicate = same real Mad number (Mad_Number_T.Mad_Number via Main_Madd_ID); year is ignored.
- const gk=m=>madNumOf(m);
+ // Duplicate = same real Mad number AND same year (Mad_Number_T.Mad_Number / Year via Main_Madd_ID).
+ const gk=m=>{const n=madNumOf(m);return n?n+'|'+madYearOf(m):'';};
  const cnt={};mains.forEach(m=>{const k=gk(m);if(k)cnt[k]=(cnt[k]||0)+1;});
  const dup=mains.filter(m=>{const k=gk(m);return k&&cnt[k]>1;}).sort((a,b)=>{const p=Number(madNumOf(a)),q=Number(madNumOf(b));if(!isNaN(p)&&!isNaN(q)&&p!==q)return p-q;if(gk(a)!==gk(b))return gk(a)<gk(b)?-1:1;return (Number(a.ID)||0)-(Number(b.ID)||0);});
  const okSt=new Set();rows('Accused_T').forEach(a=>{if(BK_OK_STATUS.includes(val(a.Present_or_Disposed_off).trim()))okSt.add(String(a.Main_Accused));});
  const unk=bkSorted(mains.filter(m=>!okSt.has(String(m.ID))));
  bkFill(2,noStation);bkFill(3,dup);bkFill(4,unk);
  {let g=-1,last=null;[...$('bkBody3').querySelectorAll('tr')].forEach((tr,i)=>{if(!dup[i])return;const k=gk(dup[i]);if(k!==last){g++;last=k;tr.classList.add('dup-start');}if(g%2)tr.classList.add('dup-alt');});
-  $('bkNote3').textContent=workbook?(g+1)+' مد نمبر — '+dup.length+' مدات (ایک ہی مد نمبر ایک سے زیادہ مدات میں)':'';}
+  $('bkNote3').textContent=workbook?(g+1)+' مد نمبر — '+dup.length+' مدات (ایک ہی مد نمبر اور ایک ہی سال ایک سے زیادہ مدات میں)':'';}
  const ids=new Set(mains.map(m=>String(m.ID)));
  bkFillOrph(workbook?rows('Accused_T').filter(a=>!ids.has(String(a.Main_Accused))):[]);}
 function bkFillOrph(list){const body=$('bkBody5');body.innerHTML='';$('bkC5').textContent=workbook?'('+list.length+')':'';
@@ -589,6 +639,30 @@ function orphSave(){const r=orphRec;if(!r)return;const v=formValues('orphFields'
  Object.assign(r,v,{Accused_ID:r.Accused_ID,Main_Accused:link?link.ID:r.Main_Accused});scheduleAutoSave();orphClose();renderBreakup();renderAccused();toast(link?'Accused record updated and linked to the case.':'Accused record updated.');}
 
 
+
+// ---------- Tab: فہرست ہائے (year-wise printable list) ----------
+let ylYear='';
+function renderYearLists(){
+ const sel=$('ylYear'),ex=[];rows('Mad_Number_T').forEach(r=>{const y=norm(r.Year);if(y)ex.push(y);});
+ const opts=yearOpts(ex);if(!ylYear)ylYear=String(curYear());
+ sel.innerHTML='';opts.forEach(y=>sel.appendChild(new Option(y,y)));sel.value=opts.includes(ylYear)?ylYear:String(curYear());ylYear=sel.value;
+ const body=$('ylBody');body.innerHTML='';
+ if(!workbook){body.innerHTML='<tr><td colspan="14" class="placeholder-row">پہلے Excel فائل منسلک کریں۔</td></tr>';$('ylCount').textContent='';$('ylPrintTitle').textContent='';return;}
+ const fv=$('ylFrom').value.trim(),tv=$('ylTo').value.trim(),lo=fv===''?null:Number(fv),hi=tv===''?null:Number(tv);
+ const mains=bkSorted(rows('Main').filter(m=>{if(madYearOf(m)!==ylYear)return false;if(lo===null&&hi===null)return true;const n=Number(madNumOf(m));if(isNaN(n)||madNumOf(m)==='')return false;return (lo===null||n>=lo)&&(hi===null||n<=hi);}));
+ const accBy=new Map();rows('Accused_T').forEach(a=>{const k=String(a.Main_Accused);if(!accBy.has(k))accBy.set(k,[]);accBy.get(k).push(a);});
+ $('ylPrintTitle').textContent='فہرست ہائے — سال '+ylYear+((lo!==null||hi!==null)?' — مد نمبر '+(lo!==null?lo:'شروع')+' سے '+(hi!==null?hi:'آخر')+' تک':'');$('ylCount').textContent=mains.length+' مدات';
+ if(!mains.length){body.innerHTML='<tr><td colspan="14" class="placeholder-row">اس سال کا کوئی ریکارڈ نہیں۔</td></tr>';return;}
+ const frag=document.createDocumentFragment();
+ mains.forEach((m,i)=>{const accs=(accBy.get(String(m.ID))||[]).slice().sort((x,y)=>(Number(x.Accused_ID)||0)-(Number(y.Accused_ID)||0));const n=Math.max(1,accs.length);
+  for(let j=0;j<n;j++){const tr=document.createElement('tr');if(j===0)tr.className='yl-start';
+   const cell=(t,span)=>{const td=document.createElement('td');td.textContent=val(t);if(span>1)td.rowSpan=span;tr.appendChild(td);};
+   if(j===0)[i+1,madNumOf(m),m.FIR_Number,val(m.FIR_Dated).replace(/_x000d_/gi,' ').replace(/\s+/g,' ').trim(),m.Under_Section,m.Police_Station,m.Investigating_Officer].forEach(c=>cell(c,n));
+   const a=accs[j]||{};[a.Accused_Name,a.Type_Of_Case_Property,a.Detail_Of_Case_Property,a.Registration_Number,a.Engine_Number,a.Chassis_Number,a.Present_or_Disposed_off].forEach(c=>cell(c,1));
+   frag.appendChild(tr);}});
+ body.appendChild(frag);}
+$('ylYear').onchange=()=>{ylYear=$('ylYear').value;renderYearLists();};$('ylFrom').addEventListener('input',renderYearLists);$('ylTo').addEventListener('input',renderYearLists);$('ylClearBtn').onclick=()=>{$('ylFrom').value='';$('ylTo').value='';renderYearLists();};
+$('ylPrintBtn').onclick=()=>{if(!workbook){toast('Connect an Excel file first.');return;}window.print();};
 
 // ---------- Update popup (shown after the Excel file is connected) ----------
 const REMIND_KEY='updRemindUntil';let remindTimer=null;
@@ -622,7 +696,7 @@ async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disc
 $('disconnectBtn').onclick=disconnectWorkbook;
 
 // ---------- Version check & Update (GitHub) ----------
-const APP_VERSION='1.0.5';
+const APP_VERSION='1.0.6';
 const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
 let newer=null;
 const setUpd=m=>{$('updateStatus').textContent=m;};
