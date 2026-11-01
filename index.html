@@ -794,18 +794,13 @@ $('cpPrintBtn').onclick=()=>{if(!workbook){toast('Connect an Excel file first.')
 
 document.body.dataset.glass='3';
 
-// ---------- "What's new" popup: shown once after every update ----------
-const CHANGELOG={
- '1.0.5':['Year column added to Mad_Number_T; new Year field in the case details (defaults to the current year, new years are added automatically from 2015)','New tab "Fehrist Haaye" (lists): year-wise list with printing','Break-up: Duplicate now checks Mad number and year together'],
- '1.0.6':['Mad number column and Mad-number range (from - to) selection for printing in the lists tab','Two sub-tabs: Mad-wise list and Case-property-wise list'],
- '1.0.7':['Glass effect across the whole app','This "What\'s new" popup now appears after every update'],
- '1.0.8':['Glass (Crystal) style finalized; style picker removed']
-};
+// ---------- "Updated Successfully" popup: shown once after an update ----------
 const WN_KEY='lastSeenVersion';
-function wnList(last){const nv=v=>String(v).split('.').map(Number);const gt=(a,b)=>{a=nv(a);b=nv(b);for(let i=0;i<3;i++){if((a[i]||0)!==(b[i]||0))return (a[i]||0)>(b[i]||0);}return false;};
- return Object.keys(CHANGELOG).filter(v=>(!last||gt(v,last))&&!gt(v,APP_VERSION)).sort((a,b)=>gt(a,b)?-1:1);}
-function showWhatsNew(vers){let o=$('wnOv');if(!o){o=document.createElement('div');o.id='wnOv';o.className='orph-ov wn-ov';o.innerHTML='<div class="orph-box wn-box" role="dialog" aria-modal="true"><h3>✅ App updated — Version <span class="wn-ver" id="wnVer"></span></h3><div id="wnBody"></div><div class="button-row"><button type="button" class="btn btn-primary" id="wnOk">OK</button></div></div>';document.body.appendChild(o);$('wnOk').onclick=()=>{o.hidden=true;};}
- $('wnVer').textContent=APP_VERSION;$('wnBody').innerHTML=vers.map(v=>`<h4>Version ${esc(v)}</h4><ul>${CHANGELOG[v].map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`).join('');o.hidden=false;}
+function showUpdatedOk(){let o=$('wnOv');
+ if(!o){o=document.createElement('div');o.id='wnOv';o.className='orph-ov wn-ov';
+  o.innerHTML='<div class="orph-box wn-box" role="dialog" aria-modal="true"><h3>✅ Updated Successfully</h3><p>The app has been updated to the latest version (<span class="wn-ver" id="wnVer"></span>).</p><div class="button-row"><button type="button" class="btn btn-primary" id="wnOk">OK</button></div></div>';
+  document.body.appendChild(o);$('wnOk').onclick=()=>{o.hidden=true;};}
+ $('wnVer').textContent=APP_VERSION;o.hidden=false;}
 
 // ---------- Update popup (shown after the Excel file is connected) ----------
 const REMIND_KEY='updRemindUntil';let remindTimer=null;
@@ -884,9 +879,9 @@ async function applyUpdate(){
   }catch(e){if(e.name!=='AbortError')alert('اپڈیٹ ناکام: '+e.message);}
 }
 $('curVersion').textContent=APP_VERSION;
-(function checkWhatsNew(){let last=null;try{last=localStorage.getItem(WN_KEY);}catch(e){}
- if(last===APP_VERSION)return;try{localStorage.setItem(WN_KEY,APP_VERSION);}catch(e){}
- const v=wnList(last);if(v.length)showWhatsNew(last?v:[APP_VERSION].filter(x=>CHANGELOG[x]));})();
+(function checkUpdated(){let last=null;try{last=localStorage.getItem(WN_KEY);}catch(e){}
+ try{localStorage.setItem(WN_KEY,APP_VERSION);}catch(e){}
+ if(last&&last!==APP_VERSION&&isNewer(APP_VERSION,last))showUpdatedOk();})();
 $('checkUpdateBtn').onclick=()=>checkUpdate(true);$('updateNowBtn').onclick=applyUpdate;
 window.addEventListener('online',()=>checkUpdate(false));
 setInterval(()=>checkUpdate(false),1800000);
