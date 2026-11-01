@@ -740,15 +740,15 @@ $('ylPrintBtn').onclick=()=>{if(!workbook){toast('Connect an Excel file first.')
 // ---------- فہرست ہائے sub-tabs + کیس پراپرٹی وائز فہرست ----------
 function ylTitle(el,lines,inline){el.innerHTML='';const h=document.createElement('div');h.className='yl-h';h.textContent='فہرست ہائے مال مقدمات';el.appendChild(h);if(inline){const d=document.createElement('div');d.className='yl-c yl-cb';d.textContent=lines.join(' | ');el.appendChild(d);return;}lines.forEach(t=>{const d=document.createElement('div');d.className='yl-c';d.textContent=t;el.appendChild(d);});}
 document.querySelectorAll('.yl-sub').forEach(b=>b.onclick=()=>{document.querySelectorAll('.yl-sub').forEach(x=>x.classList.toggle('active',x===b));$('ylP1').hidden=b.dataset.yl!=='1';$('ylP2').hidden=b.dataset.yl!=='2';if(b.dataset.yl==='1')renderYearLists();else renderCaseLists();});
-const cpSel={year:'',type:'',prop:'',st:''};
+const cpSel={year:null,type:'',prop:'',st:''};
 function renderCaseLists(){
  if(!$('cpYear'))return;
  const ex=[];rows('Mad_Number_T').forEach(r=>{const y=norm(r.Year);if(y)ex.push(y);});
- const yo=yearOpts(ex);if(!cpSel.year)cpSel.year=String(curYear());
- const fillSel=(id,opts,cur,withAll)=>{const s=$(id);s.innerHTML='';if(withAll)s.appendChild(new Option('سب',''));opts.forEach(o=>s.appendChild(new Option(o,o)));const v=opts.includes(cur)?cur:(withAll?'':String(curYear()));s.value=v;return v;};
- cpSel.year=fillSel('cpYear',yo,cpSel.year,false);
+ const yo=yearOpts(ex);if(cpSel.year===null)cpSel.year=String(curYear());
+ const fillSel=(id,opts,cur,withAll)=>{const s=$(id);s.innerHTML='';if(withAll)s.appendChild(new Option('All',''));opts.forEach(o=>s.appendChild(new Option(o,o)));const v=opts.includes(cur)?cur:'';s.value=v;return v;};
+ cpSel.year=fillSel('cpYear',yo,cpSel.year,true);
  const mainsById=new Map();rows('Main').forEach(m=>mainsById.set(String(m.ID),m));
- const items=[];if(workbook)rows('Accused_T').forEach(a=>{const m=mainsById.get(String(a.Main_Accused));if(m&&madYearOf(m)===cpSel.year)items.push({a,m,tys:[val(a.Type_Of_Case_Property).trim(),((typeof resLinks!=='undefined'&&resLinks.Case_Property)||{})[val(a.Case_Property).trim()]||''],cp:val(a.Case_Property).trim(),st:bkStationOf(m)});});
+ const items=[];if(workbook)rows('Accused_T').forEach(a=>{const m=mainsById.get(String(a.Main_Accused));if(m&&(!cpSel.year||madYearOf(m)===cpSel.year))items.push({a,m,tys:[val(a.Type_Of_Case_Property).trim(),((typeof resLinks!=='undefined'&&resLinks.Case_Property)||{})[val(a.Case_Property).trim()]||''],cp:val(a.Case_Property).trim(),st:bkStationOf(m)});});
  // پراپرٹی کی قسم / کیس پراپرٹی dropdowns come from the Resources sheet (Police Station and Year are the only exceptions)
  const typeOpts=(resOpts.Type_Of_Case_Property&&resOpts.Type_Of_Case_Property.length)?resOpts.Type_Of_Case_Property:BK_CATS;
  cpSel.type=fillSel('cpType',typeOpts,cpSel.type,true);
@@ -770,7 +770,7 @@ function renderCaseLists(){
  if(!noVeh)accCols.push(['رجسٹریشن نمبر',a=>a.Registration_Number],['انجن نمبر',a=>a.Engine_Number],['چیسس نمبر',a=>a.Chassis_Number]);
  accCols.push(['موجود / تلف شدہ',a=>a.Present_or_Disposed_off]);
  const head=$('cpHead');head.innerHTML='';const htr=document.createElement('tr');mainCols.concat(accCols).forEach(c=>{const th=document.createElement('th');th.textContent=c[0];htr.appendChild(th);});head.appendChild(htr);
- const lines=['سال: '+cpSel.year];if(cpSel.type)lines.push('پراپرٹی کی قسم: '+cpSel.type);if(cpSel.prop)lines.push('کیس پراپرٹی: '+cpSel.prop);if(cpSel.st)lines.push('پولیس اسٹیشن: '+cpSel.st);
+ const lines=[];if(cpSel.year)lines.push('سال: '+cpSel.year);if(cpSel.type)lines.push('پراپرٹی کی قسم: '+cpSel.type);if(cpSel.prop)lines.push('کیس پراپرٹی: '+cpSel.prop);if(cpSel.st)lines.push('پولیس اسٹیشن: '+cpSel.st);
  ylTitle($('cpPrintTitle'),lines,true);
  const body=$('cpBody');body.innerHTML='';const ncol=mainCols.length+accCols.length;
  if(!workbook){body.innerHTML='<tr><td colspan="'+ncol+'" class="placeholder-row">پہلے Excel فائل منسلک کریں۔</td></tr>';$('cpCount').textContent='';return;}
@@ -834,7 +834,7 @@ async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disc
 $('disconnectBtn').onclick=disconnectWorkbook;
 
 // ---------- Version check & Update (GitHub) ----------
-const APP_VERSION='1.0.7';
+const APP_VERSION='1.0.8';
 const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
 let newer=null;
 const setUpd=m=>{$('updateStatus').textContent=m;};
