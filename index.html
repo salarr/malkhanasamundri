@@ -189,9 +189,9 @@ footer{padding:6px clamp(10px,2vw,20px);font-size:19.67px}
 .orph-link{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #dbe6f0}
 .orph-box .button-row{margin-top:12px}
 
-.upd-box{direction:ltr;max-width:460px;text-align:left}
+.upd-box{direction:ltr;max-width:460px;text-align:center}
 .upd-box h3{margin:0 0 8px}
-.upd-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.upd-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:14px}
 .upd-row select{min-height:40px;padding:4px 8px;border:1px solid #cfdbe8;border-radius:8px;font:inherit}
 
 #bkBody3 tr.dup-alt td{background:#eef6fc}
@@ -267,6 +267,28 @@ body[data-glass] footer{background:transparent;border-top-color:rgba(255,255,255
 .wn-box h4{margin:12px 0 4px;color:#1f3a56}
 .wn-box ul{margin:0;padding-inline-start:22px;line-height:1.9}
 .wn-box .button-row{margin-top:14px;justify-content:flex-start}
+
+/* آخری مد chip (no year shown) */
+.lm-chip{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;padding:8px 14px;border-radius:14px;border:1px solid rgba(19,165,142,.45);background:linear-gradient(90deg,rgba(19,165,142,.14),rgba(255,255,255,.65));box-shadow:0 6px 18px rgba(8,127,112,.14),inset 0 1px 0 #fff;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.lm-label{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:10px;background:linear-gradient(135deg,#087f70,#13a58e);color:#fff;font-weight:700;font-size:20px;white-space:nowrap}
+.lm-dot{width:10px;height:10px;border-radius:50%;background:#fff;animation:lmPulse 1.6s infinite}
+@keyframes lmPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}70%{box-shadow:0 0 0 9px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.lm-num{font:700 30px 'Segoe UI',Tahoma,sans-serif;color:#087f70;line-height:1.2;direction:ltr}
+.lm-rot{position:relative;flex:1;min-width:220px;height:36px;overflow:hidden}
+.lm-rot span{position:absolute;inset:0;display:flex;align-items:center;font-size:21px;color:#1e2c3d;opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s}
+.lm-rot span.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.lm-dot{animation:none}.lm-rot span{transition:none}}
+@media print{.lm-chip{display:none!important}}
+
+.lm-rot span b{color:#087f70;font-weight:700}
+
+/* Shimmer: Madd number in the chip + the active tab */
+.lm-num{background:linear-gradient(100deg,#087f70 35%,#7ff5de 48%,#d9fff7 50%,#7ff5de 52%,#087f70 65%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:lmShim 2.8s linear infinite}
+@keyframes lmShim{from{background-position:130% 0}to{background-position:-130% 0}}
+.tab-btn{position:relative;overflow:hidden}
+.tab-btn.active::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(19,165,142,.28) 46%,rgba(8,127,112,.38) 50%,rgba(19,165,142,.28) 54%,transparent 65%);background-size:250% 100%;animation:tabShim 2.8s linear infinite}
+@keyframes tabShim{from{background-position:130% 0}to{background-position:-130% 0}}
+@media (prefers-reduced-motion:reduce){.lm-num,.tab-btn.active::after{animation:none}.lm-num{background:none;color:#087f70;-webkit-text-fill-color:#087f70}}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -285,6 +307,12 @@ body[data-glass] footer{background:transparent;border-top-color:rgba(255,255,255
 
     <main>
       <div id="tabMain" class="tab-pane">
+        <div id="lastMadChip" class="lm-chip" hidden>
+          <span class="lm-label"><span class="lm-dot"></span>آخری مد</span>
+          <span class="lm-num" id="lmNum"></span>
+          <span class="lm-rot" id="lmRot" aria-live="polite"></span>
+          <button type="button" class="btn btn-primary lm-open" id="lmOpen">کھولیں ↗</button>
+        </div>
         <section class="panel main-panel">
           <div class="section-heading main-heading">
             <div><h3>مقدمات کی تفصیل</h3></div>
@@ -488,7 +516,7 @@ function buildFields(containerId, table, record={}, mode='edit', hiddenKeys=[]){
 function formValues(containerId,table){const out={};(SCHEMA[table]||[]).forEach(k=>{const el=$(`${containerId}_${k}`);if(!el)return;if(el.type==='date'){out[k]=el.value?fmtDMY(el.value):(el.dataset.orig||'');}else out[k]=el.value.trim();});return out;}
 function currentMain(){return rows('Main').find(r=>String(r.ID)===String(selectedMain))||null;}
 function currentAccused(){return rows('Accused_T').find(r=>String(r.Accused_ID)===String(selectedAccused))||null;}
-function updateStatus(){const has=!!workbook;if(has)$('connectPopup').hidden=true;$('popReconnectBtn').hidden=has||!pendingHandle;$('workbookStatus').textContent=has?'Excel فائل منسلک ہے':(pendingHandle?'پچھلی Excel فائل اجازت کی منتظر ہے':'Excel فائل منسلک نہیں');$('workbookStatus').className='status-pill '+(has?'connected':'offline');$('saveWorkbookBtn').disabled=!has;$('downloadCopyBtn').disabled=!has;$('disconnectBtn').disabled=!has&&!pendingHandle;$('reconnectBtn').hidden=has||!pendingHandle;$('autoSaveStatus').textContent=has?(workbookHandle?'آٹو سیو فعال':'آٹو سیو دستی اجازت کی منتظر'):'آٹو سیو بند';$('mainForm').hidden=!has;if(!has){$('mainRows').innerHTML='';}}
+function updateStatus(){updateLastMad();const has=!!workbook;if(has)$('connectPopup').hidden=true;$('popReconnectBtn').hidden=has||!pendingHandle;$('workbookStatus').textContent=has?'Excel فائل منسلک ہے':(pendingHandle?'پچھلی Excel فائل اجازت کی منتظر ہے':'Excel فائل منسلک نہیں');$('workbookStatus').className='status-pill '+(has?'connected':'offline');$('saveWorkbookBtn').disabled=!has;$('downloadCopyBtn').disabled=!has;$('disconnectBtn').disabled=!has&&!pendingHandle;$('reconnectBtn').hidden=has||!pendingHandle;$('autoSaveStatus').textContent=has?(workbookHandle?'آٹو سیو فعال':'آٹو سیو دستی اجازت کی منتظر'):'آٹو سیو بند';$('mainForm').hidden=!has;if(!has){$('mainRows').innerHTML='';}}
 function norm(v){const s=val(v).trim();return /^\d+\.0+$/.test(s)?s.replace(/\.0+$/,''):s;}
 // Main.Main_Madd_ID holds a Madd_ID; the real Mad number is Mad_Number_T.Mad_Number for that Madd_ID.
 let madCache=null;
@@ -573,7 +601,7 @@ async function saveToConnectedFile(showMessage=true){
  finally{isWritingWorkbook=false;}
 }
 function scheduleAutoSave(){
- madCache=null;
+ madCache=null;updateLastMad();
  if(!workbook)return;
  $('autoSaveStatus').textContent=workbookHandle?'تبدیلی محفوظ ہو رہی ہے…':'تبدیلی عارضی طور پر رکھی گئی';
  clearTimeout(autoSaveTimer);
@@ -802,19 +830,32 @@ function showUpdatedOk(){let o=$('wnOv');
   document.body.appendChild(o);$('wnOk').onclick=()=>{o.hidden=true;};}
  $('wnVer').textContent=APP_VERSION;o.hidden=false;}
 
+
+// ---------- آخری مد chip (rotating details, no year) ----------
+function updateLastMad(){const box=$('lastMadChip');if(!box)return;clearInterval(window._lmTimer);
+ const list=workbook?rows('Main'):[];
+ if(!list.length){box.hidden=true;return;}
+ const m=list.reduce((a,b)=>(Number(b.ID)||0)>(Number(a.ID)||0)?b:a);
+ const f=val(m.FIR_Number).trim(),sec=val(m.Under_Section).trim(),ps=val(m.Police_Station).trim(),io=val(m.Investigating_Officer).trim();
+ const items=[];if(f||sec)items.push([[ 'FIR نمبر: ',f||'—' ]].concat(sec?[[' — زیر دفعہ ',sec]]:[]));if(ps)items.push([['پولیس اسٹیشن: ',ps]]);if(io)items.push([['تفتیشی افسر: ',io]]);
+ $('lmNum').textContent=madNumOf(m)||'—';
+ const rot=$('lmRot');rot.innerHTML='';items.forEach((parts,i)=>{const sp=document.createElement('span');parts.forEach(([l,v])=>{sp.appendChild(document.createTextNode(l));const b=document.createElement('b');b.textContent=v;sp.appendChild(b);});if(i===0)sp.className='on';rot.appendChild(sp);});
+ $('lmOpen').onclick=()=>openMainFromList(m.ID);
+ const sp=[...rot.children];if(sp.length>1&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)){let k=0;window._lmTimer=setInterval(()=>{sp[k].classList.remove('on');k=(k+1)%sp.length;sp[k].classList.add('on');},3000);}
+ box.hidden=false;}
+
 // ---------- Update popup (shown after the Excel file is connected) ----------
 const REMIND_KEY='updRemindUntil';let remindTimer=null;
 function scheduleRemind(ms){clearTimeout(remindTimer);remindTimer=setTimeout(()=>updatePopupCheck(false),Math.max(ms,1000));}
 function hideUpdPopup(){const o=$('updOv');if(o)o.hidden=true;}
 function showUpdPopup(){let o=$('updOv');
  if(!o){o=document.createElement('div');o.id='updOv';o.className='orph-ov';
-  o.innerHTML='<div class="orph-box upd-box" role="dialog" aria-modal="true"><h3>Update is Available</h3><p id="updPopMsg"></p><div class="upd-row"><select id="updRemindSel" aria-label="Remind me in"><option value="10">10 minutes</option><option value="30">30 minutes</option><option value="60">01 hour</option></select><button type="button" class="btn btn-ghost" id="updRemindBtn">Remind Me Later</button><button type="button" class="btn btn-primary" id="updNowBtn2">Update Now</button></div></div>';
+  o.innerHTML='<div class="orph-box upd-box" role="dialog" aria-modal="true"><h3>Update is Available</h3><p id="updPopMsg"></p><div class="upd-row"><button type="button" class="btn btn-primary" id="updNowBtn2">Update Now</button></div></div>';
   document.body.appendChild(o);
-  $('updRemindBtn').onclick=()=>{const m=Number($('updRemindSel').value)||10;try{localStorage.setItem(REMIND_KEY,String(Date.now()+m*60000));}catch(e){}hideUpdPopup();scheduleRemind(m*60000);toast('We will remind you again in '+(m===60?'1 hour':m+' minutes')+'.');};
-  $('updNowBtn2').onclick=()=>{hideUpdPopup();applyUpdate();};}
- $('updPopMsg').textContent='Version '+newer.version+' is available (you are using '+APP_VERSION+').'+(newer.notes?' '+newer.notes:'');o.hidden=false;}
+  $('updNowBtn2').onclick=()=>{hideUpdPopup();applyUpdate();};
+  o.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();hideUpdPopup();scheduleRemind(5*60000);}else if(e.key==='Tab'){e.preventDefault();e.stopPropagation();$('updNowBtn2').focus();}});}
+ $('updPopMsg').textContent='Version '+newer.version+' is available (you are using '+APP_VERSION+').'+(newer.notes?' '+newer.notes:'');o.hidden=false;$('updNowBtn2').focus();}
 async function updatePopupCheck(){
- try{const t=Number(localStorage.getItem(REMIND_KEY)||0);if(t>Date.now()){scheduleRemind(t-Date.now());return;}}catch(e){}
  await checkUpdate(false);
  if(newer&&isNewer(newer.version,APP_VERSION))showUpdPopup();}
 
@@ -834,7 +875,7 @@ async function disconnectWorkbook(){if(!confirm('کیا آپ Excel فائل Disc
 $('disconnectBtn').onclick=disconnectWorkbook;
 
 // ---------- Version check & Update (GitHub) ----------
-const APP_VERSION='1.0.8';
+const APP_VERSION='1.0.7';
 const UPDATE_URL='https://raw.githubusercontent.com/salarr/malkhanasamundri/main/version.json';
 let newer=null;
 const setUpd=m=>{$('updateStatus').textContent=m;};
